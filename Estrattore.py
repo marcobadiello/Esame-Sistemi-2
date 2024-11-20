@@ -25,3 +25,4 @@ def data(report=False):
         print(df.columns)
         print(df)
     return df
+df = data()
