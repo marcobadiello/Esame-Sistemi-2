@@ -6,5 +6,6 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "altair>=5.4.1",
+    "polars>=1.14.0",
     "streamlit>=1.40.1",
 ]
