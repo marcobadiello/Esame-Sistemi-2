@@ -1,0 +1,10 @@
+[project]
+name = "esame-sistemi-2"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "altair>=5.4.1",
+    "streamlit>=1.40.1",
+]
