@@ -4,10 +4,16 @@ import Tools
 import polars as pl
 import Analisi as anal
 
-st.title("Spotify wrapped statistico")
-st.write(df)
-# Tools.banner_canzone_small("7x8dCjCr0x6x2lXKujYD34")
-# Tools.banner_canzone_big("7x8dCjCr0x6x2lXKujYD34")
+from pagine.Top import run_top
+from pagine.home import run_home
 
-Tools.stampa_top_n(3)
+pagine = {
+    "Menù": [st.Page(run_home, title="Home", icon="🏠",default=True)],
+    "": [st.Page(run_top, title="TOP", icon="🎖️")]
+    
+}
+pg = st.navigation(pagine)
+pg.run()
+
+
 
