@@ -24,8 +24,12 @@ def banner_canzone_big(codice):
     </iframe>
     """
     st.markdown(oo, unsafe_allow_html=True)
-def stampa_top_n(n):
-        data = anal.top_n_canzoni(n)
+def stampa_top_n(df,n,periodo):
+        data = anal.top_n_canzoni(df,n,periodo)
+        total_sum = anal.top_n_canzoni(df,n=None,periodo=periodo)["s_played"].sum()
+        st.subheader("Hai ascoltato un totale di ")
+        st.subheader(convert_seconds(total_sum))
+
         for i in range(0,len(data)):
                 numero = str(i+1)
                 if numero == '1':

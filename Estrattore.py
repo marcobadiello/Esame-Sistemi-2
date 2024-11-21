@@ -1,5 +1,6 @@
 import json
 import polars as pl
+from datetime import datetime
 #creo una funzione che "pulisce" i miei dati
 def data(report=False):
     #converto il file json in una lisa python
@@ -32,8 +33,15 @@ def data(report=False):
     #rinomino la colonna da millisecondi a secondi
     df = df.rename({'ms_played': 's_played'})
     #converto in datetime le date
+    df = df.with_columns(pl.col("ts").str.strptime(pl.Datetime, "%Y-%m-%dT%H:%M:%SZ"))
+
     if report == True:
         print(df.columns)
         print(df)
     return df
 df = data()
+
+print(df["s_played"].sum())
+print(df["s_played"].sum()/60)
+print(df["s_played"].sum()/60/60)
+print(df["s_played"].sum()/60/60/24)
