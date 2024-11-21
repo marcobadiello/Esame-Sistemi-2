@@ -21,6 +21,16 @@ def data(report=False):
     df = df.drop("episode_name")
     df = df.drop("episode_show_name")
     df = df.drop('spotify_episode_uri')
+    # estraggo i codice delle canzoni
+    df = df.with_columns(
+        pl.col("spotify_track_uri").str.replace("spotify:track:","")
+    )
+    #converto i millisecondi in secondi
+    df = df.with_columns(
+        (pl.col('ms_played')/ 1000).alias('ms_played')
+    )
+    #rinomino la colonna da millisecondi a secondi
+    df = df.rename({'ms_played': 's_played'})
     if report == True:
         print(df.columns)
         print(df)
