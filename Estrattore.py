@@ -40,8 +40,3 @@ def data(report=False):
         print(df)
     return df
 df = data()
-
-print(df["s_played"].sum())
-print(df["s_played"].sum()/60)
-print(df["s_played"].sum()/60/60)
-print(df["s_played"].sum()/60/60/24)
