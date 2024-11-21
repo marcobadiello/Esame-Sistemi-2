@@ -37,13 +37,3 @@ def data(report=False):
         print(df)
     return df
 df = data()
-
-X = (df.group_by("master_metadata_track_name")
-        .agg([pl.col("s_played").sum(),
-             pl.col("spotify_track_uri").first()])
-        .sort("s_played",descending=True)
-        .select("*")
-        .head(10)
-)
-print(X)
-print(X.row(0)[2])
