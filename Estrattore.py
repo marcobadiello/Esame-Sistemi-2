@@ -31,8 +31,19 @@ def data(report=False):
     )
     #rinomino la colonna da millisecondi a secondi
     df = df.rename({'ms_played': 's_played'})
+    #converto in datetime le date
     if report == True:
         print(df.columns)
         print(df)
     return df
 df = data()
+
+X = (df.group_by("master_metadata_track_name")
+        .agg([pl.col("s_played").sum(),
+             pl.col("spotify_track_uri").first()])
+        .sort("s_played",descending=True)
+        .select("*")
+        .head(10)
+)
+print(X)
+print(X.row(0)[2])
