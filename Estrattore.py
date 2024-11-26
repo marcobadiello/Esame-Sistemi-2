@@ -5,20 +5,15 @@ from datetime import datetime
 def data(report=False):
     #converto il file json in una lisa python
     with open('my_spotify_data/data/json0.json', mode='r', encoding='utf-8') as file:
-        data0 = json.load(file)
-    df0 = pl.DataFrame(data0)
+        df0 = pl.read_json(file,infer_schema_length=20000)
     with open('my_spotify_data/data/json1.json', mode='r', encoding='utf-8') as file:
-        data1 = json.load(file)
-    df1 = pl.DataFrame(data1)
+        df1 = pl.read_json(file,infer_schema_length=20000)
     with open('my_spotify_data/data/json2.json', mode='r', encoding='utf-8') as file:
-        data2 = json.load(file)
-    df2 = pl.DataFrame(data2)
+        df2 = pl.read_json(file,infer_schema_length=20000)
     with open('my_spotify_data/data/json3.json', mode='r', encoding='utf-8') as file:
-        data3 = json.load(file)
-    df3 = pl.DataFrame(data3)
+        df3 = pl.read_json(file,infer_schema_length=20000)
     with open('my_spotify_data/data/json4.json', mode='r', encoding='utf-8') as file:
-        data4 = json.load(file)
-    df4 = pl.DataFrame(data4)
+        df4 = pl.read_json(file,infer_schema_length=20000)
     df = pl.concat([df0, df1, df2, df3, df4], how="vertical")
     
     
