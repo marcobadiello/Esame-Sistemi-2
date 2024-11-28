@@ -33,6 +33,23 @@ def top_n_artisti(df,n,periodo=None):
         .select("*")
         .head(n)
 ))
-periodo = (df['ts'].min(), df['ts'].max())
-print("TOP ARTISTI")
-print(top_n_artisti(df,15,periodo))
+
+def time_series(df):
+        # Estrai anno e mese dalla colonna 'ts'
+    df_new = df.with_columns(
+        pl.col("ts").dt.year().alias("year"),
+        pl.col("ts").dt.month().alias("month")
+    )
+
+    # Raggruppa per anno e mese e somma i secondi di ascolto
+    grouped = df_new.group_by(["year", "month"]).agg(
+        pl.col("s_played").sum().alias("total_seconds_played")
+    )
+
+    # Ordina i risultati per anno e mese
+    grouped = grouped.sort(["year", "month"])
+    grouped.write_csv("dati.time.series")
+    
+    return grouped
+print("Serie temporale")
+time_series(df)
