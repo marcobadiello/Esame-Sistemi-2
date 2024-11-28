@@ -37,7 +37,7 @@ Gli obiettivi di questo progetto sono la presentazione dei miei dati personali d
         st.write(df)
     st.markdown("---")
     st.subheader("📊Le analisi")
-    st.subheader("Obbiettivi")
+    st.subheader("Le classifiche")
     st.write("Nella sezione TOP si possono trovare le classifiche de:")
     st.markdown('''
         - **Canzoni**
