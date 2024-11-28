@@ -33,5 +33,6 @@ def top_n_artisti(df,n,periodo=None):
         .select("*")
         .head(n)
 ))
-periodo = (datetime(2020, 1, 1),datetime(2020, 1, 31))
-print(top_n_canzoni(df,15,periodo))
+periodo = (df['ts'].min(), df['ts'].max())
+print("TOP ARTISTI")
+print(top_n_artisti(df,15,periodo))

@@ -3,13 +3,13 @@ import streamlit as st
 from datetime import datetime
 from Estrattore import df
 
-def run_top():
+def run_top_artisti():
     oggi = datetime.now().date()
     anno_corrente = oggi.year
 
     # Slider per il numero di canzoni
     n = st.slider(
-        'Quante canzoni vuoi visualizzare?',
+        'Quanti artisti vuoi visualizzare?',
         min_value=1,
         max_value=100,
         value=3
@@ -45,5 +45,6 @@ def run_top():
         periodo = (start_date, end_date)
 
     # Visualizza il periodo selezionato e i risultati
-    Tools.stampa_top_n(df, n, periodo)
-    st.write(f"Periodo selezionato: {periodo}")
+    Tools.stampa_top_artisti(df, n, periodo)
+    st.write(f"Periodo selezionato: da {periodo[0].strftime('%Y-%m-%d')} a {periodo[1].strftime('%Y-%m-%d')}")
+

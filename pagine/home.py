@@ -3,4 +3,5 @@ from Estrattore import df
 
 def run_home():
     st.title("Spotify wrapped statistico")
-    st.write(df)
+    if st.button("Mostra dataframe"):
+        st.write(df)
