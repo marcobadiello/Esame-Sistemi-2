@@ -51,5 +51,3 @@ def time_series(df):
     grouped.write_csv("dati.time.series")
     
     return grouped
-print("Serie temporale")
-time_series(df)
