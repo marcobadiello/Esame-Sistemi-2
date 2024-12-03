@@ -5,6 +5,16 @@ library(ggplot2)
 #DEFINIZIONE DI FUNZIONI
 ################################################################################
 #funzione per creare dummy stagionali
+# Crea una cartella se non esiste
+if (!dir.exists("output")) {
+  dir.create("output")
+}
+
+
+
+
+
+
 make.dummy <- function(n, freq=12, start=1)
 {
   dv=matrix(0,nrow=n, ncol=freq)
@@ -54,14 +64,18 @@ modello_polinomiale <- function(y, grado) {
   
   
   # Grafico dei dati e valori stimati
+  png("output/grafico_modello.png", width = 800, height = 600)
   plot(y, type = "l", xlab = "t", xaxp = c(0, n, 9), main = paste("Polinomio di grado", grado),ylab="Ore ascoltate")
   lines(modello$fitted.values, col = "red", lwd = 2)
+  dev.off()  # Chiude il dispositivo grafico
   
   # Restituzione del modello
   return(modello)
 }
 
 
-fit <- modello_polinomiale(y, grado = 3) # Modello con polinomio di grado 2
+
+
+fit <- modello_polinomiale(y, grado = 30) # Modello con polinomio di grado 2
 saveRDS(fit, "modello_polinomiale.rds")
 
