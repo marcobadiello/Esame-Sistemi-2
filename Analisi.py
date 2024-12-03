@@ -48,6 +48,5 @@ def time_series(df):
 
     # Ordina i risultati per anno e mese
     grouped = grouped.sort(["year", "month"])
-    grouped.write_csv("dati.time.series")
     
     return grouped

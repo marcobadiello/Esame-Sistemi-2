@@ -44,3 +44,5 @@ Gli obiettivi di questo progetto sono la presentazione dei miei dati personali d
         - **Artisti**
     ''')
     
+import Tools
+Tools.stampa_ts(df)
