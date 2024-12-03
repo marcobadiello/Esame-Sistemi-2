@@ -1,5 +1,6 @@
 #Script R per il progetto di Sistemi di elaborazione 2
-setwd("C:\\Users\\Utente\\Desktop\\Esame-Sistemi-2")
+setwd("C:\\Users\\Marco\\Desktop\\Esame-Sistemi-2")
+getwd()
 library(ggplot2)
 ################################################################################
 #DEFINIZIONE DI FUNZIONI
