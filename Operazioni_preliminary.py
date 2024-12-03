@@ -1,20 +1,18 @@
 import subprocess
 from Analisi import time_series
 from Estrattore import df
+import os
 def avvia_script_R():
-    # Definisci il percorso del file R
-    r_script = "Script.R"  # Aggiungi il percorso completo se non si trova nella stessa cartella
+    # Verifica se il file R esiste nella directory del progetto
+    script_path = "Script.R"
+    if not os.path.exists(script_path):
+        print(f"Errore: il file '{script_path}' non esiste nella directory corrente.")
+        return
+    subprocess.run(["Rscript", script_path], check=True, capture_output=True, text=True)
 
-    # Esegui lo script R con Rscript
-    try:
-        result = subprocess.run(["Rscript", r_script], check=True, capture_output=True, text=True)
-        print("Script eseguito correttamente!")
-        print("Output:", result.stdout)
-    except subprocess.CalledProcessError as e:
-        print("Errore durante l'esecuzione dello script R:", e.stderr)
 def start():
     time_series(df)
-   #avvia_script_R()
+    avvia_script_R()
     print("Operazioni preliminari completate")
     
     
