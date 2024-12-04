@@ -45,4 +45,4 @@ Gli obiettivi di questo progetto sono la presentazione dei miei dati personali d
     ''')
     
 import Tools
-Tools.stampa_ts(df)
+# Tools.stampa_ts(df)
