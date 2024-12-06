@@ -4,14 +4,12 @@ import Tools
 import polars as pl
 import Analisi as anal
 
-import Operazioni_preliminary
 
 from pagine.Top_canzoni import run_top_canzoni
 from pagine.home import run_home
 from pagine.Top_artisti import run_top_artisti
 from pagine.time_series import run_time_series
 
-Operazioni_preliminary.start()
 
 
 pagine = {

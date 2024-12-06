@@ -35,7 +35,7 @@ def top_n_artisti(df,n,periodo=None):
 ))
 
 def time_series(df):
-        # Estrai anno e mese dalla colonna 'ts'
+    # Estrai anno e mese dalla colonna 'ts'
     df_new = df.with_columns(
         pl.col("ts").dt.year().alias("year"),
         pl.col("ts").dt.month().alias("month")
@@ -45,9 +45,15 @@ def time_series(df):
     grouped = df_new.group_by(["year", "month"]).agg(
         pl.col("s_played").sum().alias("total_seconds_played")
     )
-
+    
     # Ordina i risultati per anno e mese
     grouped = grouped.sort(["year", "month"])
     
+    # Aggiungi una colonna 'periodo' che parte da 1
+    grouped = grouped.with_columns(
+        pl.arange(1, len(grouped) + 1).alias("periodo")  # Crea numeri sequenziali
+    )
+    
     return grouped
+
 print(time_series(df))

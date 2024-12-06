@@ -73,3 +73,32 @@ def convert_seconds(seconds):
     minutes = seconds // 60 
     seconds %= 60  
     return f"{round(days)} giorni, {round(hours)} ore, {round(minutes)} minuti, {round(seconds)} secondi"
+
+def stampa_time_series(df):
+      data = anal.time_series(df)
+      chart = (
+            alt.Chart(df)
+            .mark_line(point=True)
+            .encode(
+                  x=alt.X("periodo", title="Anno-Mese"),  
+                  y=alt.Y("total_seconds_played", title="Secondi Totali Giocati"),
+            )
+      )
+      st.altair_chart(chart)
+      #       chart = (
+      # alt.Chart(df)
+      # .mark_line(point=True)  # Linea con punti
+      # .encode(
+      #       x="date:T",  # Tipo temporale
+      #       y="total_seconds_played:Q",
+      #       tooltip=["date:T", "total_seconds_played:Q"]  # Tooltip per dettagli
+      # )
+      # .properties(
+      #       title="Andamento dei secondi totali giocati nel tempo",
+      #       width=700,
+      #       height=400
+      # )
+      # )
+
+      # # Visualizzazione grafico
+      # st.altair_chart(chart, use_container_width=True)
