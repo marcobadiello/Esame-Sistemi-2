@@ -50,3 +50,4 @@ def time_series(df):
     grouped = grouped.sort(["year", "month"])
     
     return grouped
+print(time_series(df))
