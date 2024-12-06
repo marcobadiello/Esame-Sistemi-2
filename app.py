@@ -16,7 +16,7 @@ pagine = {
     "Menù": [st.Page(run_home, title="Home", icon="🏠",default=True)],
     "TOP 🎖️": [st.Page(run_top_canzoni, title="TOP Canzoni", icon="")],
     "": [st.Page(run_top_artisti, title="TOP Artisti", icon="")],
-    "Analisi": [st.Page(run_time_series, title="Time Series", icon="")]
+    "Analisi": [st.Page(run_time_series, title="Serie storica", icon="")]
     
 }
 pg = st.navigation(pagine)
