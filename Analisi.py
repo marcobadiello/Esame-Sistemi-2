@@ -43,7 +43,7 @@ def time_series(df):
 
     # Raggruppa per anno e mese e somma i secondi di ascolto
     grouped = df_new.group_by(["year", "month"]).agg(
-        pl.col("s_played").sum().alias("total_seconds_played")
+        (pl.col("s_played").sum() / 3600).alias("total_hours_played")  # Converti i secondi in ore
     )
     
     # Ordina i risultati per anno e mese
