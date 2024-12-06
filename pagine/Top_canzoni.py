@@ -53,3 +53,4 @@ def run_top_canzoni():
     Tools.stampa_top_canzoni_n(df, n, periodo)
     st.write(f"Periodo selezionato: da {periodo[0].strftime('%Y-%m-%d')} a {periodo[1].strftime('%Y-%m-%d')}")
 
+print(df)
