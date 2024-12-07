@@ -86,10 +86,10 @@ def stampa_time_series(df):
       
       st.altair_chart(chart, use_container_width=True)
 def stampa_time_series_artisti(df, artisti: list, periodo):
-    # Crea un grafico vuoto per visualizzare la serie temporale degli artisti
-    charts = []
+    # Inizializza una lista per raccogliere i dataframe degli artisti
+    dataframes = []
 
-    # Ciclo su ogni artista nella lista e creo il grafico corrispondente
+    # Ciclo su ogni artista e crea un dataframe per ciascuno
     for artista in artisti:
         # Ottieni i dati per l'artista corrente
         data = anal.time_series_artista(df, artista, periodo)
@@ -97,20 +97,32 @@ def stampa_time_series_artisti(df, artisti: list, periodo):
         # Aggiungi una colonna per il nome dell'artista
         data = data.with_columns(pl.lit(artista).alias("artista"))
 
-        # Crea il grafico per l'artista
-        chart = (
-            alt.Chart(data)
-            .mark_line(point=True)
-            .encode(
-                x=alt.X("periodo", title="Periodo"),
-                y=alt.Y("ore_riprodotte", title="Ore riprodotte"),
-                color=alt.Color("artista:N", title="Artista")  # Mappa 'artista' come categoria (N)
-            )
+        # Aggiungi il dataframe dell'artista alla lista
+        dataframes.append(data)
+
+    # Unisci tutti i dataframe in uno solo (concatenando verticalmente)
+    df_completo = pl.concat(dataframes)
+
+    # Palette di colori più contrastati
+    colori_contrasti = [
+        "#e41a1c", "#377eb8", "#4daf4a", "#ff7f00", "#ffff33", "#a65628", 
+        "#f781bf", "#999999", "#f0027f", "#66c2a5"
+    ]
+    
+    # Creiamo il grafico utilizzando Altair
+    chart = (
+        alt.Chart(df_completo.to_pandas())  # Converte il dataframe in pandas per Altair
+        .mark_line(point=True)
+        .encode(
+            x=alt.X('periodo', title="Periodo"),  # Assumendo che 'periodo' sia di tipo DataTime
+            y=alt.Y('ore_riprodotte:Q', title="Ore riprodotte"),
+            color=alt.Color('artista:N', 
+                            scale=alt.Scale(domain=artisti, range=colori_contrasti),
+                            legend=alt.Legend(title="Artista"))
         )
-        charts.append(chart)  # Aggiungi il grafico alla lista
+    )
 
-    # Unisci i grafici in un'unica visualizzazione
-    combined_chart = alt.layer(*charts).resolve_scale(color='independent')  # Ogni linea avrà un colore indipendente
+    # Visualizza il grafico in Streamlit
+    st.altair_chart(chart, use_container_width=True)
 
-    # Mostra il grafico combinato in Streamlit
-    st.altair_chart(combined_chart, use_container_width=True)
+    return df_completo
