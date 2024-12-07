@@ -85,13 +85,32 @@ def stampa_time_series(df):
       )
       
       st.altair_chart(chart, use_container_width=True)
-def stampa_time_series_artisti(df,artisti: list,periodo):
-      data = anal.time_series_artista(df,artisti[0],periodo)
-      chart = (
-            alt.Chart(data).mark_line(point=True)
+def stampa_time_series_artisti(df, artisti: list, periodo):
+    # Crea un grafico vuoto per visualizzare la serie temporale degli artisti
+    charts = []
+
+    # Ciclo su ogni artista nella lista e creo il grafico corrispondente
+    for artista in artisti:
+        # Ottieni i dati per l'artista corrente
+        data = anal.time_series_artista(df, artista, periodo)
+
+        # Aggiungi una colonna per il nome dell'artista
+        data = data.with_columns(pl.lit(artista).alias("artista"))
+
+        # Crea il grafico per l'artista
+        chart = (
+            alt.Chart(data)
+            .mark_line(point=True)
             .encode(
-                  x = alt.X("periodo",title="Periodo"),
-                  y = alt.Y("ore_riprodotte",title="Ore riprodotte")
+                x=alt.X("periodo", title="Periodo"),
+                y=alt.Y("ore_riprodotte", title="Ore riprodotte"),
+                color=alt.Color("artista:N", title="Artista")  # Mappa 'artista' come categoria (N)
             )
-      )
-      st.altair_chart(chart, use_container_width=True)
+        )
+        charts.append(chart)  # Aggiungi il grafico alla lista
+
+    # Unisci i grafici in un'unica visualizzazione
+    combined_chart = alt.layer(*charts).resolve_scale(color='independent')  # Ogni linea avrà un colore indipendente
+
+    # Mostra il grafico combinato in Streamlit
+    st.altair_chart(combined_chart, use_container_width=True)
