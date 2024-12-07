@@ -4,7 +4,9 @@ import polars as pl
 import altair as alt
 import streamlit as st
 import Tools
+from datetime import datetime
 import Analisi as anal
+
 
 def run_time_series():
     serie = anal.time_series(df)
@@ -24,8 +26,8 @@ def run_time_series():
         12: "Dicembre"
     }
     stringa = f'''
-    Il seguente grafcio riporta la serie storica degli ascolti suddivisa per mesi. Ogni perido corrisponde a un mese a perire da {mesi[serie["month"][0]]} {serie["year"][0]} fino a 
-    {mesi[serie["month"][-1]]} {serie["year"][-1]}
+    Il seguente grafcio riporta la serie storica degli ascolti suddivisa per mesi. Ogni perido corrisponde a un mese a perire da {mesi[serie["mese"][0]]} {serie["anno"][0]} fino a 
+    {mesi[serie["mese"][-1]]} {serie["anno"][-1]}
     '''
     st.write(stringa)
     Tools.stampa_time_series(df)
@@ -38,7 +40,49 @@ def run_time_series():
         max_value=serie["periodo"][-1],
         value=1
     )
-    st.subheader(f"{mesi[serie["month"][periodo_richiesto-1]]} {serie["year"][periodo_richiesto-1]}")
+    st.subheader(f"{mesi[serie["mese"][periodo_richiesto-1]]} {serie["anno"][periodo_richiesto-1]}")
     st.markdown("---")
-    if st.button("Premimi per scoprire un segreto 🤫"):
-        st.write("Il peridoo con il tempo di ascolto più alto è il perido 64 (più di 105 ore di ascolto) che corrsponde a Giugno 2023. Questo perchè il 3 Agosto 2023 ci sarebbe stato il concerto degli Imagine Dragons e io doveo ripassare le canzoni. Per questo c'è stato un picco nei miei ascolti.")
+
+    st.title("Confronto serie storica divisa per artisti")
+    stringaq = '''
+    In questa sezione metteremo a confronto la serie storica degli artisti più ascoltati per vedere come sono cambiati nel tempo
+    '''
+    st.write(stringaq)
+    oggi = datetime.now().date()
+    anno_corrente = oggi.year
+    n = st.slider(
+        'Quante canzoni vuoi visualizzare?',
+        min_value=1,
+        max_value=10,
+        value=3
+    )
+    opzione_periodo = st.radio(
+        "Seleziona il periodo:",
+        ["Dati di sempre", "Anno specifico", "Periodo personalizzato"]
+    )
+
+    # Gestione del periodo in base alla selezione
+    if opzione_periodo == "Dati di sempre":
+        # Usa l'intero range del DataFrame
+        periodo = (df['ts'].min(), df['ts'].max())
+
+    elif opzione_periodo == "Anno specifico":
+        # Permetti di scegliere un anno
+        anno_selezionato = st.selectbox(
+            "Seleziona un anno",
+            [i for i in range(anno_corrente, anno_corrente - 11, -1)],
+            index=0
+        )
+        periodo = (datetime(anno_selezionato, 1, 1), datetime(anno_selezionato, 12, 31))
+
+    elif opzione_periodo == "Periodo personalizzato":
+        # Permetti di scegliere un intervallo di date
+        start_date = st.date_input("Seleziona la data di inizio", value=datetime(anno_corrente, 1, 1).date())
+        end_date = st.date_input("Seleziona la data di fine", value=oggi)
+        if start_date > end_date:
+            st.error("La data di inizio non può essere successiva alla data di fine.")
+            return  # Esce dalla funzione se l'intervallo non è valido
+        periodo = (start_date, end_date)
+        
+    artisti_da_analizzare = anal.top_n_artisti(df,n,periodo)["master_metadata_album_artist_name"]
+    st.write(artisti_da_analizzare)

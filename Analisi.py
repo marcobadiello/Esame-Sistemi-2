@@ -33,8 +33,8 @@ def top_n_artisti(df,n,periodo=None):
         .select("*")
         .head(n)
 ))
-
-def time_series(df):
+################### NON TOCCARE ASSOLUTAMETNE PER NESSUN MOTIVO QUESTE TRE FUNZIONI ##########################
+def time_series_scorretto(df):
     # Estrai anno e mese dalla colonna 'ts'
     df_new = df.with_columns(
         pl.col("ts").dt.year().alias("year"),
@@ -50,10 +50,71 @@ def time_series(df):
     grouped = grouped.sort(["year", "month"])
     
     # Aggiungi una colonna 'periodo' che parte da 1
-    grouped = grouped.with_columns(
-        pl.arange(1, len(grouped) + 1).alias("periodo")  # Crea numeri sequenziali
-    )
+    # grouped = grouped.with_columns(
+    #     pl.arange(1, len(grouped) + 1).alias("periodo")  # Crea numeri sequenziali
+    # )
     
     return grouped
 
-print(time_series(df))
+def dataframe_periodi(df):
+    # Estrai il periodo minimo e massimo
+    periodo = (df['ts'].min(), df['ts'].max())
+    # Estrai l'anno e il mese di inizio e fine
+    data_inizio, data_fine = periodo
+    anno_iniziale = data_inizio.year
+    mese_iniziale = data_inizio.month
+    anno_finale = data_fine.year
+    mese_finale = data_fine.month
+
+    # Genera una lista di tuple (anno, mese)
+    mesi = []
+    anno, mese = anno_iniziale, mese_iniziale
+
+    while (anno < anno_finale) or (anno == anno_finale and mese <= mese_finale):
+        mesi.append((anno, mese))
+        mese += 1
+        if mese > 12:
+            mese = 1
+            anno += 1
+
+    # Crea il dataframe
+    df_mesi = pl.DataFrame(mesi, schema=["anno", "mese"])
+
+    # Aggiungi la colonna 'periodo' che parte da 1 e va avanti
+    df_mesi = df_mesi.with_columns(
+        pl.arange(1, len(df_mesi) + 1).alias("periodo")
+    )
+    
+    return df_mesi
+    
+def time_series(df):
+    # Crea i dataframe dei periodi e delle ore di ascolto
+    p = dataframe_periodi(df)
+    d = time_series_scorretto(df)
+
+    # Creazione delle liste di periodi
+    lista_p = [f"{p["anno"][i]}-{p["mese"][i]}" for i in range(len(p))]
+    lista_d = [f"{d["year"][i]}-{d["month"][i]}" for i in range(len(d))]
+
+    # Creazione della lista delle ore riprodotte
+    vere_ore = []
+    thp = d["total_hours_played"].to_list()  # Converto la colonna in lista per una gestione più semplice
+
+    for periodo in lista_p:
+        if periodo in lista_d:
+            vere_ore.append(float(thp[lista_d.index(periodo)]))  # Assicurati che siano float
+        else:
+            vere_ore.append(0.0)  # Se non c'è l'artista in quel mese, assegno 0 come float
+
+    # Aggiungi la colonna 'ore_riprodotte' con i valori corrispondenti a ogni riga
+    df_finale = p.with_columns(
+        pl.Series(name="ore_riprodotte", values=vere_ore)
+    )
+
+    return df_finale
+
+
+
+
+
+

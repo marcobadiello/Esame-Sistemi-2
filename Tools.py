@@ -80,7 +80,7 @@ def stampa_time_series(df):
             alt.Chart(dataframe).mark_line(point=True)
             .encode(
                   x = alt.X("periodo",title="Periodo"),
-                  y = alt.Y("total_hours_played",title="Ore riprodotte")
+                  y = alt.Y("ore_riprodotte",title="Ore riprodotte")
             )
       )
       
