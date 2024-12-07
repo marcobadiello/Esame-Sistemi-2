@@ -86,8 +86,15 @@ def run_time_series():
             return  # Esce dalla funzione se l'intervallo non è valido
         periodo = (start_date, end_date)
     st.caption("Selezionando il periodo scegli di mettere a confronto la top n (numero selezionato con lo slider) artisti del periodo scelto")
-    artisti_da_analizzare = anal.top_n_artisti(df,n,periodo)["master_metadata_album_artist_name"]
+    
+    artisti_da_analizzare = anal.top_n_artisti(df, n, periodo)["master_metadata_album_artist_name"]
     artisti = []
+
     for i in artisti_da_analizzare:
         artisti.append(i)
-    Tools.stampa_time_series_artisti(df,artisti,periodo)
+
+
+
+    Tools.stampa_time_series_artisti(df, artisti, periodo)
+        
+    

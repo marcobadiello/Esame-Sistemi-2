@@ -24,15 +24,25 @@ def top_n_canzoni(df,n=None,periodo=None):
             .select("*")
                 ))
 
-def top_n_artisti(df,n,periodo=None):
+def top_n_artisti(df,n=None,periodo=None):
     if periodo != None:
         df = df.filter((pl.col("ts") >= periodo[0]) & (pl.col("ts") <=  periodo[1]))
-    return((df.group_by("master_metadata_album_artist_name")
-        .agg([pl.col("s_played").sum()])
-        .sort("s_played",descending=True)
-        .select("*")
-        .head(n)
-))
+        
+    if n != None:
+        return((df.group_by("master_metadata_album_artist_name")
+            .agg([pl.col("s_played").sum()])
+            .sort("s_played",descending=True)
+            .select("*")
+            .head(n)
+        ))
+    else:
+        return((df.group_by("master_metadata_album_artist_name")
+            .agg([pl.col("s_played").sum()])
+            .sort("s_played",descending=True)
+            .select("*")
+        ))
+        
+
 ################### NON TOCCARE ASSOLUTAMETNE PER NESSUN MOTIVO QUESTE TRE FUNZIONI ##########################
 def time_series_scorretto(df):
     # Estrai anno e mese dalla colonna 'ts'
