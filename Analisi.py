@@ -112,9 +112,57 @@ def time_series(df):
     )
 
     return df_finale
+#################################################################################################################
 
 
 
 
+def time_series_artista_scorretta(df, artista, periodo=None):
+    
+    if periodo is not None:
+        # Filtra i dati nel periodo specificato
+        df = df.filter((pl.col("ts") >= periodo[0]) & (pl.col("ts") <= periodo[1]))
+    
+    # Filtra per l'artista specificato
+    df = df.filter(pl.col("master_metadata_album_artist_name") == artista)
+    
+    # Estrai anno e mese dalla colonna 'ts'
+    df = df.with_columns(
+        pl.col("ts").dt.year().alias("year"),
+        pl.col("ts").dt.month().alias("month")
+    )
+    
+    # Raggruppa per anno e mese e somma i secondi di ascolto (convertiti in ore)
+    return (
+        df.group_by(["year", "month"])  # Raggruppa per anno e mese
+          .agg((pl.col("s_played").sum() / 3600).alias("total_hours_played"))  # Converti i secondi in ore
+          .sort(["year", "month"])  # Ordina per anno e mese
+    )
+    
 
+def time_series_artista(df,artista,periodo=None):
+    # Crea i dataframe dei periodi e delle ore di ascolto
+    p = dataframe_periodi(df)
+    d = time_series_artista_scorretta(df,artista)
+
+    # Creazione delle liste di periodi
+    lista_p = [f"{p["anno"][i]}-{p["mese"][i]}" for i in range(len(p))]
+    lista_d = [f"{d["year"][i]}-{d["month"][i]}" for i in range(len(d))]
+
+    # Creazione della lista delle ore riprodotte
+    vere_ore = []
+    thp = d["total_hours_played"].to_list()  # Converto la colonna in lista per una gestione più semplice
+
+    for periodo in lista_p:
+        if periodo in lista_d:
+            vere_ore.append(float(thp[lista_d.index(periodo)]))  # Assicurati che siano float
+        else:
+            vere_ore.append(0.0)  # Se non c'è l'artista in quel mese, assegno 0 come float
+
+    # Aggiungi la colonna 'ore_riprodotte' con i valori corrispondenti a ogni riga
+    df_finale = p.with_columns(
+        pl.Series(name="ore_riprodotte", values=vere_ore)
+    )
+
+    return df_finale
 

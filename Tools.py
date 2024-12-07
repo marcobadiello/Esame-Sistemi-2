@@ -85,3 +85,13 @@ def stampa_time_series(df):
       )
       
       st.altair_chart(chart, use_container_width=True)
+def stampa_time_series_artisti(df,artisti: list,periodo):
+      data = anal.time_series_artista(df,artisti[0],periodo)
+      chart = (
+            alt.Chart(data).mark_line(point=True)
+            .encode(
+                  x = alt.X("periodo",title="Periodo"),
+                  y = alt.Y("ore_riprodotte",title="Ore riprodotte")
+            )
+      )
+      st.altair_chart(chart, use_container_width=True)

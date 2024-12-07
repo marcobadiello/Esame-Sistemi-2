@@ -56,33 +56,14 @@ def run_time_series():
         max_value=10,
         value=3
     )
-    opzione_periodo = st.radio(
-        "Seleziona il periodo:",
-        ["Dati di sempre", "Anno specifico", "Periodo personalizzato"]
-    )
 
-    # Gestione del periodo in base alla selezione
-    if opzione_periodo == "Dati di sempre":
-        # Usa l'intero range del DataFrame
-        periodo = (df['ts'].min(), df['ts'].max())
-
-    elif opzione_periodo == "Anno specifico":
-        # Permetti di scegliere un anno
-        anno_selezionato = st.selectbox(
-            "Seleziona un anno",
-            [i for i in range(anno_corrente, anno_corrente - 11, -1)],
-            index=0
-        )
-        periodo = (datetime(anno_selezionato, 1, 1), datetime(anno_selezionato, 12, 31))
-
-    elif opzione_periodo == "Periodo personalizzato":
-        # Permetti di scegliere un intervallo di date
-        start_date = st.date_input("Seleziona la data di inizio", value=datetime(anno_corrente, 1, 1).date())
-        end_date = st.date_input("Seleziona la data di fine", value=oggi)
-        if start_date > end_date:
-            st.error("La data di inizio non può essere successiva alla data di fine.")
-            return  # Esce dalla funzione se l'intervallo non è valido
-        periodo = (start_date, end_date)
+    periodo = (df['ts'].min(), df['ts'].max())
         
     artisti_da_analizzare = anal.top_n_artisti(df,n,periodo)["master_metadata_album_artist_name"]
     st.write(artisti_da_analizzare)
+    
+    # stampare la time series degli artisti a confroto
+    # per prima cosa stampa la time series corretta (anche con 0) di un singolo artista es "Imagine Dragons"
+    
+    artisti = ["Imagine Dragons"]
+    Tools.stampa_time_series_artisti(df,artisti,periodo)
