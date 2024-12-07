@@ -35,6 +35,13 @@ Gli obiettivi di questo progetto sono la presentazione dei miei dati personali d
     ''')
     if st.button("Mostra dataframe"):
         st.write(df)
+    st.subheader("Come è stato ottenuto il dataset")
+    qwertyuiop = '''
+    Il dataset è stato ottenuto mandando una richiesta di dawnload di tutto lo storico delle mie stream a Spotify. I file ottenuti erano più file .json i queli sono stati letti tutti e
+    trasformati in un dataset polars attraverso il file Estrattore.py . Dopodichè sono stati ripuliti da varibili non utili ai fini del progetto e sono stati rimossi tutti gli ascolti relativi ai podcast 
+    poichè in questo progetto si procede ad analizzare solo l'ascolto della musica. 
+    '''
+    st.write(qwertyuiop)
     st.markdown("---")
     st.subheader("📊Le analisi")
     st.subheader("Le classifiche")
