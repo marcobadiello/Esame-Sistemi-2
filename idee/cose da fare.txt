@@ -1,0 +1,2 @@
+-Fare una serie storica cumulata
+- Risolvere il problema dell'ordine alfabetico che poi non ritorna normale
