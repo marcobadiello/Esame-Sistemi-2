@@ -147,6 +147,8 @@ def run_time_series():
         # Ordinamento degli artisti in base all'opzione scelta
         if opzione == "Alfabetico":
             artisti.sort()
+        else:
+            st.experimental_rerun()
         
         # Multiselect per scegliere fino a 10 artisti
         selezione_artisti = st.multiselect(
