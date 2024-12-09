@@ -125,62 +125,50 @@ def run_time_series():
         st.markdown("---")
 
     def ceck():
-        # Calcolo del periodo
-        periodo = (df['ts'].min(), df['ts'].max())
-        
-        # Ottieni gli artisti da analizzare
-        artisti_da_analizzare = anal.top_n_artisti(df, periodo=periodo)["master_metadata_album_artist_name"]
-        
-        # Selezione degli artisti da confrontare
-        if "artisti" not in st.session_state:
-            st.session_state.artisti = [i for i in artisti_da_analizzare]  # Memorizza la lista degli artisti
-        
-        artisti = st.session_state.artisti
-        
-        # Radio per scegliere l'ordinamento
-        opzione = st.radio(
-            "Scegli il tipo di ordinamento",
-            ("Dai più ascoltati", "Alfabetico"),
-            key="radio_ordinamento"
-        )
-        
-        # Ordinamento degli artisti in base all'opzione scelta
-        if opzione == "Alfabetico":
-            artisti.sort()
-        else:
-            st.experimental_rerun()
-        
-        # Multiselect per scegliere fino a 10 artisti
-        selezione_artisti = st.multiselect(
-            "Seleziona fino a 10 artisti da confrontare",
-            artisti,  # Lista degli artisti dal session_state
-            default=st.session_state.get("selezione_artisti", []),  # Carica selezione precedente
-            max_selections=10,
-            key="multiselect_artisti"
-        )
-        
-        # Salva le selezioni nel session_state
-        if selezione_artisti:
-            st.session_state["selezione_artisti"] = selezione_artisti
-        else:
-            st.warning("Seleziona almeno un artista!")
-
-
-        if len(selezione_artisti) != 0:
-            Tools.stampa_time_series_artisti(df, selezione_artisti, periodo)
-            st.markdown("---")
-            stringa1 = '''Per capire a che mese e che anno corrsisponde un certo periodo potete aiutarvi con lo slider qui sotto'''
-            st.write(stringa1)
-            periodo_richiesto = st.slider(
-                'Che periodo ti interessa?',
-                min_value=1,
-                max_value=serie["periodo"][-1],
-                value=1,
-                key = "slider_3"
-            )
-            st.subheader(f"{mesi[serie["mese"][periodo_richiesto-1]]} {serie["anno"][periodo_richiesto-1]}")
-            st.markdown("---")
+            # Calcolo del periodo
+            periodo = (df['ts'].min(), df['ts'].max())
             
+            # Ottieni gli artisti da analizzare
+            artisti_da_analizzare = anal.top_n_artisti(df, periodo=periodo)["master_metadata_album_artist_name"]
+            
+            # Selezione degli artisti da confrontare
+            if "artisti" not in st.session_state:
+                st.session_state.artisti = [i for i in artisti_da_analizzare]  # Memorizza la lista degli artisti
+            
+            artisti = st.session_state.artisti
+            # Multiselect per scegliere fino a 10 artisti
+            selezione_artisti = st.multiselect(
+                "Seleziona fino a 10 artisti da confrontare",
+                artisti,  # Lista degli artisti dal session_state
+                default=st.session_state.get("selezione_artisti", []),  # Carica selezione precedente
+                max_selections=10,
+                key="multiselect_artisti"
+            )
+            
+            # Salva le selezioni nel session_state
+            if selezione_artisti:
+                st.session_state["selezione_artisti"] = selezione_artisti
+            else:
+                st.warning("Seleziona almeno un artista!")
+
+
+            if len(selezione_artisti) != 0:
+                Tools.stampa_time_series_artisti(df, selezione_artisti, periodo)
+                st.markdown("---")
+                stringa1 = '''Per capire a che mese e che anno corrsisponde un certo periodo potete aiutarvi con lo slider qui sotto'''
+                st.write(stringa1)
+                periodo_richiesto = st.slider(
+                    'Che periodo ti interessa?',
+                    min_value=1,
+                    max_value=serie["periodo"][-1],
+                    value=1,
+                    key = "slider_3"
+                )
+                st.subheader(f"{mesi[serie["mese"][periodo_richiesto-1]]} {serie["anno"][periodo_richiesto-1]}")
+                st.markdown("---")
+
+        
+       
     st.write("Se vuoi scegliere manualmente gli artisti spunta la casella sottostante")
     if st.checkbox("Ciao io sono la casella"):
 
