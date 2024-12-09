@@ -85,6 +85,16 @@ def stampa_time_series(df):
       )
       
       st.altair_chart(chart, use_container_width=True)
+def stampa_time_series_cumulata(df):
+      dataframe = anal.time_series_cumulata(df)
+      chart = (
+            alt.Chart(dataframe).mark_line(point = True)
+            .encode(
+                  x = alt.X("periodo",title="Periodo"),
+                  y = alt.Y("ore_riprodotte_cumulate",title="Ore cumulate")
+            )
+      )
+      st.altair_chart(chart, use_container_width=True)
 def stampa_time_series_artisti(df, artisti: list, periodo):
     # Inizializza una lista per raccogliere i dataframe degli artisti
     dataframes = []

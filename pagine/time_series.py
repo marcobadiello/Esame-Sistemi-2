@@ -49,8 +49,52 @@ def run_time_series():
     )
     st.subheader(f"{mesi[serie["mese"][periodo_richiesto-1]]} {serie["anno"][periodo_richiesto-1]}")
     st.markdown("---")
-
-
+    st.title("Serie storica cumulata")
+    Tools.stampa_time_series_cumulata(df)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    st.markdown("---")
     st.title("Confronto serie storica divisa per artisti")
     stringaq = '''
         In questa sezione metteremo a confronto la serie storica degli artisti più ascoltati per vedere come sono cambiati nel tempo

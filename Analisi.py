@@ -176,3 +176,13 @@ def time_series_artista(df,artista,periodo=None):
 
     return df_finale
 
+def time_series_cumulata(df):
+    data = time_series(df)
+    data_cum = data.with_columns(
+    (pl.col("ore_riprodotte").cum_sum()).alias("ore_riprodotte_cumulate")
+    )
+    data_cum = data_cum.drop("anno")
+    data_cum = data_cum.drop("mese")
+    data_cum = data_cum.drop("ore_riprodotte")
+    return data_cum
+
