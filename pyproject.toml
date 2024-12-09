@@ -14,5 +14,4 @@ dependencies = [
     "beautifulsoup4>=4.12.3",
     "requests>=2.32.3",
     "plotly-express>=0.4.1",
-    "rpy2>=3.5.17",
 ]
