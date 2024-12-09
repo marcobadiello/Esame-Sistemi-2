@@ -14,4 +14,6 @@ dependencies = [
     "beautifulsoup4>=4.12.3",
     "requests>=2.32.3",
     "plotly-express>=0.4.1",
+    "pygame>=2.6.1",
+    "matplotlib>=3.9.3",
 ]
