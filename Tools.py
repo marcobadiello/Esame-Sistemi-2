@@ -5,6 +5,12 @@ import Tools
 from Estrattore import df
 import altair as alt
 
+'''
+In qesto file mi creo delle funzioni utili per allegerire poi il codice negli altri file
+e renderlo più leggivile
+'''
+
+# questa funzione cra un banner piccole della canzone su streamlit
 def banner_canzone_small(codice):
     oo = f"""
     <iframe style="border-radius:12px" 
@@ -16,6 +22,8 @@ def banner_canzone_small(codice):
     </iframe>
     """
     st.markdown(oo, unsafe_allow_html=True)
+    
+# questa funzione crea un banner grande di una canzone su streamlit
 def banner_canzone_big(codice):
     oo = f"""
     <iframe style="border-radius:12px" 
@@ -27,12 +35,18 @@ def banner_canzone_big(codice):
     </iframe>
     """
     st.markdown(oo, unsafe_allow_html=True)
+
+# questa funzione stampa la top 'n' delle canzoni
 def stampa_top_canzoni_n(df,n,periodo):
+      
+      # ottengo il dataframe con la top
         data = anal.top_n_canzoni(df,n,periodo)
         total_sum = anal.top_n_canzoni(df,n=None,periodo=periodo)["s_played"].sum()
+        
+        # scrivo il tempo di ascolto
         st.subheader("Hai ascoltato un totale di ")
         st.subheader(convert_seconds(total_sum))
-
+      # stampo le canzoni con una faccina per il podio
         for i in range(0,len(data)):
                 numero = str(i+1)
                 if numero == '1':
@@ -43,13 +57,21 @@ def stampa_top_canzoni_n(df,n,periodo):
                       numero = numero + "🥉"
                 print(numero)
                 st.header(numero)
+                
+                # scrivo il tempo di ascolto pe rla signola canzone
                 st.subheader("Riprodotta per")
                 st.subheader(convert_seconds(data.row(i)[1]))
-                banner_canzone_small(data.row(i)[2])
                 
+                # stampo il banner con la canzone
+                banner_canzone_small(data.row(i)[2])
+  
+# questa funzione stampa la top 'n' degli artisti
 def stampa_top_artisti(df,n,periodo):
+      
+      # ottengo la top artitsti
       data = anal.top_n_artisti(df,n,periodo)
 
+      # mostro a schermo glia rtisti con el faccine per il podio
       for i in range(0,len(data)):
                 numero = str(i+1)
                 if numero == '1':
@@ -58,14 +80,19 @@ def stampa_top_artisti(df,n,periodo):
                       numero = numero + "🥈"
                 elif numero == '3':
                       numero = numero + "🥉"
-                print(numero)
+                
+                # mostro l'artista
                 st.header(numero)
                 st.title(f"{data.row(i)[0]}")
+                
+                # mostro il tempio di ascolto dell'artista specifico
                 st.subheader("Tempo di ascolto")
                 st.subheader(convert_seconds(data.row(i)[1]))
                 st.markdown("---")
 
+# questa funzione converte i secondi in giorni-ore-minuti-secondi
 def convert_seconds(seconds):
+    # è un codice molto semplice non penso di doverlo spiegare
     days = seconds // 86400 
     seconds %= 86400
     hours = seconds // 3600 
@@ -74,57 +101,83 @@ def convert_seconds(seconds):
     seconds %= 60  
     return f"{round(days)} giorni, {round(hours)} ore, {round(minutes)} minuti, {round(seconds)} secondi"
 
+# questa funzione stampa un grafico di una time series
 def stampa_time_series(df):
+      
+      # ottengo la time series
       dataframe = anal.time_series(df)
+      
+      # creo il grafico
       chart = (
             alt.Chart(dataframe).mark_line(point=True)
             .encode(
+                  # sull'asse x metto il peridoo ovvero ogni mese
                   x = alt.X("periodo",title="Periodo"),
+                  # sull'asse y il tempo di ascolto in ore
                   y = alt.Y("ore_riprodotte",title="Ore riprodotte")
             )
       )
       
+      # stampo a schermo il grafico
       st.altair_chart(chart, use_container_width=True)
+
+# questa funzione stampa il grafico di una time series cumulata
 def stampa_time_series_cumulata(df):
+      
+      # ottengo la time series cumulata
       dataframe = anal.time_series_cumulata(df)
+      
+      # creo il grafico
       chart = (
             alt.Chart(dataframe).mark_line(point = True)
             .encode(
+                  # sull'asse x il periodo che sarebbe il mese
                   x = alt.X("periodo",title="Periodo"),
+                  # sull'asse y le ore di ascolto cumulate
                   y = alt.Y("ore_riprodotte_cumulate",title="Ore cumulate")
             )
       )
+      
+      # stampo il graficgrafico a schermo
       st.altair_chart(chart, use_container_width=True)
+
+# questo grafico stampoa una time seriees dia rtisti a confronto
+# il paramettro artisti che viene passato alla funzione infatti
+# è una lista
 def stampa_time_series_artisti(df, artisti: list, periodo):
-    # Inizializza una lista per raccogliere i dataframe degli artisti
+    # inizializzo una lista per raccogliere i dataframe degli artisti
     dataframes = []
 
-    # Ciclo su ogni artista e crea un dataframe per ciascuno
+    # ciclo su ogni artista e crea un dataframe per ciascuno
     for artista in artisti:
-        # Ottieni i dati per l'artista corrente
+          
+        # ottengo i dati per l'artista corrente
         data = anal.time_series_artista(df, artista, periodo)
 
-        # Aggiungi una colonna per il nome dell'artista
+        # aggiungo una colonna per il nome dell'artista
         data = data.with_columns(pl.lit(artista).alias("artista"))
 
-        # Aggiungi il dataframe dell'artista alla lista
+        # aggiungo il dataframe dell'artista alla lista
         dataframes.append(data)
 
-    # Unisci tutti i dataframe in uno solo (concatenando verticalmente)
+    # unisco tutti i dataframe in uno solo (concatenando verticalmente)
     df_completo = pl.concat(dataframes)
 
-    # Palette di colori più contrastati
+    # creo una palette di colori più contrastati tanto permetto al massimo 10 confronti
     colori_contrasti = [
         "#e41a1c", "#377eb8", "#4daf4a", "#ff7f00", "#ffff33", "#a65628", 
         "#f781bf", "#999999", "#f0027f", "#66c2a5"
     ]
     
-    # Creiamo il grafico utilizzando Altair
+    # creo il grafico
+    # non ho idea del perchè questo codice funzioni
+    # NON TOCCARE NULLA
     chart = (
-        alt.Chart(df_completo.to_pandas())  # Converte il dataframe in pandas per Altair
+          # Converte il dataframe in pandas per Altair
+        alt.Chart(df_completo.to_pandas())  
         .mark_line(point=True)
         .encode(
-            x=alt.X('periodo', title="Periodo"),  # Assumendo che 'periodo' sia di tipo DataTime
+            x=alt.X('periodo', title="Periodo"),  
             y=alt.Y('ore_riprodotte:Q', title="Ore riprodotte"),
             color=alt.Color('artista:N', 
                             scale=alt.Scale(domain=artisti, range=colori_contrasti),
@@ -132,7 +185,8 @@ def stampa_time_series_artisti(df, artisti: list, periodo):
         )
     )
 
-    # Visualizza il grafico in Streamlit
+    # stampa il grafico a scehrmo
     st.altair_chart(chart, use_container_width=True)
 
+    # mi restituisce anche il dataframe
     return df_completo
