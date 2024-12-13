@@ -1,7 +1,14 @@
 import streamlit as st
 from Estrattore import df
 
+''''
+In qeusto file è contenuto il codice per la schermata HOME del progetto
+'''
+
+# creo una funzione che avvia la schermata
 def run_home():
+    
+    # metto il titolo e il logo di spotify
     col1, col2 = st.columns([1, 3])
     with col1:
         st.image("spotify_logo.png", width=100)
@@ -22,7 +29,6 @@ Tutti dati del progetto e le analisi sono dipendenti dai dati, questo rende poss
 di altre persone e di conseguenza cambierebbero anche tutte le analisi. 
 ''')
 
-
     st.subheader("Il dataset")
     st.write('''
             Il dataset raccoglie tutte le mie strem eseguite su Spotify.
@@ -39,15 +45,19 @@ di altre persone e di conseguenza cambierebbero anche tutte le analisi.
         - **shuffle**: Variabile dicotomica. La stram era o non era n riproduzione casuale
         - **skipped**: Variabile dicotomica. La canzone è o non è stata skippata.
     ''')
+    
+    # creo un bottone per mostrare il dataframe
     if st.button("Mostra dataframe"):
         st.write(df)
+        
     st.subheader("Come è stato ottenuto il dataset")
-    qwertyuiop = '''
+    stringhetta = '''
     Il dataset è stato ottenuto mandando una richiesta di dawnload di tutto lo storico delle mie stream a Spotify. I file ottenuti erano più file .json i queli sono stati letti tutti e
     trasformati in un dataset polars attraverso il file Estrattore.py . Dopodichè sono stati ripuliti da varibili non utili ai fini del progetto e sono stati rimossi tutti gli ascolti relativi ai podcast 
     poichè in questo progetto si procede ad analizzare solo l'ascolto della musica. 
     '''
-    st.write(qwertyuiop)
+    st.write(stringhetta)
+    
     st.markdown("---")
     st.subheader("📊Le analisi")
     st.subheader("Le classifiche")
@@ -57,5 +67,3 @@ di altre persone e di conseguenza cambierebbero anche tutte le analisi.
         - **Artisti**
     ''')
     
-import Tools
-# Tools.stampa_ts(df)
