@@ -16,6 +16,12 @@ Gli obiettivi di questo progetto sono la presentazione dei miei dati personali d
             , cercando di avere un riassunto il più chiaro possibile di quelli che sono i miei gusti musicali e di come sono 
              variati nel corso del tempo.
 ''')
+    st.subheader("Il progetto")
+    st.write('''
+Tutti dati del progetto e le analisi sono dipendenti dai dati, questo rende possibile applicare il progetto ai dati 
+di altre persone e di conseguenza cambierebbero anche tutte le analisi. 
+''')
+
 
     st.subheader("Il dataset")
     st.write('''
