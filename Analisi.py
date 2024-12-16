@@ -265,8 +265,24 @@ def shuffle_data(df):
     risultati = (tot,skip,notskip,skip/tot,notskip/tot)
     return risultati
 
-    
-
+# questa funzione mi restituisci gli ascolti medi divisi per ora
+def media_oraria(df):
+    diz = {hour: 0 for hour in range(24)}
+    for i in range(0,len(df)):
+        ora = df['ts'][i].hour
+        ascolto = df['s_played'][i]  
+        diz[ora] = diz[ora] + ascolto
+    totale = 0 
+    for i in diz:
+        totale = totale + diz[i]
+    for i in diz:
+        diz[i] = (diz[i]/totale)*100
+    print(diz)
+    data = pl.DataFrame({
+    "hour": list(diz.keys()),
+    "observations": list(diz.values())
+    })
+    return data
 
 
 '''
@@ -276,6 +292,6 @@ COSE IMPORTANTI DA SAPERE
 
 
 
-
+print(media_oraria(df))
 #########################################
 

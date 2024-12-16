@@ -13,3 +13,4 @@ In questo file c'è il codice per descrivere gli ascolti durante la gironatata
 
 def run_giornata():
     st.write("Giornata")
+    Tools.grafico_giornata(df)

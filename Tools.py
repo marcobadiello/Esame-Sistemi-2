@@ -4,6 +4,7 @@ import polars as pl
 import Tools
 from Estrattore import df
 import altair as alt
+import math
 
 '''
 In qesto file mi creo delle funzioni utili per allegerire poi il codice negli altri file
@@ -209,3 +210,57 @@ def stmapa_torta_shuffle(df):
     )
     
     st.altair_chart(chart, use_container_width=True)
+
+# questa funzione stampa il grafico della giornata copiata da "https://altair-viz.github.io/gallery/polar_bar_chart.html"
+def grafico_giornata(df):
+      data = anal.media_oraria(df)
+
+      source = data
+
+      polar_bars = alt.Chart(source).mark_arc(stroke='white', tooltip=True).encode(
+      theta=alt.Theta("hour:O"),
+      radius=alt.Radius('observations').scale(type='linear'),
+      radius2=alt.datum(0),
+      )
+
+      # Create the circular axis lines for the number of observations
+      axis_rings = alt.Chart(pl.DataFrame({"ring": range(0, 11, 1)})).mark_arc(stroke='lightgrey', fill=None).encode(
+      theta=alt.value(2 * math.pi),
+      radius=alt.Radius('ring').stack(False)
+      )
+      axis_rings_labels = axis_rings.mark_text(color='grey', radiusOffset=5, align='left').encode(
+      text="ring",
+      theta=alt.value(math.pi / 4)
+      )
+
+      # Create the straight axis lines for the time of the day
+      axis_lines = alt.Chart(pl.DataFrame({
+      "radius": 10,
+      "theta": math.pi / 2,
+      'hour': ['00:00', '06:00', '12:00', '18:00']
+      })).mark_arc(stroke='lightgrey', fill=None).encode(
+      theta=alt.Theta('theta').stack(True),
+      radius=alt.Radius('radius'),
+      radius2=alt.datum(1),
+      )
+      axis_lines_labels = axis_lines.mark_text(
+            color='grey',
+            radiusOffset=5,
+            thetaOffset=-math.pi / 4,
+            # These adjustments could be left out with a larger radius offset, but they make the label positioning a bit clearner
+            align=alt.expr('datum.hour == "18:00" ? "right" : datum.hour == "06:00" ? "left" : "center"'),
+            baseline=alt.expr('datum.hour == "00:00" ? "bottom" : datum.hour == "12:00" ? "top" : "middle"'),
+      ).encode(text="hour")
+
+      chart = alt.layer(
+      axis_rings,
+      axis_rings_labels,
+      axis_lines_labels,
+      axis_lines,
+      polar_bars,
+      ).properties(
+    width=800,  # Aumenta larghezza
+    height=800 # Aumenta altezza
+      )
+
+      st.altair_chart(chart, use_container_width=True)
