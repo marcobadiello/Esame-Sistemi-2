@@ -12,7 +12,7 @@ def run_top_artisti():
     with col2:
         st.title("Spotify Wrapped Statistico")
 
-    # Slider per il numero di canzoni
+    # slider per scegliere il numero di canzoni
     n = st.slider(
         'Quanti artisti vuoi visualizzare?',
         min_value=1,
@@ -20,19 +20,19 @@ def run_top_artisti():
         value=3
     )
 
-    # Scelta del tipo di periodo
+    # scelta del tipo di periodo
     opzione_periodo = st.radio(
         "Seleziona il periodo:",
         ["Dati di sempre", "Anno specifico", "Periodo personalizzato"]
     )
 
-    # Gestione del periodo in base alla selezione
+    # gestisco il periodo in base alla selezione
     if opzione_periodo == "Dati di sempre":
-        # Usa l'intero range del DataFrame
+        # utilizza l'intero range del dataframe
         periodo = (df['ts'].min(), df['ts'].max())
 
     elif opzione_periodo == "Anno specifico":
-        # Permetti di scegliere un anno
+        # permetto di scegliere un anno
         anno_selezionato = st.selectbox(
             "Seleziona un anno",
             [i for i in range(anno_corrente, anno_corrente - 11, -1)],
@@ -41,15 +41,15 @@ def run_top_artisti():
         periodo = (datetime(anno_selezionato, 1, 1), datetime(anno_selezionato, 12, 31))
 
     elif opzione_periodo == "Periodo personalizzato":
-        # Permetti di scegliere un intervallo di date
+        # permetto di scegliere un intervallo di date
         start_date = st.date_input("Seleziona la data di inizio", value=datetime(anno_corrente, 1, 1).date())
         end_date = st.date_input("Seleziona la data di fine", value=oggi)
         if start_date > end_date:
             st.error("La data di inizio non può essere successiva alla data di fine.")
-            return  # Esce dalla funzione se l'intervallo non è valido
+            return  # esce dalla funzione se l'intervallo non è valido
         periodo = (start_date, end_date)
 
-    # Visualizza il periodo selezionato e i risultati
+    # mostro il periodo selezionato e i risultati
     Tools.stampa_top_artisti(df, n, periodo)
     st.write(f"Periodo selezionato: da {periodo[0].strftime('%Y-%m-%d')} a {periodo[1].strftime('%Y-%m-%d')}")
 

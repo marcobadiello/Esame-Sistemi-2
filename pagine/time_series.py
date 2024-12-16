@@ -9,6 +9,7 @@ import Analisi as anal
 
 
 def run_time_series():
+    # scrivo il titolo
     col1, col2 = st.columns([1, 3])
     with col1:
         st.image("spotify_logo.png", width=100)
@@ -16,6 +17,7 @@ def run_time_series():
         st.title("Spotify Wrapped Statistico")
     serie = anal.time_series(df)
     st.title("Serie storica")
+    # dizionario utile
     mesi = {
         1: "Gennaio",
         2: "Febbraio",
@@ -35,8 +37,10 @@ def run_time_series():
     {mesi[serie["mese"][-1]]} {serie["anno"][-1]}
     '''
     st.write(stringa)
+    # mostro a schermo la time series
     Tools.stampa_time_series(df)
 
+    # aggiungo uno slider
     st.markdown("---")
     stringa1 = '''Per capire a che mese e che anno corrsisponde un certo periodo potete aiutarvi con lo slider qui sotto'''
     st.write(stringa1)
@@ -51,10 +55,13 @@ def run_time_series():
     st.markdown("---")
     st.title("Serie storica cumulata")
     st.write("Il seguente grafcio mostra la serie storica cumulata degli ascolti, ad ongni periodo")
+    # stampo la serie storica cumulata
     Tools.stampa_time_series_cumulata(df)
+    # stampo lo slider
     st.markdown("---")
     stringa1 = '''Per capire a che mese e che anno corrsisponde un certo periodo potete aiutarvi con lo slider qui sotto'''
     st.write(stringa1)
+    
     periodo_richiesto = st.slider(
         'Che periodo ti interessa?',
         min_value=1,
@@ -65,3 +72,7 @@ def run_time_series():
     st.subheader(f"{mesi[serie["mese"][periodo_richiesto-1]]} {serie["anno"][periodo_richiesto-1]}")
     st.markdown("---")
     
+'''
+COSE DA SAPERE
+- Le key degli slideer sono tutte diverse perchè sennò mi creava problemi ma gli slider sono identici
+'''
