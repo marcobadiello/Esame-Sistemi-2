@@ -2,6 +2,8 @@ from Estrattore import df
 import polars as pl
 from datetime import datetime
 
+import icecream as ic
+
 '''
 In questo file vengono definite tutte le funzioni che hanno come
 scopo un analisi dei dati pecifica e restituiscono i dati richiesti
@@ -123,26 +125,41 @@ def dataframe_periodi(df):
 # questa funzioen ha il compito di correggere la time series restituita dalla prima funzione di queste 
 # tre funzioni che NON VANNO TOCCATE 
 def time_series(df):
-    
+    print("Inizio la funzione")
     # creo i dataframe della time series e dei peridoo di ascolo
     p = dataframe_periodi(df)
+    print("Stampo p")
+    print(p)
     d = time_series_scorretto(df)
+    print("Stampo d")
+    print(d)
 
     # creo le liste dei periodi
     lista_p = [f"{p["anno"][i]}-{p["mese"][i]}" for i in range(len(p))]
+    print("Stampo lista p")
+    print(lista_p)
     lista_d = [f"{d["year"][i]}-{d["month"][i]}" for i in range(len(d))]
+    print("Stampo lista d")
+    print(lista_d)
 
     # creo la lissta delle ore riprodotte
     vere_ore = []
     # converto la colonna in una liste perchè il progetto è mio e mi trovo meglio
     thp = d["total_hours_played"].to_list() 
+    
+    print("Stampo THP")
+    print(thp)
 
     for periodo in lista_p:
         if periodo in lista_d:
             # mi asicuro che il valore sia floating point
             vere_ore.append(float(thp[lista_d.index(periodo)]))  
-            # se l'artista non è peresente in quel mese assegno il valore 0.0 (float)
+        else:
+            # se il periodo non è nella lista vuol dire che non ci sono ascolti in quel perido
             vere_ore.append(0.0) 
+    print("Stampo vere ore post process")
+    print("Lunhezza vere ore = ", len(vere_ore))
+    print(vere_ore)
 
     # aggiungi la colonna 'ore_riprodotte' con i valori corrispondenti a ogni riga
     df_finale = p.with_columns(
@@ -234,7 +251,7 @@ def time_series_cumulata(df):
     return data_cum
 
 
-
+print(time_series(df))
 
 
 '''
