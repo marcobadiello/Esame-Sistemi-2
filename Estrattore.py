@@ -65,8 +65,6 @@ def data(report=False):
 df = data()
 
 
-
-
 ''''
 COSE IMPORTANTI DA SAPERE
 

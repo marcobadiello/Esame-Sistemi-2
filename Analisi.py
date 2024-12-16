@@ -250,11 +250,32 @@ def time_series_cumulata(df):
     
     return data_cum
 
+# questa funzione mi restituisce una tubla con tutte le informazioni in merito
+# all'utilizzo della funzione 'shuffle'
+def shuffle_data(df):
+    l = df['shuffle'].to_list()
+    tot = len(l)
+    skip = 0 
+    notskip = 0
+    for i in l:
+        if i == True:
+            skip += 1
+        else:
+            notskip += 1
+    risultati = (tot,skip,notskip,skip/tot,notskip/tot)
+    return risultati
 
-print(time_series(df))
+    
+
 
 
 '''
 COSE IMPORTANTI DA SAPERE
 - Ogni periodo corrisponde ad un mese quindi ogni 12 periodi corrisponde un anno
 '''
+
+
+
+
+#########################################
+

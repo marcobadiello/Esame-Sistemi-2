@@ -190,3 +190,22 @@ def stampa_time_series_artisti(df, artisti: list, periodo):
 
     # mi restituisce anche il dataframe
     return df_completo
+
+# questa funzione stampa un grafico per lo shuffle
+def stmapa_torta_shuffle(df):
+    data = anal.shuffle_data(df)
+    
+    source = pl.DataFrame({
+        "category": ["SHUFFLE ATTIVATO", "SHUFFLE DISATTIVATO"],
+        "value": [round(data[1], 3), round(data[2], 3)]
+    })
+
+    chart = alt.Chart(source).mark_arc(innerRadius=50).encode(
+        theta="value",
+        color=alt.Color("category:N").scale(
+            domain=["SHUFFLE ATTIVATO", "SHUFFLE DISATTIVATO"],
+            range=["#00FF00", "#FF0000"]  # Rosso per attivato, blu per disattivato
+        )
+    )
+    
+    st.altair_chart(chart, use_container_width=True)

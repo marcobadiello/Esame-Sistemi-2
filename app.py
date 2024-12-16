@@ -10,6 +10,8 @@ from pagine.home import run_home
 from pagine.Top_artisti import run_top_artisti
 from pagine.time_series import run_time_series
 from pagine.time_series_artisti import run_time_series_artisti
+from pagine.shuffle import run_shuffle
+from pagine.giornata import run_giornata
 
 
 
@@ -23,7 +25,9 @@ pagine = {
     "TOP 🎖️": [st.Page(run_top_canzoni, title="TOP Canzoni", icon="")],
     "": [st.Page(run_top_artisti, title="TOP Artisti", icon="")],
     "Analisi": [st.Page(run_time_series, title="Serie storica", icon="")],
-    "\n":[st.Page(run_time_series_artisti,title="Serie storica artisti")]
+    "\n":[st.Page(run_time_series_artisti,title="Serie storica artisti")],
+    "\n\n":[st.Page(run_shuffle,title="Shuffle?")],
+    "\n\n\n":[st.Page(run_giornata,title="Giornata tipo")]
     
 }
 
