@@ -18,17 +18,17 @@ Non devi preoccuparti di nulla, un ambiente virtuale verra creato automaticament
 ## Avvio del Progetto  
 Per eseguire il progetto, segui questi passi:  
 
-1. **Clona il repository**:  
+### 1. **Clona il repository**:  
    ```bash
    git clone https://github.com/marcobadiello/Esame-Sistemi-2.git
    ```
 
-2. **Spostati nella directory del progetto**:  
+### 2. **Spostati nella directory del progetto**:  
    ```bash
    cd Esame-Sistemi-2
    ```
 
-3. **Esegui il programma**:  
+### 3. **Esegui il programma**:  
    ```bash
    uv run streamlit run app.py
    ```
