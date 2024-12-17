@@ -22,13 +22,11 @@ def run_home():
 Gli obiettivi di questo progetto sono la presentazione dei miei dati personali di Spotify
             , cercando di avere un riassunto il più chiaro possibile di quelli che sono i miei gusti musicali e di come sono 
              variati nel corso del tempo.
+             Inoltre il progetto è interamente strutturato da essere indipendente dai dati, questo lo rende versatile
+             poichè qualora si volessero cambiare i dati con quelli di un altra persona il progetto si adatterebbe di conseguenza 
+             senza bisogno di ulteriori aggiustamenti.
 ''')
-    st.subheader("Il progetto")
-    st.write('''
-Tutti dati del progetto e le analisi sono dipendenti dai dati, questo rende possibile applicare il progetto ai dati 
-di altre persone e di conseguenza cambierebbero anche tutte le analisi. Il codice è scritto interamente in python
-con l'utilizzo di tre librerie principali: Polars, Altair e Streamlit
-''')
+
 
     st.subheader("Il dataset")
     st.write('''
@@ -54,17 +52,35 @@ con l'utilizzo di tre librerie principali: Polars, Altair e Streamlit
     st.subheader("Come è stato ottenuto il dataset")
     stringhetta = '''
     Il dataset è stato ottenuto mandando una richiesta di dawnload di tutto lo storico delle mie stream a Spotify. I file ottenuti erano più file .json i queli sono stati letti tutti e
-    trasformati in un dataset polars attraverso il file Estrattore.py . Dopodichè sono stati ripuliti da varibili non utili ai fini del progetto e sono stati rimossi tutti gli ascolti relativi ai podcast 
+    trasformati in un dataset polars attraverso opportune analisi. Dopodichè sono stati ripuliti da varibili non utili ai fini del progetto e sono stati rimossi tutti gli ascolti relativi ai podcast 
     poichè in questo progetto si procede ad analizzare solo l'ascolto della musica. 
     '''
     st.write(stringhetta)
     
     st.markdown("---")
-    st.subheader("📊Le analisi")
-    st.subheader("Le classifiche")
-    st.write("Nella sezione TOP si possono trovare le classifiche de:")
-    st.markdown('''
-        - **Canzoni**
-        - **Artisti**
-    ''')
-    
+    st.title("📒Le pagine")
+    st.subheader("TOP Canzoni")
+    st.write('''
+In questa pagina puoi vedere una classifica di tutte le canzoni ascoltate in un determinato periodo.
+''')
+    st.subheader("TOP Artisti")
+    st.write('''
+In questa pagina puoi vedere una classifica di tutti gli artisti ascoltati in un determinato periodo.
+''')
+    st.subheader("Serie storica")
+    st.write('''
+In questa pagina puoi vedere la serie storica di tutti gli ascolti con periodo mensile.
+''')
+    st.subheader("Serie storica artisti")
+    st.write('''
+In questa pagina puoi vedere la serie storica degli ascolti con periodo mensile
+             e dividerla per artisti.
+''')
+    st.subheader("Shuffle?")
+    st.write('''
+In queswta pagina puoi vedere un riassunto dell'utilizzo della funzione Shuffle.
+''')
+    st.subheader("Giornata tipo")
+    st.write('''
+In questa pagina puoi vedere come gli ascolti sono distribuiti nell'arco di una giornata
+''')
