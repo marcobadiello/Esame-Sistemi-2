@@ -64,7 +64,7 @@ def run_giornata():
     # mostro orario selezionato
     st.markdown(
     f"""
-    <h1 style='text-align: center; color: white;'>
+    <h1 style='text-align: center; color: #FF0000;'>
         {orari[orario_selezionato]}
     </h1>
     """,
@@ -74,7 +74,7 @@ def run_giornata():
     # mostro percentuale relativa all'orario selezionato
     st.markdown(
     f"""
-    <h1 style='text-align: center; color: white;'>
+    <h1 style='text-align: center; color: #FF0000;'>
         {round(perc['observations'][orario_selezionato],3)}%
     </h1>
     """,
