@@ -12,13 +12,29 @@ In questo file c'è il codice per descrivere gli ascolti durante la gironatata
 '''
 
 def run_giornata():
-    st.write("Giornata")
+    # metto il titolo e il logo di spotify
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        st.image("spotify_logo.png", width=100)
+    with col2:
+        st.title("Spotify Wrapped Statistico")
+    # scrivo il titolo
+    st.title("Percentuale di ascolto durante la giornata")
+    # scrivo una introduzione
+    stringa = '''
+    In questa pagina puoi vedere come varia l'ascolto della musica durante
+    l'arco della giornata, tutti i valori riportati sono in percentuale rispetto a tutta la musica ascoltata.
+    Per vedere i dati di un orario particolare utilizza lo slieder qui sotto.
+    '''
+    st.write(stringa)
+    # creo uno slider per selezionare l'orario
     orario_selezionato = st.slider(
-        label="Seleziona orario",
+        label="Seleziona un orario",
         min_value=0,
         max_value=23,
-        value=None
+        value=12
     )
+    # dizionario utile
     orari = {
     0: '00:00',
     1: '01:00',
@@ -45,6 +61,7 @@ def run_giornata():
     22: '22:00',
     23: '23:00'
 }
+    # mostro orario selezionato
     st.markdown(
     f"""
     <h1 style='text-align: center; color: white;'>
@@ -54,6 +71,7 @@ def run_giornata():
     unsafe_allow_html=True
     )
     perc = anal.media_oraria(df)
+    # mostro percentuale relativa all'orario selezionato
     st.markdown(
     f"""
     <h1 style='text-align: center; color: white;'>
@@ -62,7 +80,17 @@ def run_giornata():
     """,
     unsafe_allow_html=True
     )
-    
+    # mostro il grafico circolare
     Tools.grafico_giornata(df,orario_selezionato)
+    # mostro il grafico orizzonale
     Tools.grafico_giornata_orizzontale(df,orario_selezionato)
     
+
+    st.title("Percentuale di ascolto cumulata durante la giornata")
+    stringhetta = '''
+    In qeusto grafico puoi vedere la percentuale cumualta dell'ascolto di musica
+    durante la giornata per vedere se ci sono incrementi repentini che segnalano un forte aumento
+    di ascolti o momenti più piatti dove gli ascolti sono pochi.
+    '''
+    st.write(stringhetta)
+    Tools.grafico_giornata_orizzontale_cumulato(df,orario_selezionato)  

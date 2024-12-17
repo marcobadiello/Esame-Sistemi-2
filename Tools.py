@@ -301,7 +301,45 @@ def grafico_giornata_orizzontale(df, n: int):
         )
     ).encode(
         alt.X('hour:O', title='Ora del giorno'),  # Usa "hour" come variabile categorica
-        alt.Y('observations:Q', title='Osservazioni')  # Variabile numerica
+        alt.Y('observations:Q', title='Percentuale')  # Variabile numerica
+    )
+
+    # Linea verticale sottile rossa
+    line_chart = alt.Chart(pl.DataFrame({'hour': [n]})).mark_rule(
+        color='red',
+        strokeWidth=2  # Linea sottile
+    ).encode(
+        x=alt.X('hour:O')  # Usa la stessa scala dell'asse X
+    )
+
+    # Layer combinato
+    chart = area_chart + line_chart
+
+    # Visualizza il grafico con Streamlit
+    st.altair_chart(chart, use_container_width=True)
+
+def grafico_giornata_orizzontale_cumulato(df, n: int):
+    data = anal.media_oraria_cumulata(df)  # Non modifico i dati di partenza
+    
+    source = data
+
+    # Grafico principale ad area
+    area_chart = alt.Chart(source).mark_area(
+        line={'color': 'darkred'},
+        color=alt.Gradient(
+            gradient='linear',
+            stops=[
+                alt.GradientStop(color='white', offset=0),
+                alt.GradientStop(color='darkred', offset=1)
+            ],
+            x1=1,
+            x2=1,
+            y1=1,
+            y2=0
+        )
+    ).encode(
+        alt.X('hour:O', title='Ora del giorno'),  # Usa "hour" come variabile categorica
+        alt.Y('cum:Q', title='Percentuale')  # Variabile numerica
     )
 
     # Linea verticale sottile rossa

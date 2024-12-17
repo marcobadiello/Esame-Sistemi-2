@@ -284,6 +284,21 @@ def media_oraria(df):
     })
     return data
 
+def media_oraria_cumulata(df):
+    data = media_oraria(df)
+    
+    ora = range(0,24)
+    perc = []
+    somma = 0
+    for i in data['observations']:
+        somma = somma + i
+        perc.append(somma)
+    df = pl.DataFrame({
+    "hour": ora,
+    "cum": perc
+    })
+    return df
+
 
 '''
 COSE IMPORTANTI DA SAPERE

@@ -26,7 +26,8 @@ Gli obiettivi di questo progetto sono la presentazione dei miei dati personali d
     st.subheader("Il progetto")
     st.write('''
 Tutti dati del progetto e le analisi sono dipendenti dai dati, questo rende possibile applicare il progetto ai dati 
-di altre persone e di conseguenza cambierebbero anche tutte le analisi. 
+di altre persone e di conseguenza cambierebbero anche tutte le analisi. Il codice è scritto interamente in python
+con l'utilizzo di tre librerie principali: Polars, Altair e Streamlit
 ''')
 
     st.subheader("Il dataset")
