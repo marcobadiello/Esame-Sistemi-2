@@ -27,6 +27,7 @@ Per eseguire il progetto, segui questi passi:
    ```
 
 3. **Esegui il programma**:  
+Questo comando è necessario per avviare correttamente tutte le dipendenze
    ```bash
    uv run streamlit run app.py
    ```
