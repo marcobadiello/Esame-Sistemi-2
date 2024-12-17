@@ -1,3 +1,64 @@
-# Progetto esame Sistemi di elaborazione 2
+# Visualizzazione dei Dati di Spotify
 
-Questo progetto analizza le mie canzoni spotify
+## Introduzione  
+Questo progetto ha lo scopo di analizzare e visualizzare i dati relativi agliascolti di Spotify. Utilizza strumenti di analisi dati e visualizzazione per fornire insight sulle informazioni
+principali degli ascolti.
+
+---
+
+## Requisiti di Sistema  
+Prima di avviare il progetto, assicurati di avere:  
+- **Python 3.8+**  
+- **uv** per la gestione delle dipendenze  
+- Un account Spotify Developer per ottenere i dati (opzionale, se si usano API).  
+
+### Installazione delle dipendenze  
+Le dipendenze del progetto sono gestite con [uv](https://github.com/astral-sh/uv).  
+Se non hai **uv**, puoi installarlo con:  
+```bash
+pip install uv
+```
+
+Per installare tutte le dipendenze:  
+```bash
+uv pip install -r requirements.txt
+```
+
+---
+
+## Avvio del Progetto  
+Per eseguire il progetto, segui questi passi:  
+
+1. **Clona il repository**:  
+   ```bash
+   git clone https://github.com/tuo-utente/nome-progetto.git
+   cd nome-progetto
+   ```
+
+2. **Installa le dipendenze**:  
+   ```bash
+   uv pip install -r requirements.txt
+   ```
+
+3. **Esegui il programma**:  
+   ```bash
+   python main.py
+   ```
+
+4. **Accedi all'interfaccia**:  
+   Se il programma prevede un'interfaccia grafica o web, accedi tramite il link fornito (esempio: http://localhost:8501).  
+
+---
+
+## Struttura del Progetto  
+
+- **file1.py**: Descrizione del file 1.  
+- **file2.py**: Descrizione del file 2.  
+- **file3.py**: Descrizione del file 3.  
+
+---
+
+## Bibliografia  
+- [Documentazione Spotify API](https://developer.spotify.com/documentation/web-api/)  
+- [uv - gestione delle dipendenze](https://github.com/astral-sh/uv)  
+- Altre fonti...
