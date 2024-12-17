@@ -13,4 +13,11 @@ In questo file c'è il codice per descrivere gli ascolti durante la gironatata
 
 def run_giornata():
     st.write("Giornata")
-    Tools.grafico_giornata(df)
+    orario_selezionato = st.slider(
+        label="Seleziona orario",
+        min_value=0,
+        max_value=23,
+        value=None
+    )
+    Tools.grafico_giornata(df,orario_selezionato)
+    

@@ -212,15 +212,22 @@ def stmapa_torta_shuffle(df):
     st.altair_chart(chart, use_container_width=True)
 
 # questa funzione stampa il grafico della giornata copiata da "https://altair-viz.github.io/gallery/polar_bar_chart.html"
-def grafico_giornata(df):
+def grafico_giornata(df,barra_evidenziata: int):
       data = anal.media_oraria(df)
 
       source = data
+      print("***********")
+      print(source)
 
       polar_bars = alt.Chart(source).mark_arc(stroke='white', tooltip=True).encode(
       theta=alt.Theta("hour:O"),
       radius=alt.Radius('observations').scale(type='linear'),
       radius2=alt.datum(0),
+      color = alt.condition(
+            alt.datum.hour == barra_evidenziata,
+            alt.value("red"),
+            alt.value("steelblue")
+          )
       )
 
       # Create the circular axis lines for the number of observations
@@ -264,3 +271,4 @@ def grafico_giornata(df):
       )
 
       st.altair_chart(chart, use_container_width=True)
+
