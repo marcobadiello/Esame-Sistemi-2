@@ -129,13 +129,13 @@ This command is necessary to correctly launch all dependencies.
 The project’s key files are as follows:
 - **my_spotify_data/** : Contains the project data.  
 - **pages/**  
-  - **giornata.py**: Code for the "Daily Routine" page.  
+  - **giornata.py**: Code for the "Giornata tipo" page.  
   - **home.py**: Code for the "Home" page.  
   - **shuffle.py**: Code for the "Shuffle?" page.  
-  - **time_series_artisti.py**: Code for the "Artists Time Series" page.  
-  - **time_series.py**: Code for the "Time Series" page.  
-  - **Top_artisti.py**: Code for the "TOP Artists" page.  
-  - **Top_canzoni.py**: Code for the "TOP Songs" page.  
+  - **time_series_artisti.py**: Code for the "Serie storica artisti" page.  
+  - **time_series.py**: Code for the "Serie storica" page.  
+  - **Top_artisti.py**: Code for the "TOP Artisti" page.  
+  - **Top_canzoni.py**: Code for the "TOP Canzoni" page.  
 - **Analisi.py** : Code for dataframe analysis functions.  
 - **app.py** : Main code to launch the program (MAIN).  
 - **Estrattore.py** : Code to extract, clean, and convert data into a dataframe.  
