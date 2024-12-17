@@ -8,7 +8,7 @@ principali dei dati di ascolto.
 
 ## Requisiti di Sistema  
 Il progetto è stato realizzato in **Python 3.8+** e tutte
-le dipendenze sono state gestite con UV "https://github.com/astral-sh/uv"
+le dipendenze sono state gestite con **uv** "https://github.com/astral-sh/uv"
 
 
 ---
@@ -18,22 +18,18 @@ Per eseguire il progetto, segui questi passi:
 
 1. **Clona il repository**:  
    ```bash
-   git clone https://github.com/tuo-utente/nome-progetto.git
-   cd nome-progetto
+   git clone https://github.com/marcobadiello/Esame-Sistemi-2.git
    ```
 
-2. **Installa le dipendenze**:  
+2. **Spostati nella directory del progetto**:  
    ```bash
-   uv pip install -r requirements.txt
+   cd Esame-Sistemi-2
    ```
 
 3. **Esegui il programma**:  
    ```bash
-   python main.py
+   uv run streamlit run app.py
    ```
-
-4. **Accedi all'interfaccia**:  
-   Se il programma prevede un'interfaccia grafica o web, accedi tramite il link fornito (esempio: http://localhost:8501).  
 
 ---
 
