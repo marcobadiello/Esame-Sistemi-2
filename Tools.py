@@ -41,11 +41,12 @@ def banner_canzone_big(codice):
 def stampa_top_canzoni_n(df,n,periodo):
       
       # ottengo il dataframe con la top
+        numero_canzoni = anal.top_n_canzoni(df,n=None,periodo=periodo)['master_metadata_track_name'].n_unique() 
         data = anal.top_n_canzoni(df,n,periodo)
         total_sum = anal.top_n_canzoni(df,n=None,periodo=periodo)["s_played"].sum()
         
         # scrivo il tempo di ascolto
-        st.subheader("Hai ascoltato un totale di ")
+        st.subheader(f"Hai ascoltato {numero_canzoni} canzoni per un totale di ")
         st.subheader(convert_seconds(total_sum))
       # stampo le canzoni con una faccina per il podio
         for i in range(0,len(data)):
@@ -70,8 +71,10 @@ def stampa_top_canzoni_n(df,n,periodo):
 def stampa_top_artisti(df,n,periodo):
       
       # ottengo la top artitsti
+      numero_artisti = anal.top_n_artisti(df,n=None,periodo=periodo)['master_metadata_album_artist_name'].n_unique() 
       data = anal.top_n_artisti(df,n,periodo)
-
+      st.subheader(f"Hai ascoltato un totale di {numero_artisti} artisti ma i tuoi preferiti sono...")
+      st.markdown("---")
       # mostro a schermo glia rtisti con el faccine per il podio
       for i in range(0,len(data)):
                 numero = str(i+1)

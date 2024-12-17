@@ -307,6 +307,6 @@ COSE IMPORTANTI DA SAPERE
 
 
 
-print(media_oraria(df))
+
 #########################################
 
