@@ -1,4 +1,5 @@
 # Spotify wrapped Statistico
+-english version below-
 
 ## Introduzione  
 Questo progetto ha lo scopo di analizzare e visualizzare i dati relativi agliascolti di Spotify. Utilizza strumenti di analisi dati e visualizzazione per fornire insight sulle informazioni
@@ -83,3 +84,88 @@ Questo codice è stato scritto utilizzando queste fonti
 - Si ringrazia [Spotify](https://www.spotify.com/) che mi ha permesso di ottenre i dati tramite questa [pagina](https://www.spotify.com/it/account/privacy)
 - Si rigrazia chiunque abbia contrinuito in qualunque modo al progetto ed eventuali pull request o segnalazioni di issue
 - Si ringrazia il professore [Ceccarello Matteo](https://www.dei.unipd.it/~ceccarello/)
+
+---
+---
+---
+
+# Spotify Wrapped Statistical
+
+## Introduction  
+This project aims to analyze and visualize data related to Spotify listening habits. It uses data analysis and visualization tools to provide insights into the main information derived from listening data.
+
+---
+
+## System Requirements and Dependencies  
+The project was developed using **Python 3.12**, and all dependencies are managed with **uv** [https://github.com/astral-sh/uv](https://github.com/astral-sh/uv).
+
+You don’t have to worry about anything— a virtual environment will be created automatically if all the steps in the next chapter are followed correctly.
+
+---
+
+## Project Startup  
+To run the project, follow these steps:
+
+### 1. **Clone the repository**:  
+\`\`\`bash
+git clone https://github.com/marcobadiello/Esame-Sistemi-2.git
+\`\`\`
+
+### 2. **Move into the project directory**:  
+\`\`\`bash
+cd Esame-Sistemi-2
+\`\`\`
+
+### 3. **Run the program**:  
+\`\`\`bash
+uv run streamlit run app.py
+\`\`\`
+This command is necessary to correctly launch all dependencies.
+
+---
+
+## Project Structure  
+
+The project’s key files are as follows:
+- **my_spotify_data/** : Contains the project data.  
+- **pages/**  
+  - **giornata.py**: Code for the "Daily Routine" page.  
+  - **home.py**: Code for the "Home" page.  
+  - **shuffle.py**: Code for the "Shuffle?" page.  
+  - **time_series_artisti.py**: Code for the "Artists Time Series" page.  
+  - **time_series.py**: Code for the "Time Series" page.  
+  - **Top_artisti.py**: Code for the "TOP Artists" page.  
+  - **Top_canzoni.py**: Code for the "TOP Songs" page.  
+- **Analisi.py** : Code for dataframe analysis functions.  
+- **app.py** : Main code to launch the program (MAIN).  
+- **Estrattore.py** : Code to extract, clean, and convert data into a dataframe.  
+- **Tools.py** : Code for utility functions.  
+- **README.md** : Project documentation.  
+
+---
+
+## Libraries Used
+- [Polars](https://github.com/pola-rs/polars)  
+For dataframe management.  
+- [Streamlit](https://github.com/streamlit/streamlit)  
+For creating the web application.  
+- [Altair](https://github.com/vega/altair)  
+For generating the charts.  
+
+---
+
+## References  
+This code was written using the following sources:  
+- https://altair-viz.github.io/  
+- https://docs.streamlit.io/  
+- https://www.reddit.com/  
+- https://chatgpt.com/  
+- https://github.com/  
+- Friends and Colleagues  
+
+---
+
+## Acknowledgments  
+- Special thanks to [Spotify](https://www.spotify.com/) for enabling data retrieval through this [page](https://www.spotify.com/it/account/privacy).  
+- Thanks to anyone who contributed to the project in any way, and to those submitting pull requests or reporting issues.  
+- A special thank you to Professor [Matteo Ceccarello](https://www.dei.unipd.it/~ceccarello/).  
