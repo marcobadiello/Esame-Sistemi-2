@@ -36,9 +36,25 @@ Questo comando è necessario per avviare correttamente tutte le dipendenze
 
 ## Struttura del Progetto  
 
-- **file1.py**: Descrizione del file 1.  
-- **file2.py**: Descrizione del file 2.  
-- **file3.py**: Descrizione del file 3.  
+La struttura del progetto è organizzata come segue:
+
+```plaintext
+nome-progetto/
+│
+├── data/                       # Cartella contenente i dati
+│   ├── raw/                    # Dati grezzi
+│   └── processed/              # Dati elaborati
+│
+├── src/                        # Codice sorgente
+│   ├── main.py                 # Script principale per avviare il progetto
+│   ├── utils.py                # Funzioni di supporto
+│   └── visualizations/         # Moduli per la visualizzazione dei dati
+│       └── charts.py           # Generazione grafici
+│
+├── requirements.txt            # File delle dipendenze
+├── README.md                   # Documentazione del progetto
+└── .gitignore                  # File per ignorare i file nel repository Git
+```
 
 ---
 
