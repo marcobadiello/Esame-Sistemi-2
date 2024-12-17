@@ -89,7 +89,7 @@ Questo codice è stato scritto utilizzando queste fonti
 ---
 ---
 
-# Spotify Wrapped Statistical
+# English version : Spotify Wrapped Statistical
 
 ## Introduction  
 This project aims to analyze and visualize data related to Spotify listening habits. It uses data analysis and visualization tools to provide insights into the main information derived from listening data.
