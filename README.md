@@ -36,18 +36,21 @@ Questo comando è necessario per avviare correttamente tutte le dipendenze
 
 ## Struttura del Progetto  
 
-La struttura del progetto è organizzata come segue:
-- **data/**  
+I file di interesse del progetto sono i seguenti:
+- **my_spotify_data/**  
   - Contiene i dati del progetto.  
-- **src/**  
-  - **main.py**: Script principale per avviare il progetto.  
-  - **utils.py**: Funzioni di supporto.  
 - **pagine/**  
-  - **index.html**: Pagina principale del progetto.  
-  - **about.html**: Pagina delle informazioni.  
-  - **contact.html**: Pagina dei contatti.  
-- **requirements.txt**  
-  - File con le dipendenze del progetto.  
+  - **giornata.py**: Codice per la pagina "Giornata tipo".
+  - **home.py**: Codice per la pagina "Home".
+  - **shuffle.py**: Codice per la pagina "Shuffle?".  
+  - **time_series_artisti.py**: Codice per la pagina "Serie storica artisti".
+  - **time_series.py**: Codice per la pagina "Serie storica".
+  - **Top_artisti.py**: Codice per la pagina "TOP Artisti".
+  - **Top_canzoni.py**: Codice per la pagina "TOP Canzoni".
+- **Analisi.py** : Codice per funzioni di analisi del dataframe.
+- **app.py** : Codice principale per avviare il programma (MAIN)
+- **Estrattore.py** : Codice per estrarre i dati, ripulirli e convertirli in un dataframe
+- **Tools.py** : Codice per funzioni utili.
 - **README.md**  
   - Documentazione del progetto.  
 
