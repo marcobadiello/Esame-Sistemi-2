@@ -80,3 +80,6 @@ Questo codice è stato scritto utilizzando queste fonti
 ---
 
 ## Ringraziamenti
+- Si ringrazia [Spotify](https://www.spotify.com/) che mi ha permesso di ottenre i dati tramite questa [pagina](https://www.spotify.com/it/account/privacy)
+- Si rigrazia chiunque abbia contrinuito in qualunque modo al progetto ed eventuali pull request o segnalazioni di issue
+- Si ringrazia il professore [Ceccarello_Matteo](https://www.dei.unipd.it/~ceccarello/)
