@@ -197,13 +197,13 @@ def stmapa_torta_shuffle(df):
     data = anal.shuffle_data(df)
     
     source = pl.DataFrame({
-        "category": ["SHUFFLE ATTIVATO", "SHUFFLE DISATTIVATO"],
-        "value": [round(data[1], 3), round(data[2], 3)]
+        "Opzioni": ["SHUFFLE ATTIVATO", "SHUFFLE DISATTIVATO"],
+        "value": [round(data[3], 3), round(data[4], 3)]
     })
 
     chart = alt.Chart(source).mark_arc(innerRadius=50).encode(
         theta="value",
-        color=alt.Color("category:N").scale(
+        color=alt.Color("Opzioni:N").scale(
             domain=["SHUFFLE ATTIVATO", "SHUFFLE DISATTIVATO"],
             range=["#00FF00", "#FF0000"]  # Rosso per attivato, blu per disattivato
         )
@@ -216,8 +216,7 @@ def grafico_giornata(df,barra_evidenziata: int):
       data = anal.media_oraria(df)
 
       source = data
-      print("***********")
-      print(source)
+
 
       polar_bars = alt.Chart(source).mark_arc(stroke='white', tooltip=True).encode(
       theta=alt.Theta("hour:O"),
