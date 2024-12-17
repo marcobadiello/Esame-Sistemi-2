@@ -2,27 +2,14 @@
 
 ## Introduzione  
 Questo progetto ha lo scopo di analizzare e visualizzare i dati relativi agliascolti di Spotify. Utilizza strumenti di analisi dati e visualizzazione per fornire insight sulle informazioni
-principali degli ascolti.
+principali dei dati di ascolto.
 
 ---
 
 ## Requisiti di Sistema  
-Prima di avviare il progetto, assicurati di avere:  
-- **Python 3.8+**  
-- **uv** per la gestione delle dipendenze  
-- Un account Spotify Developer per ottenere i dati (opzionale, se si usano API).  
+Il progetto è stato realizzato in **Python 3.8+** e tutte
+le dipendenze sono state gestite con UV "https://github.com/astral-sh/uv"
 
-### Installazione delle dipendenze  
-Le dipendenze del progetto sono gestite con [uv](https://github.com/astral-sh/uv).  
-Se non hai **uv**, puoi installarlo con:  
-```bash
-pip install uv
-```
-
-Per installare tutte le dipendenze:  
-```bash
-uv pip install -r requirements.txt
-```
 
 ---
 
