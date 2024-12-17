@@ -54,7 +54,27 @@ I file di interesse del progetto sono i seguenti:
 
 ---
 
-## Bibliografia  
-- [Documentazione Spotify API](https://developer.spotify.com/documentation/web-api/)  
-- [uv - gestione delle dipendenze](https://github.com/astral-sh/uv)  
-- Altre fonti...
+## Librerie utilizzate
+- [Polars](https://github.com/pola-rs/polars)  
+Per la gestione dei dataframe
+- [Streamlit](https://github.com/streamlit/streamlit)  
+Per la creazione dell'applicazione web
+- [Altair](https://github.com/vega/altair)
+Per la realizzazione dei grafici
+
+---
+
+## Bibliografia
+Questo codice è stato scritto utilizzando queste fonti
+- https://altair-viz.github.io/
+- https://docs.streamlit.io/
+- https://www.reddit.com/
+- https://chatgpt.com/
+- https://www.reddit.com/
+- https://github.com/
+- Amici e Colleghi
+
+
+---
+
+## Ringraziamenti
