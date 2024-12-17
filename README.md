@@ -8,7 +8,7 @@ principali dei dati di ascolto.
 
 ## Requisiti di sistema e dipendenze
 Il progetto è stato realizzato in **Python 3.12** e tutte
-le dipendenze sono state gestite con **uv** "https://github.com/astral-sh/uv"
+le dipendenze sono state gestite con **uv** "https://github.com/astral-sh/uv"\n
 Non devi preoccuparti di nulla, un ambiente virtuale verra creato automaticamente se verranno eseguiti correttamente tutti i passaggi nel capitolo successivo.
 
 
