@@ -107,19 +107,19 @@ You don’t have to worry about anything— a virtual environment will be create
 To run the project, follow these steps:
 
 ### 1. **Clone the repository**:  
-\`\`\`bash
+```bash
 git clone https://github.com/marcobadiello/Esame-Sistemi-2.git
-\`\`\`
+```
 
 ### 2. **Move into the project directory**:  
-\`\`\`bash
+```bash
 cd Esame-Sistemi-2
-\`\`\`
+```
 
 ### 3. **Run the program**:  
-\`\`\`bash
+```bash
 uv run streamlit run app.py
-\`\`\`
+```
 This command is necessary to correctly launch all dependencies.
 
 ---
