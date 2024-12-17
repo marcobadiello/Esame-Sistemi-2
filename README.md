@@ -41,9 +41,7 @@ La struttura del progetto è organizzata come segue:
 ```plaintext
 nome-progetto/
 │
-├── data/                       # Cartella contenente i dati
-│   ├── raw/                    # Dati grezzi
-│   └── processed/              # Dati elaborati
+├── my_spotify_data/data/                       # Cartella contenente i dati
 │
 ├── src/                        # Codice sorgente
 │   ├── main.py                 # Script principale per avviare il progetto
