@@ -37,8 +37,7 @@ Questo comando è necessario per avviare correttamente tutte le dipendenze
 ## Struttura del Progetto  
 
 I file di interesse del progetto sono i seguenti:
-- **my_spotify_data/**  
-  - Contiene i dati del progetto.  
+- **my_spotify_data/** : Contiene i dati del progetto.  
 - **pagine/**  
   - **giornata.py**: Codice per la pagina "Giornata tipo".
   - **home.py**: Codice per la pagina "Home".
@@ -51,8 +50,7 @@ I file di interesse del progetto sono i seguenti:
 - **app.py** : Codice principale per avviare il programma (MAIN)
 - **Estrattore.py** : Codice per estrarre i dati, ripulirli e convertirli in un dataframe
 - **Tools.py** : Codice per funzioni utili.
-- **README.md**  
-  - Documentazione del progetto.  
+- **README.md** : Documentazione del progetto.  
 
 ---
 
