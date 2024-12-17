@@ -37,22 +37,19 @@ Questo comando è necessario per avviare correttamente tutte le dipendenze
 ## Struttura del Progetto  
 
 La struttura del progetto è organizzata come segue:
-
-```plaintext
-nome-progetto/
-│
-├── my_spotify_data/data/                       # Cartella contenente i dati
-│
-├── src/                        # Codice sorgente
-│   ├── main.py                 # Script principale per avviare il progetto
-│   ├── utils.py                # Funzioni di supporto
-│   └── visualizations/         # Moduli per la visualizzazione dei dati
-│       └── charts.py           # Generazione grafici
-│
-├── requirements.txt            # File delle dipendenze
-├── README.md                   # Documentazione del progetto
-└── .gitignore                  # File per ignorare i file nel repository Git
-```
+- **data/**  
+  - Contiene i dati del progetto.  
+- **src/**  
+  - **main.py**: Script principale per avviare il progetto.  
+  - **utils.py**: Funzioni di supporto.  
+- **pagine/**  
+  - **index.html**: Pagina principale del progetto.  
+  - **about.html**: Pagina delle informazioni.  
+  - **contact.html**: Pagina dei contatti.  
+- **requirements.txt**  
+  - File con le dipendenze del progetto.  
+- **README.md**  
+  - Documentazione del progetto.  
 
 ---
 
