@@ -1,4 +1,4 @@
-# Visualizzazione dei Dati di Spotify
+# Spotify wrapped Statistico
 
 ## Introduzione  
 Questo progetto ha lo scopo di analizzare e visualizzare i dati relativi agliascolti di Spotify. Utilizza strumenti di analisi dati e visualizzazione per fornire insight sulle informazioni
@@ -6,9 +6,10 @@ principali dei dati di ascolto.
 
 ---
 
-## Requisiti di Sistema  
-Il progetto è stato realizzato in **Python 3.8+** e tutte
+## Requisiti di sistema e dipendenze
+Il progetto è stato realizzato in **Python 3.12** e tutte
 le dipendenze sono state gestite con **uv** "https://github.com/astral-sh/uv"
+Non devi preoccuparti di nulla, un ambiente virtuale verra creato automaticamente se verranno eseguiti correttamente tutti i passaggi nel capitolo successivo.
 
 
 ---
