@@ -258,6 +258,14 @@ def grafico_giornata(df,barra_evidenziata: int):
             align=alt.expr('datum.hour == "18:00" ? "right" : datum.hour == "06:00" ? "left" : "center"'),
             baseline=alt.expr('datum.hour == "00:00" ? "bottom" : datum.hour == "12:00" ? "top" : "middle"'),
       ).encode(text="hour")
+      
+      lancetta = alt.Chart(pl.DataFrame({
+        'theta': [barra_evidenziata * (360 / 24)],  # Calcola l'angolo in base all'ora
+        'radius': [15],  # Lunghezza della lancetta
+        })).mark_line(color='green', strokeWidth=7).encode(
+        theta=alt.Theta("theta:Q", scale=alt.Scale(domain=[0, 360])),
+        radius=alt.Radius("radius:Q", scale=alt.Scale(domain=[0, 10]))
+        )
 
       chart = alt.layer(
       axis_rings,
@@ -265,6 +273,7 @@ def grafico_giornata(df,barra_evidenziata: int):
       axis_lines_labels,
       axis_lines,
       polar_bars,
+      lancetta
       ).properties(
     width=800,  # Aumenta larghezza
     height=800 # Aumenta altezza
@@ -272,3 +281,40 @@ def grafico_giornata(df,barra_evidenziata: int):
 
       st.altair_chart(chart, use_container_width=True)
 
+def grafico_giornata_orizzontale(df, n: int):
+    data = anal.media_oraria(df)  # Non modifico i dati di partenza
+    
+    source = data
+
+    # Grafico principale ad area
+    area_chart = alt.Chart(source).mark_area(
+        line={'color': 'darkgreen'},
+        color=alt.Gradient(
+            gradient='linear',
+            stops=[
+                alt.GradientStop(color='white', offset=0),
+                alt.GradientStop(color='darkgreen', offset=1)
+            ],
+            x1=1,
+            x2=1,
+            y1=1,
+            y2=0
+        )
+    ).encode(
+        alt.X('hour:O', title='Ora del giorno'),  # Usa "hour" come variabile categorica
+        alt.Y('observations:Q', title='Osservazioni')  # Variabile numerica
+    )
+
+    # Linea verticale sottile rossa
+    line_chart = alt.Chart(pl.DataFrame({'hour': [n]})).mark_rule(
+        color='red',
+        strokeWidth=2  # Linea sottile
+    ).encode(
+        x=alt.X('hour:O')  # Usa la stessa scala dell'asse X
+    )
+
+    # Layer combinato
+    chart = area_chart + line_chart
+
+    # Visualizza il grafico con Streamlit
+    st.altair_chart(chart, use_container_width=True)
