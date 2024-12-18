@@ -57,7 +57,6 @@ def stampa_top_canzoni_n(df,n,periodo):
                       numero = numero + "🥈"
                 elif numero == '3':
                       numero = numero + "🥉"
-                print(numero)
                 st.header(numero)
                 
                 # scrivo il tempo di ascolto pe rla signola canzone

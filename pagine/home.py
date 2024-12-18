@@ -51,9 +51,13 @@ Gli obiettivi di questo progetto sono la presentazione dei miei dati personali d
         
     st.subheader("Come è stato ottenuto il dataset")
     stringhetta = '''
-    Il dataset è stato ottenuto mandando una richiesta di dawnload di tutto lo storico delle mie stream a Spotify. I file ottenuti erano più file .json i queli sono stati letti tutti e
-    trasformati in un dataset polars attraverso opportune analisi. Dopodichè sono stati ripuliti da varibili non utili ai fini del progetto e sono stati rimossi tutti gli ascolti relativi ai podcast 
-    poichè in questo progetto si procede ad analizzare solo l'ascolto della musica. 
+    Il dataset è stato ottenuto mediante una richiesta di dawnload di tutto lo storico 
+    delle mie stream a Spotify. I file ottenuti a seguito della richiesta sono più file di tipo 
+    .json i queli sono stati letti, analizzati e 
+    trasformati in un dataset polars attraverso opportune analisi. Successivamente i dati sono
+    stati ripuliti da tutte le 
+    varibili non utili ai fini del progetto e dai dati relativi agli ascolti di podcast 
+    poichè in questo progetto si procede ad analizzare solo i dati sulla musica. 
     '''
     st.write(stringhetta)
     

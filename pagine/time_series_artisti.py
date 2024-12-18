@@ -94,7 +94,8 @@ def run_time_series_artisti():
             
         Tools.stampa_time_series_artisti(df, artisti, periodo)
         st.markdown("---")
-        stringa1 = '''Per capire a che mese e che anno corrsisponde un certo periodo potete aiutarvi con lo slider qui sotto'''
+        stringa1 = '''Per capire a che mese e che anno corrsisponde un certo periodo
+        puoi aiutarti con lo slider qui sotto'''
         st.write(stringa1)
         periodo_richiesto = st.slider(
             'Che periodo ti interessa?',
@@ -138,7 +139,8 @@ def run_time_series_artisti():
             if len(selezione_artisti) != 0:
                 Tools.stampa_time_series_artisti(df, selezione_artisti, periodo)
                 st.markdown("---")
-                stringa1 = '''Per capire a che mese e che anno corrsisponde un certo periodo potete aiutarvi con lo slider qui sotto'''
+                stringa1 = '''Per capire a che mese e che anno corrsisponde un certo 
+                periodo puoi aiutarti con lo slider qui sotto'''
                 st.write(stringa1)
                 periodo_richiesto = st.slider(
                     'Che periodo ti interessa?',

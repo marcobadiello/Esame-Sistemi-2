@@ -21,8 +21,8 @@ def run_shuffle():
         st.title("Spotify Wrapped Statistico")
     
     stringa = '''
-    In questo grafico possiamo vedere quanto viene utilizzato in percentuale la funzione 'Shuffle'
-    , ovvero la riproduzione casuale
+    In questa pagina puoi vedere un grafico che mostra quanto viene utilizzato 
+    in percentuale la funzione 'Shuffle', ovvero la riproduzione casuale
     '''
     st.write(stringa)
     Tools.stmapa_torta_shuffle(df)

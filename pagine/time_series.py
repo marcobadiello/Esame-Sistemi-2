@@ -33,7 +33,8 @@ def run_time_series():
         12: "Dicembre"
     }
     stringa = f'''
-    Il seguente grafcio riporta la serie storica degli ascolti suddivisa per mesi. Ogni perido corrisponde a un mese a perire da {mesi[serie["mese"][0]]} {serie["anno"][0]} fino a 
+    Il seguente grafcio riporta la serie storica degli ascolti suddivisa per mesi. 
+    Ogni perido corrisponde a un mese a partire da {mesi[serie["mese"][0]]} {serie["anno"][0]} fino a 
     {mesi[serie["mese"][-1]]} {serie["anno"][-1]}
     '''
     st.write(stringa)
@@ -42,7 +43,8 @@ def run_time_series():
 
     # aggiungo uno slider
     st.markdown("---")
-    stringa1 = '''Per capire a che mese e che anno corrsisponde un certo periodo potete aiutarvi con lo slider qui sotto'''
+    stringa1 = '''Per capire a che mese e che anno corrsisponde 
+    un certo periodo puoi aiutarti con lo slider qui sotto'''
     st.write(stringa1)
     periodo_richiesto = st.slider(
         'Che periodo ti interessa?',
@@ -59,7 +61,8 @@ def run_time_series():
     Tools.stampa_time_series_cumulata(df)
     # stampo lo slider
     st.markdown("---")
-    stringa1 = '''Per capire a che mese e che anno corrsisponde un certo periodo potete aiutarvi con lo slider qui sotto'''
+    stringa1 = '''Per capire a che mese e che anno corrsisponde un certo periodo
+    puoi aiutarti con lo slider qui sotto'''
     st.write(stringa1)
     
     periodo_richiesto = st.slider(
