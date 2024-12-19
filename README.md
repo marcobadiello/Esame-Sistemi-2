@@ -1,5 +1,6 @@
+[Italiano](#spotify-wrapped-statistico) / [English](#spotify-wrapped-statistical)
+
 # Spotify wrapped Statistico
--english version below-
 
 ## Introduzione  
 Questo progetto ha lo scopo di analizzare e visualizzare i dati relativi agliascolti di Spotify. Utilizza strumenti di analisi dati e visualizzazione per fornire insight sulle informazioni
@@ -97,7 +98,7 @@ Questo codice è stato scritto utilizzando queste fonti:
 ---
 ---
 
-# English version : Spotify Wrapped Statistical
+# Spotify Wrapped Statistical
 
 ## Introduction  
 This project aims to analyze and visualize data related to Spotify listening habits. It uses data analysis and visualization tools to provide insights into the main information derived from listening data.
