@@ -33,7 +33,7 @@ Per eseguire il progetto, segui questi passi:
    ```bash
    uv run streamlit run app.py
    ```
-Questo comando è necessario per avviare correttamente tutte le dipendenze
+Questo comando è necessario per avviare correttamente tutte le dipendenze.
 
 ---
 
@@ -50,25 +50,33 @@ I file di interesse del progetto sono i seguenti:
   - **Top_artisti.py**: Codice per la pagina "TOP Artisti".
   - **Top_canzoni.py**: Codice per la pagina "TOP Canzoni".
 - **Analisi.py** : Codice per funzioni di analisi del dataframe.
-- **app.py** : Codice principale per avviare il programma (MAIN)
-- **Estrattore.py** : Codice per estrarre i dati, ripulirli e convertirli in un dataframe
+- **app.py** : Codice principale per avviare il programma (MAIN).
+- **Estrattore.py** : Codice per estrarre i dati, ripulirli e convertirli in un dataframe.
 - **Tools.py** : Codice per funzioni utili.
 - **README.md** : Documentazione del progetto.  
 
 ---
 
+## Possibili implementazioni furure
+
+- **Possibilità di caricare i dati direttamente dall'app**
+- **Integrazione di modelli di machine learning per un sistema di raccomandazione**
+- **Possibilità di adattare il l'applicazione ai dati di Aplle Music**
+
+---
+
 ## Librerie utilizzate
 - [Polars](https://github.com/pola-rs/polars)  
-Per la gestione dei dataframe
+Per la gestione dei dataframe.
 - [Streamlit](https://github.com/streamlit/streamlit)  
-Per la creazione dell'applicazione web
+Per la creazione dell'applicazione web.
 - [Altair](https://github.com/vega/altair)
-Per la realizzazione dei grafici
+Per la realizzazione dei grafici.
 
 ---
 
 ## Bibliografia
-Questo codice è stato scritto utilizzando queste fonti
+Questo codice è stato scritto utilizzando queste fonti:
 - https://altair-viz.github.io/
 - https://docs.streamlit.io/
 - https://www.reddit.com/
@@ -81,9 +89,9 @@ Questo codice è stato scritto utilizzando queste fonti
 ---
 
 ## Ringraziamenti
-- Si ringrazia [Spotify](https://www.spotify.com/) che mi ha permesso di ottenre i dati tramite questa [pagina](https://www.spotify.com/it/account/privacy)
-- Si rigrazia chiunque abbia contrinuito in qualunque modo al progetto ed eventuali pull request o segnalazioni di issues
-- Si ringrazia il professore [Ceccarello Matteo](https://www.dei.unipd.it/~ceccarello/)
+- Si ringrazia [Spotify](https://www.spotify.com/) che mi ha permesso di ottenre i dati tramite questa [pagina](https://www.spotify.com/it/account/privacy).
+- Si rigrazia chiunque abbia contrinuito in qualunque modo al progetto ed eventuali pull request o segnalazioni di issues.
+- Si ringrazia il professore [Ceccarello Matteo](https://www.dei.unipd.it/~ceccarello/).
 
 ---
 ---
@@ -144,6 +152,13 @@ The project’s key files are as follows:
 
 ---
 
+## Possible Future Implementations
+- **Ability to upload data directly from the app**
+- **Integration of machine learning models for a recommendation system**
+- **Adaptation of the application to support Apple Music data**
+
+---
+
 ## Libraries Used
 - [Polars](https://github.com/pola-rs/polars)  
 For dataframe management.  
@@ -167,5 +182,5 @@ This code was written using the following sources:
 
 ## Acknowledgments  
 - Special thanks to [Spotify](https://www.spotify.com/) for enabling data retrieval through this [page](https://www.spotify.com/it/account/privacy).  
-- Thanks to anyone who contributed to the project in any way, and to those submitting pull requests or reporting issues.  
+- Thanks to anyone who contributed to the project in any way, and to those submitting pull requests or reporting issues.
 - A special thank you to Professor [Matteo Ceccarello](https://www.dei.unipd.it/~ceccarello/).  
