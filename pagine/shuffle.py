@@ -41,7 +41,7 @@ def run_shuffle():
         st.markdown(
     f"""
     <h1 style='text-align: center; color: #FF0000;'>
-        {round(data[4], 3)×100}%
+        {round(data[4], 3)*100}%
     </h1>
     """,
     unsafe_allow_html=True
