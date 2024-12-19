@@ -29,6 +29,24 @@ def data(report=False):
             with open(filepath, mode='r', encoding='utf-8') as file:
                 # Leggi il JSON in un DataFrame
                 df = pl.read_json(file, infer_schema_length=20000)
+                print(df)
+                            #il dataframe contiene molte informazioni non utili ai fini del progetto, 
+                # procedo a rimuovere quelle che non mi interessano
+                df = df.drop('platform')
+                df = df.drop('conn_country')
+                df = df.drop('ip_addr')
+                df = df.drop('offline')
+                df = df.drop('offline_timestamp')
+                df = df.drop('incognito_mode')
+
+                #rimuovo tutte le righe che riguardano i podcast
+                df = df.filter(pl.col('episode_name').is_null())
+
+                # ripulisco ulteriormente i podcast (forse questi codici non sono necessari) 
+                # non ricordo sicneramente meglio non toccare nulla
+                df = df.drop("episode_name")
+                df = df.drop("episode_show_name")
+                df = df.drop('spotify_episode_uri')
                 dfs.append(df)
 
     # Concatena tutti i DataFrame
@@ -37,23 +55,7 @@ def data(report=False):
     else:
         print("Nessun file JSON trovato nella directory.")
     
-    #il dataframe contiene molte informazioni non utili ai fini del progetto, 
-    # procedo a rimuovere quelle che non mi interessano
-    df = df.drop('platform')
-    df = df.drop('conn_country')
-    df = df.drop('ip_addr')
-    df = df.drop('offline')
-    df = df.drop('offline_timestamp')
-    df = df.drop('incognito_mode')
-
-    #rimuovo tutte le righe che riguardano i podcast
-    df = df.filter(pl.col('episode_name').is_null())
-
-    # ripulisco ulteriormente i podcast (forse questi codici non sono necessari) 
-    # non ricordo sicneramente meglio non toccare nulla
-    df = df.drop("episode_name")
-    df = df.drop("episode_show_name")
-    df = df.drop('spotify_episode_uri')
+    
 
     # estraggo i codice identificativi delle canzoni
     df = df.with_columns(
