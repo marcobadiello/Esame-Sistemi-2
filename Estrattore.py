@@ -1,5 +1,6 @@
 import json
 import polars as pl
+import os
 from datetime import datetime
 
 '''
@@ -12,18 +13,29 @@ Le informzioen sulle varaibili presenti nel dataframe sono visibili sul pdf
 
 #questa funzione trasforma i file li pulisce e restituisce un dataframe
 def data(report=False):
-    #converto il file json in una lisa python
-    with open('my_spotify_data/data/json0.json', mode='r', encoding='utf-8') as file:
-        df0 = pl.read_json(file,infer_schema_length=20000)
-    with open('my_spotify_data/data/json1.json', mode='r', encoding='utf-8') as file:
-        df1 = pl.read_json(file,infer_schema_length=20000)
-    with open('my_spotify_data/data/json2.json', mode='r', encoding='utf-8') as file:
-        df2 = pl.read_json(file,infer_schema_length=20000)
-    with open('my_spotify_data/data/json3.json', mode='r', encoding='utf-8') as file:
-        df3 = pl.read_json(file,infer_schema_length=20000)
-    with open('my_spotify_data/data/json4.json', mode='r', encoding='utf-8') as file:
-        df4 = pl.read_json(file,infer_schema_length=20000)
-    df = pl.concat([df0, df1, df2, df3, df4], how="vertical")
+        # Percorso alla directory con i file
+    directory = 'my_spotify_data/Spotify Extended Streaming History'
+
+    # Lista per memorizzare i DataFrame
+    dfs = []
+
+    # Itera attraverso i file nella directory
+    for filename in os.listdir(directory):
+        # Percorso completo del file
+        filepath = os.path.join(directory, filename)
+        
+        # Controlla che sia un file JSON
+        if filename.endswith('.json'):
+            with open(filepath, mode='r', encoding='utf-8') as file:
+                # Leggi il JSON in un DataFrame
+                df = pl.read_json(file, infer_schema_length=20000)
+                dfs.append(df)
+
+    # Concatena tutti i DataFrame
+    if dfs:  # Assicurati che ci siano file JSON prima di concatenare
+        df = pl.concat(dfs, how="vertical")
+    else:
+        print("Nessun file JSON trovato nella directory.")
     
     #il dataframe contiene molte informazioni non utili ai fini del progetto, 
     # procedo a rimuovere quelle che non mi interessano
@@ -64,7 +76,7 @@ def data(report=False):
 # creo il dataframe
 df = data()
 
-
+print(df)
 ''''
 COSE IMPORTANTI DA SAPERE
 
