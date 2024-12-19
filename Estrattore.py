@@ -29,7 +29,6 @@ def data(report=False):
             with open(filepath, mode='r', encoding='utf-8') as file:
                 # Leggi il JSON in un DataFrame
                 df = pl.read_json(file, infer_schema_length=20000)
-                print(df)
                             #il dataframe contiene molte informazioni non utili ai fini del progetto, 
                 # procedo a rimuovere quelle che non mi interessano
                 df = df.drop('platform')
@@ -78,7 +77,6 @@ def data(report=False):
 # creo il dataframe
 df = data()
 
-print(df)
 ''''
 COSE IMPORTANTI DA SAPERE
 
