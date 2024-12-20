@@ -125,31 +125,37 @@ def dataframe_periodi(df):
 # questa funzioen ha il compito di correggere la time series restituita dalla prima funzione di queste 
 # tre funzioni che NON VANNO TOCCATE 
 def time_series(df):
-    # creo i dataframe della time series e dei peridoo di ascolo
+    # creo i dataframe della time series e dei periodi di ascolto
     p = dataframe_periodi(df)
     d = time_series_scorretto(df)
 
-
     # creo le liste dei periodi
-    lista_p = [f"{p["anno"][i]}-{p["mese"][i]}" for i in range(len(p))]
-    lista_d = [f"{d["year"][i]}-{d["month"][i]}" for i in range(len(d))]
+    lista_p = [f"{p['anno'][i]}-{p['mese'][i]}" for i in range(len(p))]
+    lista_d = [f"{d['year'][i]}-{d['month'][i]}" for i in range(len(d))]
 
-    # creo la lissta delle ore riprodotte
+    # creo la lista delle ore riprodotte
     vere_ore = []
-    # converto la colonna in una liste perchè il progetto è mio e mi trovo meglio
-    thp = d["total_hours_played"].to_list() 
+    thp = d["total_hours_played"].to_list()  # converto la colonna in una lista
 
     for periodo in lista_p:
         if periodo in lista_d:
-            # mi asicuro che il valore sia floating point
-            vere_ore.append(float(thp[lista_d.index(periodo)]))  
+            vere_ore.append(float(thp[lista_d.index(periodo)]))  # assicuro che il valore sia float
         else:
-            # se il periodo non è nella lista vuol dire che non ci sono ascolti in quel perido
-            vere_ore.append(0.0) 
+            vere_ore.append(0.0)  # se il periodo non è nella lista, aggiungo 0.0
 
     # aggiungi la colonna 'ore_riprodotte' con i valori corrispondenti a ogni riga
     df_finale = p.with_columns(
         pl.Series(name="ore_riprodotte", values=vere_ore)
+    )
+
+    # crea la colonna 'data' combinando 'anno' e 'mese'
+    df_finale = df_finale.with_columns(
+        (pl.col("anno").cast(pl.Utf8) + "-" + pl.col("mese").cast(pl.Utf8).str.zfill(2)).alias("data")
+    )
+
+    # crea una nuova colonna 'anno' estraendo solo l'anno dalla colonna 'data'
+    df_finale = df_finale.with_columns(
+        pl.col("data").str.slice(0, 4).alias("anno")
     )
 
     return df_finale
