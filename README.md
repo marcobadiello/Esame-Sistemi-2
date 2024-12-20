@@ -63,6 +63,7 @@ I file di interesse del progetto sono i seguenti:
 - **Possibilità di caricare i dati direttamente dall'app**
 - **Integrazione di modelli di machine learning per un sistema di raccomandazione**
 - **Possibilità di adattare il l'applicazione ai dati di Aplle Music**
+- **Possibilità di implementare l'utilizzo delle [API Spotify](https://developer.spotify.com/documentation/web-api)**
 
 ---
 
@@ -157,6 +158,7 @@ The project’s key files are as follows:
 - **Ability to upload data directly from the app**
 - **Integration of machine learning models for a recommendation system**
 - **Adaptation of the application to support Apple Music data**
+- **Ability to implement the use of Spotify's [APIs](https://developer.spotify.com/documentation/web-api)**
 
 ---
 
