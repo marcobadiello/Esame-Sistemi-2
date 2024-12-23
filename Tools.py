@@ -50,6 +50,7 @@ def stampa_top_canzoni_n(df,n,periodo):
         st.subheader(convert_seconds(total_sum))
       # stampo le canzoni con una faccina per il podio
         for i in range(0,len(data)):
+                st.markdown("---")
                 numero = str(i+1)
                 if numero == '1':
                       numero = numero + "🥇"
