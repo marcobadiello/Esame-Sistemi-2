@@ -93,19 +93,7 @@ def run_time_series_artisti():
             artisti.append(i)
             
         Tools.stampa_time_series_artisti(df, artisti, periodo)
-        st.markdown("---")
-        stringa1 = '''Per capire a che mese e che anno corrsisponde un certo periodo
-        puoi aiutarti con lo slider qui sotto'''
-        st.write(stringa1)
-        periodo_richiesto = st.slider(
-            'Che periodo ti interessa?',
-            min_value=1,
-            max_value=serie["periodo"][-1],
-            value=1,
-            key = "slider_2"
-        )
-        st.subheader(f"{mesi[serie["mese"][periodo_richiesto-1]]} {serie["anno"][periodo_richiesto-1]}")
-        st.markdown("---")
+        
     
     # scrivo una funzinoe nel caso in cui la casella NON sia selezionata
     def ceck():
@@ -138,19 +126,7 @@ def run_time_series_artisti():
 
             if len(selezione_artisti) != 0:
                 Tools.stampa_time_series_artisti(df, selezione_artisti, periodo)
-                st.markdown("---")
-                stringa1 = '''Per capire a che mese e che anno corrsisponde un certo 
-                periodo puoi aiutarti con lo slider qui sotto'''
-                st.write(stringa1)
-                periodo_richiesto = st.slider(
-                    'Che periodo ti interessa?',
-                    min_value=1,
-                    max_value=serie["periodo"][-1],
-                    value=1,
-                    key = "slider_3"
-                )
-                st.subheader(f"{mesi[serie["mese"][periodo_richiesto-1]]} {serie["anno"][periodo_richiesto-1]}")
-                st.markdown("---")
+                
 
     st.write("Se vuoi scegliere manualmente gli artisti spunta la casella sottostante")
     if st.checkbox("Ciao io sono la casella"):

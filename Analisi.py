@@ -125,32 +125,45 @@ def dataframe_periodi(df):
 # questa funzioen ha il compito di correggere la time series restituita dalla prima funzione di queste 
 # tre funzioni che NON VANNO TOCCATE 
 def time_series(df):
-    # creo i dataframe della time series e dei peridoo di ascolo
+    # creo i dataframe della time series e dei periodi di ascolto
     p = dataframe_periodi(df)
     d = time_series_scorretto(df)
 
-
     # creo le liste dei periodi
-    lista_p = [f"{p["anno"][i]}-{p["mese"][i]}" for i in range(len(p))]
-    lista_d = [f"{d["year"][i]}-{d["month"][i]}" for i in range(len(d))]
+    lista_p = [f"{p['anno'][i]}-{p['mese'][i]}" for i in range(len(p))]
+    lista_d = [f"{d['year'][i]}-{d['month'][i]}" for i in range(len(d))]
 
-    # creo la lissta delle ore riprodotte
+    # creo la lista delle ore riprodotte
     vere_ore = []
-    # converto la colonna in una liste perchè il progetto è mio e mi trovo meglio
-    thp = d["total_hours_played"].to_list() 
+    thp = d["total_hours_played"].to_list()  # converto la colonna in una lista
 
     for periodo in lista_p:
         if periodo in lista_d:
-            # mi asicuro che il valore sia floating point
-            vere_ore.append(float(thp[lista_d.index(periodo)]))  
+            vere_ore.append(float(thp[lista_d.index(periodo)]))  # assicuro che il valore sia float
         else:
-            # se il periodo non è nella lista vuol dire che non ci sono ascolti in quel perido
-            vere_ore.append(0.0) 
+            vere_ore.append(0.0)  # se il periodo non è nella lista, aggiungo 0.0
 
     # aggiungi la colonna 'ore_riprodotte' con i valori corrispondenti a ogni riga
     df_finale = p.with_columns(
         pl.Series(name="ore_riprodotte", values=vere_ore)
     )
+
+    # crea la colonna 'data' combinando 'anno' e 'mese'
+    df_finale = df_finale.with_columns(
+        (pl.col("anno").cast(pl.Utf8) + "-" + pl.col("mese").cast(pl.Utf8).str.zfill(2)).alias("data")
+    )
+
+    # crea una nuova colonna 'anno' estraendo solo l'anno dalla colonna 'data'
+    df_finale = df_finale.with_columns(
+        pl.col("data").str.slice(0, 4).alias("anno")
+    )
+
+    df_finale = df_finale.with_columns(
+        df_finale["anno"].cast(pl.Int64)
+    )
+
+
+
 
     return df_finale
 #################################################################################################################
@@ -179,12 +192,16 @@ def time_series_artista_scorretta(df, artista, periodo=None):
     
     # raggruppo per anno e mese e sommo i secondi di ascolto
     # per poi convertirli in ore e restituirli
-    return (
+    df_finale = (
         df.group_by(["year", "month"])  # Raggruppa per anno e mese
           .agg((pl.col("s_played").sum() / 3600).alias("total_hours_played"))  # Converti i secondi in ore
           .sort(["year", "month"])  # Ordina per anno e mese
     )
     
+
+    print(df_finale)
+
+    return df_finale
 # questa funzine ha il compito di correggere la funzione precedente come nel caso di prima 
 # viene sfrittata la funzione dataframe_periodi(df) per avere un dataframe completo dei periodi
 def time_series_artista(df,artista,periodo=None):
@@ -219,22 +236,21 @@ def time_series_artista(df,artista,periodo=None):
 # quezt funzione mi restituisce un dataframe con la time series cumulata
 # ovvero ad ogni periodo viene indicato il numero di ore riprodotto dall'inizio fino a quel periodo
 def time_series_cumulata(df):
-    
-    # mi prendoo la time series classica
+    # Mi prendo la time series classica
     data = time_series(df)
     
-    # aggiungo la colonna con le ore cumulate
+    # Aggiungo la colonna con le ore cumulate
     data_cum = data.with_columns(
-    (pl.col("ore_riprodotte").cum_sum()).alias("ore_riprodotte_cumulate")
+        (pl.col("ore_riprodotte").cum_sum()).alias("ore_riprodotte_cumulate")
     )
-    
-    # cancello tutte le colonne che non mi servono in modo che mi resti solamente la
-    # colonna "peridoo" e "ore_riprodotte_cumulate"
-    data_cum = data_cum.drop("anno")
-    data_cum = data_cum.drop("mese")
-    data_cum = data_cum.drop("ore_riprodotte")
+
+    # Cancello tutte le colonne che non mi servono in modo che mi resti solamente
+    # la colonna "periodo", "ore_riprodotte_cumulate" e "anno_int"
+    data_cum = data_cum.drop(["ore_riprodotte"])
+
     
     return data_cum
+
 
 # questa funzione mi restituisce una tubla con tutte le informazioni in merito
 # all'utilizzo della funzione 'shuffle'

@@ -41,39 +41,13 @@ def run_time_series():
     # mostro a schermo la time series
     Tools.stampa_time_series(df)
 
-    # aggiungo uno slider
-    st.markdown("---")
-    stringa1 = '''Per capire a che mese e che anno corrsisponde 
-    un certo periodo puoi aiutarti con lo slider qui sotto'''
-    st.write(stringa1)
-    periodo_richiesto = st.slider(
-        'Che periodo ti interessa?',
-        min_value=1,
-        max_value=serie["periodo"][-1],
-        value=1,
-        key = "slider_1"
-    )
-    st.subheader(f"{mesi[serie["mese"][periodo_richiesto-1]]} {serie["anno"][periodo_richiesto-1]}")
-    st.markdown("---")
+    
     st.title("Serie storica cumulata")
     st.write("Il seguente grafcio mostra la serie storica cumulata degli ascolti, ad ongni periodo")
     # stampo la serie storica cumulata
     Tools.stampa_time_series_cumulata(df)
     # stampo lo slider
-    st.markdown("---")
-    stringa1 = '''Per capire a che mese e che anno corrsisponde un certo periodo
-    puoi aiutarti con lo slider qui sotto'''
-    st.write(stringa1)
     
-    periodo_richiesto = st.slider(
-        'Che periodo ti interessa?',
-        min_value=1,
-        max_value=serie["periodo"][-1],
-        value=1,
-        key = "slider_3456"
-    )
-    st.subheader(f"{mesi[serie["mese"][periodo_richiesto-1]]} {serie["anno"][periodo_richiesto-1]}")
-    st.markdown("---")
     
 '''
 COSE DA SAPERE
