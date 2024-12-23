@@ -78,6 +78,7 @@ def data(report=False):
 
 # creo il dataframe
 df = data()
+print(df['spotify_track_uri'])
 
 ''''
 COSE IMPORTANTI DA SAPERE
