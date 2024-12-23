@@ -108,10 +108,6 @@ def convert_seconds(seconds):
 def stampa_time_series(df):
     # ottengo la time series
     dataframe = anal.time_series(df)
-    print(dataframe)
-
-    # Crea una lista degli anni unici (in base alla colonna 'anno') per tracciare le linee verticali
-    anni_unici = dataframe['anno'].to_list()
 
     # Crea il grafico
     chart = (
@@ -119,30 +115,17 @@ def stampa_time_series(df):
         .encode(
             # sull'asse x metto il periodo ovvero ogni anno-mese
             x=alt.X('data:T', title='Periodo', 
-                    axis=alt.Axis(labelAngle=90)),  # etichette verticali
+                    axis=alt.Axis(labelAngle=-90)),  # etichette verticali
             # sull'asse y il tempo di ascolto in ore
             y=alt.Y('ore_riprodotte', title='Ore riprodotte'),
             # personalizza il tooltip per mostrare solo il mese e l'anno
-            tooltip=[alt.Tooltip("anno:T",title='Anno'),
+            tooltip=[alt.Tooltip("anno",title='Anno'),
                      alt.Tooltip('mese:N', title='Mese'),
                      alt.Tooltip('ore_riprodotte', title='Ore riprodotte')]
         )
     )
     
-    # Aggiungi linee verticali per ogni inizio anno
-    lines = (
-        alt.Chart(dataframe)
-        .mark_rule(color="red")  # Aggiungi la linea verticale (di colore rosso, ad esempio)
-        .encode(
-            x='anno:T',  # linea verticale all'inizio di ogni anno
-        )
-        .transform_filter(
-            alt.FieldOneOfPredicate(field="anno", oneOf=anni_unici)  # Filtra per ogni anno
-        )
-    )
 
-    # Unisco il grafico principale con le linee verticali
-    chart = lines + chart
     
     # stampo a schermo il grafico
     st.altair_chart(chart, use_container_width=True)
@@ -155,14 +138,19 @@ def stampa_time_series_cumulata(df):
       
       # creo il grafico
       chart = (
-            alt.Chart(dataframe).mark_line(point = True)
-            .encode(
-                  # sull'asse x il periodo che sarebbe il mese
-                  x = alt.X("periodo",title="Periodo"),
-                  # sull'asse y le ore di ascolto cumulate
-                  y = alt.Y("ore_riprodotte_cumulate",title="Ore cumulate")
-            )
-      )
+        alt.Chart(dataframe).mark_line(point=True)
+        .encode(
+            # sull'asse x metto il periodo ovvero ogni anno-mese
+            x=alt.X('data:T', title='Periodo', 
+                    axis=alt.Axis(labelAngle=-90)),  # etichette verticali
+            # sull'asse y il tempo di ascolto in ore
+            y=alt.Y('ore_riprodotte_cumulate', title='Ore riprodotte'),
+            # personalizza il tooltip per mostrare solo il mese e l'anno
+            tooltip=[alt.Tooltip("anno",title='Anno'),
+                     alt.Tooltip('mese:N', title='Mese'),
+                     alt.Tooltip('ore_riprodotte_cumulate', title='Ore riprodotte')]
+        )
+    )
       
       # stampo il graficgrafico a schermo
       st.altair_chart(chart, use_container_width=True)
@@ -188,6 +176,10 @@ def stampa_time_series_artisti(df, artisti: list, periodo):
 
     # unisco tutti i dataframe in uno solo (concatenando verticalmente)
     df_completo = pl.concat(dataframes)
+    df_completo = df_completo.with_columns(
+        (pl.col("anno").cast(pl.Utf8) + "-" + pl.col("mese").cast(pl.Utf8).str.zfill(2)).alias("data")
+    )
+    
 
     # creo una palette di colori più contrastati tanto permetto al massimo 10 confronti
     colori_contrasti = [
@@ -198,13 +190,22 @@ def stampa_time_series_artisti(df, artisti: list, periodo):
     # creo il grafico
     # non ho idea del perchè questo codice funzioni
     # NON TOCCARE NULLA
+    print(df_completo)
+    
+
+
     chart = (
           # Converte il dataframe in pandas per Altair
         alt.Chart(df_completo.to_pandas())  
         .mark_line(point=True)
         .encode(
-            x=alt.X('periodo', title="Periodo"),  
+            x=alt.X('data:T', title="Periodo",axis=alt.Axis(labelAngle=-90)),  
             y=alt.Y('ore_riprodotte:Q', title="Ore riprodotte"),
+            tooltip=[alt.Tooltip("anno:N",title='Anno'),
+                     alt.Tooltip('mese:N', title='Mese'),
+                     alt.Tooltip('ore_riprodotte', title='Ore riprodotte')],
+            
+
             color=alt.Color('artista:N', 
                             scale=alt.Scale(domain=artisti, range=colori_contrasti),
                             legend=alt.Legend(title="Artista"))
