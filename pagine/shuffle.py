@@ -24,14 +24,17 @@ def run_shuffle():
     In questa pagina puoi vedere un grafico che mostra quanto viene utilizzato 
     in percentuale la funzione 'Shuffle', ovvero la riproduzione casuale
     '''
+    colori = ("#00FF00", "#FF0000")
+    if st.checkbox("Sono daltonico"):
+        colori = ("#0055FF"," #FFDD00")
     st.write(stringa)
-    Tools.stmapa_torta_shuffle(df)
+    Tools.stmapa_torta_shuffle(df,colori=colori)
     data = anal.shuffle_data(df)
     col1, col2 = st.columns([2,2])
     with col1:
         st.markdown(
     f"""
-    <h1 style='text-align: center; color: #00FF00;'>
+    <h1 style='text-align: center; color: {colori[0]};'>
         {round((round(data[3],3)*100),3)}%
     </h1>
     """,
@@ -40,7 +43,7 @@ def run_shuffle():
     with col2:
         st.markdown(
     f"""
-    <h1 style='text-align: center; color: #FF0000;'>
+    <h1 style='text-align: center; color: {colori[1]};'>
         {round((round(data[4],3)*100),3)}%
     </h1>
     """,
