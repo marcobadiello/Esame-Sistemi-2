@@ -1,6 +1,9 @@
 from Estrattore import df
 import polars as pl
 from datetime import datetime
+import spotipy
+from spotipy.oauth2 import SpotifyOAuth
+
 
 import icecream as ic
 
@@ -8,7 +11,9 @@ import icecream as ic
 In questo file vengono definite tutte le funzioni che hanno come
 scopo un analisi dei dati pecifica e restituiscono i dati richiesti
 '''
-
+client_id = '0c495503d007492cb9ab221bc097e13c'
+client_secret = 'd03ba7bbe9f749d0b47bea40a0f11882'
+redirect_uri = 'http://localhost:8888/callback'
 # definisco una funzione per restituire la top delle canzoni di una determianto peridoo
 def top_n_canzoni(df,n=None,periodo=None):
     
@@ -300,7 +305,43 @@ def media_oraria_cumulata(df):
     })
     return df
 
+def ascolto_generi(df,client_id=client_id,client_secret=client_secret,redirect_uri=redirect_uri):
+    diz = {}
+    new_col = []
 
+    # Autenticazione con Spotify usando il OAuth Flow
+    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
+                                                client_secret=client_secret,
+                                                redirect_uri=redirect_uri,
+                                                scope="user-library-read"))
+    dataframe = df.select(['master_metadata_album_artist_name','spotify_track_uri','ts'])
+    print(dataframe)
+    for row in dataframe.iter_rows():
+        nome_artista = row[0]
+        code = row[1]
+        if nome_artista not in diz:
+            search_result = sp.search(q=nome_artista, type='artist', limit=1)
+            if search_result['artists']['items']:
+                # Ottieni le informazioni dell'artista
+                artist_info = search_result['artists']['items'][0]
+                genres = artist_info.get('genres', [])
+            else:
+                genres = None
+            diz[nome_artista] = genres
+            print(nome_artista,'---',genres)
+            new_col.append(genres)
+        else:
+            new_col.append(diz[nome_artista])
+    dataframe = dataframe.with_columns(
+        pl.Series(name="generi", values=new_col)
+    )
+    print(dataframe)
+
+from datetime import datetime
+start = datetime.now()
+ascolto_generi(df)
+stop = datetime.now()
+print("Tempo -> ",stop-start)
 '''
 COSE IMPORTANTI DA SAPERE
 - Ogni periodo corrisponde ad un mese quindi ogni 12 periodi corrisponde un anno

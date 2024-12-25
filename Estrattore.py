@@ -12,11 +12,11 @@ Le informzioen sulle varaibili presenti nel dataframe sono visibili sul pdf
 '''
 
 #questa funzione trasforma i file li pulisce e restituisce un dataframe
-def data(report=False):
+def data():
         # Percorso alla directory con i file
-    # directory = 'my_spotify_data/Spotify Extended Streaming History'
+    directory = 'my_spotify_data/Spotify Extended Streaming History'
     # directory = 'my_spotify_data_ele/Spotify Extended Streaming History'
-    directory = 'my_spotify_data_milan/Spotify Extended Streaming History'
+    # directory = 'my_spotify_data_milan/Spotify Extended Streaming History'
 
     # Lista per memorizzare i DataFrame
     dfs = []
@@ -76,9 +76,11 @@ def data(report=False):
 
     return df
 
+
+
 # creo il dataframe
 df = data()
-print(df['spotify_track_uri'])
+# print(df['spotify_track_uri'])
 
 ''''
 COSE IMPORTANTI DA SAPERE
