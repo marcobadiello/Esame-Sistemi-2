@@ -3,6 +3,8 @@ import polars as pl
 from datetime import datetime
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+from datetime import datetime
+import json
 
 
 import icecream as ic
@@ -306,6 +308,7 @@ def media_oraria_cumulata(df):
     return df
 
 def ascolto_generi(df,client_id=client_id,client_secret=client_secret,redirect_uri=redirect_uri):
+    startint = datetime.now()
     diz = {}
     new_col = []
 
@@ -314,7 +317,8 @@ def ascolto_generi(df,client_id=client_id,client_secret=client_secret,redirect_u
                                                 client_secret=client_secret,
                                                 redirect_uri=redirect_uri,
                                                 scope="user-library-read"))
-    dataframe = df.select(['master_metadata_album_artist_name','spotify_track_uri','ts'])
+    print(df)
+    dataframe = df.select(['master_metadata_album_artist_name','spotify_track_uri','s_played'])
     print(dataframe)
     for row in dataframe.iter_rows():
         nome_artista = row[0]
@@ -336,12 +340,37 @@ def ascolto_generi(df,client_id=client_id,client_secret=client_secret,redirect_u
         pl.Series(name="generi", values=new_col)
     )
     print(dataframe)
+    dataframe.write_json("dataframe_con_generi.json")
 
-from datetime import datetime
+    
+    
+    stopint = datetime.now()
+    print("Tempo ricavo generi -> ",stopint-startint)
+
+    conclusioni = {}
+    for row in dataframe:
+        generi = row[3]
+        tempo = row[2]
+        if generi:
+            for i in generi:
+                if i not in conclusioni:
+                    conclusioni[i] = 0.0
+                conclusioni[i] = conclusioni[i] + tempo
+    nome_file = "generi.json"
+
+    # Salvare il dizionario come JSON nel file
+    with open(nome_file, "w", encoding="utf-8") as file:
+        json.dump(conclusioni, file, ensure_ascii=False, indent=4)
+
+    print(f"Dizionario salvato come JSON nel file '{nome_file}'.")
+
+
+
+
 start = datetime.now()
 ascolto_generi(df)
 stop = datetime.now()
-print("Tempo -> ",stop-start)
+print("Tempo totale -> ",stop-start)
 '''
 COSE IMPORTANTI DA SAPERE
 - Ogni periodo corrisponde ad un mese quindi ogni 12 periodi corrisponde un anno
