@@ -364,13 +364,39 @@ def ascolto_generi(df,client_id=client_id,client_secret=client_secret,redirect_u
 
     print(f"Dizionario salvato come JSON nel file '{nome_file}'.")
 
+def aaa():
+        # Specifica il percorso del file JSON
+    file_path = "dataframe_con_generi.json"
 
+    # Legge il file JSON
+    with open(file_path, "r",encoding="utf-8") as f:
+        data = json.load(f)
+
+    mappa = {}
+
+
+    for elemento in data:
+        generi = elemento['generi']
+        tempo = elemento['s_played']
+        for i in generi:
+            if i not in mappa:
+                mappa[i] = tempo
+            else:
+                mappa[i] += tempo
+    mappa = dict(sorted(mappa.items(), key=lambda item: item[1], reverse=False))
+    for i in mappa:
+        print(f"{i} -> {mappa[i]}")
+
+
+
+    
 
 
 start = datetime.now()
-ascolto_generi(df)
+# ascolto_generi(df)
 stop = datetime.now()
 print("Tempo totale -> ",stop-start)
+aaa()
 '''
 COSE IMPORTANTI DA SAPERE
 - Ogni periodo corrisponde ad un mese quindi ogni 12 periodi corrisponde un anno
