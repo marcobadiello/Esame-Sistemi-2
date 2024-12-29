@@ -12,6 +12,7 @@ from pagine.time_series import run_time_series
 from pagine.time_series_artisti import run_time_series_artisti
 from pagine.shuffle import run_shuffle
 from pagine.giornata import run_giornata
+from pagine.generi import run_generi
 
 
 
@@ -27,7 +28,8 @@ pagine = {
     "Analisi": [st.Page(run_time_series, title="Serie storica", icon="")],
     "\n":[st.Page(run_time_series_artisti,title="Serie storica artisti")],
     "\n\n":[st.Page(run_shuffle,title="Shuffle?")],
-    "\n\n\n":[st.Page(run_giornata,title="Giornata tipo")]
+    "\n\n\n":[st.Page(run_giornata,title="Giornata tipo")],
+    "\n\n\n\n":[st.Page(run_generi,title="Generi musicali")]
     
 }
 
