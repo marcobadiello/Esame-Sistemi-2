@@ -5,6 +5,7 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from datetime import datetime
 import json
+import streamlit as st
 
 
 import icecream as ic
@@ -307,7 +308,8 @@ def media_oraria_cumulata(df):
     })
     return df
 
-def ascolto_generi(df,client_id=client_id,client_secret=client_secret,redirect_uri=redirect_uri):
+@st.cache_data
+def ascolto_generi(_df,client_id=client_id,client_secret=client_secret,redirect_uri=redirect_uri):
     startint = datetime.now()
     mappa = {}
 
@@ -363,10 +365,6 @@ def ascolto_generi(df,client_id=client_id,client_secret=client_secret,redirect_u
     
 
 
-start = datetime.now()
-print(ascolto_generi(df))
-stop = datetime.now()
-print("Tempo totale -> ",stop-start)
 
 
 '''

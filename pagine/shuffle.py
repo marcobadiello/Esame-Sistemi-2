@@ -28,6 +28,7 @@ def run_shuffle():
     if st.checkbox("Sono daltonico"):
         colori = ("#0055FF"," #FFDD00")
     st.write(stringa)
+    st.write(df)
     Tools.stmapa_torta_shuffle(df,colori=colori)
     data = anal.shuffle_data(df)
     col1, col2 = st.columns([2,2])
@@ -49,3 +50,7 @@ def run_shuffle():
     """,
     unsafe_allow_html=True
     )
+        
+
+
+    
