@@ -13,8 +13,8 @@ import icecream as ic
 In questo file vengono definite tutte le funzioni che hanno come
 scopo un analisi dei dati pecifica e restituiscono i dati richiesti
 '''
-client_id = '0c495503d007492cb9ab221bc097e13c'
-client_secret = 'd03ba7bbe9f749d0b47bea40a0f11882'
+client_id = 'fca40934bfc94188b06e4d95d42d0dcb'
+client_secret = '45acdbe55d954d20a55e2c8db28b7035'
 redirect_uri = 'http://localhost:8888/callback'
 # definisco una funzione per restituire la top delle canzoni di una determianto peridoo
 def top_n_canzoni(df,n=None,periodo=None):
@@ -342,29 +342,6 @@ def ascolto_generi(df,client_id=client_id,client_secret=client_secret,redirect_u
     print(dataframe)
     dataframe.write_json("dataframe_con_generi.json")
 
-    
-    
-    stopint = datetime.now()
-    print("Tempo ricavo generi -> ",stopint-startint)
-
-    conclusioni = {}
-    for row in dataframe:
-        generi = row[3]
-        tempo = row[2]
-        if generi:
-            for i in generi:
-                if i not in conclusioni:
-                    conclusioni[i] = 0.0
-                conclusioni[i] = conclusioni[i] + tempo
-    nome_file = "generi.json"
-
-    # Salvare il dizionario come JSON nel file
-    with open(nome_file, "w", encoding="utf-8") as file:
-        json.dump(conclusioni, file, ensure_ascii=False, indent=4)
-
-    print(f"Dizionario salvato come JSON nel file '{nome_file}'.")
-
-def aaa():
         # Specifica il percorso del file JSON
     file_path = "dataframe_con_generi.json"
 
@@ -386,6 +363,8 @@ def aaa():
     mappa = dict(sorted(mappa.items(), key=lambda item: item[1], reverse=False))
     for i in mappa:
         print(f"{i} -> {mappa[i]}")
+    with open('mappa_generi.json', 'w') as json_file:
+        json.dump(data, json_file, indent=4)
 
 
 
@@ -393,10 +372,10 @@ def aaa():
 
 
 start = datetime.now()
-# ascolto_generi(df)
+ascolto_generi(df)
 stop = datetime.now()
 print("Tempo totale -> ",stop-start)
-aaa()
+
 '''
 COSE IMPORTANTI DA SAPERE
 - Ogni periodo corrisponde ad un mese quindi ogni 12 periodi corrisponde un anno

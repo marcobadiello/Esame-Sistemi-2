@@ -16,4 +16,5 @@ dependencies = [
     "plotly-express>=0.4.1",
     "pygame>=2.6.1",
     "matplotlib>=3.9.3",
+    "spotipy>=2.24.0",
 ]
