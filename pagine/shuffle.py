@@ -13,6 +13,7 @@ ai dati riguardo l'utilizzo della modalità di shuffle
 '''
 
 def run_shuffle():
+    st.set_page_config(layout="wide")
     # metto il titolo e il logo di spotify
     col1, col2 = st.columns([1, 3])
     with col1:
@@ -28,7 +29,6 @@ def run_shuffle():
     if st.checkbox("Sono daltonico"):
         colori = ("#0055FF"," #FFDD00")
     st.write(stringa)
-    st.write(df)
     Tools.stmapa_torta_shuffle(df,colori=colori)
     data = anal.shuffle_data(df)
     col1, col2 = st.columns([2,2])

@@ -10,13 +10,15 @@ import streamlit as st
 
 import icecream as ic
 
+from credenziali import client_id
+from credenziali import client_secret
+from credenziali import redirect_uri
+
 '''
 In questo file vengono definite tutte le funzioni che hanno come
 scopo un analisi dei dati pecifica e restituiscono i dati richiesti
 '''
-client_id = 'fca40934bfc94188b06e4d95d42d0dcb'
-client_secret = '45acdbe55d954d20a55e2c8db28b7035'
-redirect_uri = 'http://localhost:8888/callback'
+
 # definisco una funzione per restituire la top delle canzoni di una determianto peridoo
 def top_n_canzoni(df,n=None,periodo=None):
     
@@ -308,8 +310,8 @@ def media_oraria_cumulata(df):
     })
     return df
 
-@st.cache_data
-def ascolto_generi(_df,client_id=client_id,client_secret=client_secret,redirect_uri=redirect_uri):
+
+def ascolto_generi(df,client_id=client_id,client_secret=client_secret,redirect_uri=redirect_uri):
     startint = datetime.now()
     mappa = {}
 
@@ -327,6 +329,7 @@ def ascolto_generi(_df,client_id=client_id,client_secret=client_secret,redirect_
     dataframe = dataframe.with_columns(
         (pl.col("s_played") / total_played * 100).alias("percentage_of_total")
     )
+
 
     # 3. Filtrare gli artisti con una percentuale di ascolto superiore o uguale all'1%
     df_filtered = dataframe.filter(pl.col("percentage_of_total") >= 1)
@@ -358,6 +361,8 @@ def ascolto_generi(_df,client_id=client_id,client_secret=client_secret,redirect_
 
         
         print(f"{nome} -> {generi}")
+
+    print(mappa)
     return mappa
         
 

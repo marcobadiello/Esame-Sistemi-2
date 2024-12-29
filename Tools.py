@@ -5,6 +5,12 @@ import Tools
 from Estrattore import df
 import altair as alt
 import math
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
+
+from credenziali import client_id
+from credenziali import client_secret
+from credenziali import redirect_uri
 
 '''
 In qesto file mi creo delle funzioni utili per allegerire poi il codice negli altri file
@@ -37,6 +43,22 @@ def banner_canzone_big(codice):
     """
     st.markdown(oo, unsafe_allow_html=True)
 
+def get_artist_image_url(artist_name,client_id,client_secret):
+    # Autenticazione con Spotify
+
+    client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
+    sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+    
+    # Cerca l'artista su Spotify
+    result = sp.search(q=artist_name, type='artist', limit=1)
+    
+    # Se l'artista è trovato, restituisce il link della foto del profilo
+    if result['artists']['items']:
+        artist = result['artists']['items'][0]
+        if artist['images']:
+            return artist['images'][0]['url']
+    return None  # Se l'artista non ha immagine o non è stato trovato
+
 # questa funzione stampa la top 'n' delle canzoni
 def stampa_top_canzoni_n(df,n,periodo):
       
@@ -68,31 +90,47 @@ def stampa_top_canzoni_n(df,n,periodo):
                 banner_canzone_small(data.row(i)[2])
   
 # questa funzione stampa la top 'n' degli artisti
-def stampa_top_artisti(df,n,periodo):
-      
-      # ottengo la top artitsti
-      numero_artisti = anal.top_n_artisti(df,n=None,periodo=periodo)['master_metadata_album_artist_name'].n_unique() 
-      data = anal.top_n_artisti(df,n,periodo)
-      st.subheader(f"Hai ascoltato un totale di {numero_artisti} artisti ma i tuoi preferiti sono...")
-      st.markdown("---")
-      # mostro a schermo glia rtisti con el faccine per il podio
-      for i in range(0,len(data)):
-                numero = str(i+1)
-                if numero == '1':
-                      numero = numero + "🥇"
-                elif numero == '2':
-                      numero = numero + "🥈"
-                elif numero == '3':
-                      numero = numero + "🥉"
-                
-                # mostro l'artista
-                st.header(numero)
-                st.title(f"{data.row(i)[0]}")
-                
-                # mostro il tempio di ascolto dell'artista specifico
-                st.subheader("Tempo di ascolto")
-                st.subheader(convert_seconds(data.row(i)[1]))
-                st.markdown("---")
+def stampa_top_artisti(df, n, periodo):
+    # Ottengo la top artisti
+    numero_artisti = anal.top_n_artisti(df, n=None, periodo=periodo)['master_metadata_album_artist_name'].n_unique() 
+    data = anal.top_n_artisti(df, n, periodo)
+    st.subheader(f"Hai ascoltato un totale di {numero_artisti} artisti ma i tuoi preferiti sono...")
+    st.markdown("---")
+    
+    # Loop per mostrare gli artisti con l'immagine e le informazioni
+    for i in range(0, len(data)):
+        numero = str(i + 1)
+        
+        # Aggiungi emoji per il podio
+        if numero == '1':
+            numero = numero + "🥇"
+        elif numero == '2':
+            numero = numero + "🥈"
+        elif numero == '3':
+            numero = numero + "🥉"
+        
+        # Definisci qui l'URL dell'immagine (modifica questa variabile con il tuo URL)
+        image_url = get_artist_image_url({data.row(i)[0]}, client_id=client_id, client_secret=client_secret)
+        
+        # Crea due colonne
+        col1, col2 = st.columns([1, 3])  # La prima colonna è più stretta per l'immagine
+        
+        with col1:
+            # Mostra l'immagine a sinistra
+            st.image(image_url, width=400)  # Puoi cambiare la larghezza dell'immagine se necessario
+        
+        with col2:
+            # Mostro l'artista e le informazioni nella colonna di destra
+            st.header(numero)
+            st.title(f"{data.row(i)[0]}")
+            
+            # Mostro il tempo di ascolto dell'artista specifico
+            st.subheader("Tempo di ascolto")
+            st.subheader(convert_seconds(data.row(i)[1]))
+        
+        st.markdown("---")
+
+
 
 # questa funzione converte i secondi in giorni-ore-minuti-secondi
 def convert_seconds(seconds):
@@ -382,3 +420,40 @@ def grafico_giornata_orizzontale_cumulato(df, n: int):
 
     # Visualizza il grafico con Streamlit
     st.altair_chart(chart, use_container_width=True)
+
+def stampa_generi(df, n):
+    # Ottenere i dati di ascolto (salvato nella cache)
+    data = anal.ascolto_generi(df)
+
+    # Calcolare il totale delle ore di ascolto
+    total_listening_time = sum(data.values())
+
+    # Convertire il dizionario in un DataFrame di Polars
+    df_pl = pl.DataFrame(list(data.items()), schema=['Genre', 'Listening Time'])
+
+    # Convertire il DataFrame di Polars in un DataFrame pandas per Altair
+    df = df_pl.to_pandas()
+
+    # Calcolare la percentuale di ascolto per ogni genere
+    df['Percentage'] = round((df['Listening Time'] / total_listening_time) * 100, 2)
+
+    # Ordinare i generi per la percentuale di ascolto (dal più ascoltato al meno ascoltato)
+    df = df.sort_values(by='Percentage', ascending=False)
+
+    # Limitare il DataFrame ai primi n generi
+    df = df.head(n)
+
+    # Creare il grafico con Altair
+    chart = alt.Chart(df).mark_bar().encode(
+        x=alt.X('Percentage:Q', title='Percentuale di Ascolto (%)'),
+        y=alt.Y('Genre:N', sort='-x', title='Genere Musicale'),
+        color=alt.Color('Genre:N', legend=None),  # Usa colori ad alta distinzione
+        tooltip=['Genre:N', 'Percentage:Q']
+    ).properties(
+        title=f"Distribuzione della Percentuale di Ascolto per i Primi {n} Generi Musicali"
+    )
+
+    # Visualizzare il grafico con Streamlit
+    st.title(f'Distribuzione della Percentuale di Ascolto per i Primi {n} Generi Musicali')
+    st.altair_chart(chart, use_container_width=True)
+

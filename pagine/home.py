@@ -7,7 +7,7 @@ In qeusto file è contenuto il codice per la schermata HOME del progetto
 
 # creo una funzione che avvia la schermata
 def run_home():
-    
+    st.set_page_config(layout="wide")
     # metto il titolo e il logo di spotify
     col1, col2 = st.columns([1, 3])
     with col1:
