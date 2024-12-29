@@ -309,8 +309,7 @@ def media_oraria_cumulata(df):
 
 def ascolto_generi(df,client_id=client_id,client_secret=client_secret,redirect_uri=redirect_uri):
     startint = datetime.now()
-    diz = {}
-    new_col = []
+    mappa = {}
 
     # Autenticazione con Spotify usando il OAuth Flow
     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
@@ -318,63 +317,57 @@ def ascolto_generi(df,client_id=client_id,client_secret=client_secret,redirect_u
                                                 redirect_uri=redirect_uri,
                                                 scope="user-library-read"))
     print(df)
-    dataframe = df.select(['master_metadata_album_artist_name','spotify_track_uri','s_played'])
-    print(dataframe)
-    for row in dataframe.iter_rows():
-        nome_artista = row[0]
-        code = row[1]
-        if nome_artista not in diz:
-            search_result = sp.search(q=nome_artista, type='artist', limit=1)
-            if search_result['artists']['items']:
-                # Ottieni le informazioni dell'artista
-                artist_info = search_result['artists']['items'][0]
-                genres = artist_info.get('genres', [])
-            else:
-                genres = None
-            diz[nome_artista] = genres
-            print(nome_artista,'---',genres)
-            new_col.append(genres)
-        else:
-            new_col.append(diz[nome_artista])
+    dataframe = top_n_artisti(df)
+    # 1. Calcolare la somma totale di 's_played'
+    total_played = dataframe["s_played"].sum()
+
+    # 2. Aggiungere una colonna con la percentuale di ascolto per ogni artista
     dataframe = dataframe.with_columns(
-        pl.Series(name="generi", values=new_col)
+        (pl.col("s_played") / total_played * 100).alias("percentage_of_total")
     )
-    print(dataframe)
-    dataframe.write_json("dataframe_con_generi.json")
 
-        # Specifica il percorso del file JSON
-    file_path = "dataframe_con_generi.json"
+    # 3. Filtrare gli artisti con una percentuale di ascolto superiore o uguale all'1%
+    df_filtered = dataframe.filter(pl.col("percentage_of_total") >= 0.1)
 
-    # Legge il file JSON
-    with open(file_path, "r",encoding="utf-8") as f:
-        data = json.load(f)
+    # Visualizzare il risultato
+    print(df_filtered)
+    print("inizio a iterare")
+    for row in df_filtered.iter_rows():
+        nome = row[0]
+        tempo = row[1]
+        print(nome)
 
-    mappa = {}
+    # Cerca l'artista usando il nome
+        results = sp.search(q='artist:' + nome, type='artist', limit=1)
 
+    
+     # Verifica se sono stati trovati risultati
+        if results['artists']['items']:
+            artist = results['artists']['items'][0]
+            generi = artist['genres']
+        else:
+            print("Artista non trovato")
 
-    for elemento in data:
-        generi = elemento['generi']
-        tempo = elemento['s_played']
         for i in generi:
             if i not in mappa:
                 mappa[i] = tempo
             else:
                 mappa[i] += tempo
-    mappa = dict(sorted(mappa.items(), key=lambda item: item[1], reverse=False))
-    for i in mappa:
-        print(f"{i} -> {mappa[i]}")
-    with open('mappa_generi.json', 'w') as json_file:
-        json.dump(data, json_file, indent=4)
 
+        
+        print(f"{nome} -> {generi}")
+    return mappa
+        
 
 
     
 
 
 start = datetime.now()
-ascolto_generi(df)
+print(ascolto_generi(df))
 stop = datetime.now()
 print("Tempo totale -> ",stop-start)
+
 
 '''
 COSE IMPORTANTI DA SAPERE
