@@ -2,7 +2,7 @@ import json
 import polars as pl
 import os
 from datetime import datetime
-
+import os
 '''
 In questo file viene gestita tutta la creazioen del datafarame dei dati.
 I dati forniti da Spotify sono in formato Json e poichè sono tanto grandi
