@@ -9,7 +9,7 @@ import Analisi as anal
 
 
 def run_time_series():
-    st.set_page_config(layout="wide")
+
     # scrivo il titolo
     col1, col2 = st.columns([1, 3])
     with col1:

@@ -12,7 +12,7 @@ def run_generi():
     global df1
     df = df1
 
-    st.set_page_config(layout="wide")
+
     oggi = datetime.now().date()
     anno_corrente = oggi.year
     col1, col2 = st.columns([1, 3])
