@@ -421,9 +421,9 @@ def grafico_giornata_orizzontale_cumulato(df, n: int):
     # Visualizza il grafico con Streamlit
     st.altair_chart(chart, use_container_width=True)
 
-def stampa_generi(df, n):
+def stampa_generi(df, n, periodo):
     # Ottenere i dati di ascolto (salvato nella cache)
-    data = anal.ascolto_generi(df)
+    data = anal.ascolto_generi(df,periodo=periodo)
 
     # Calcolare il totale delle ore di ascolto
     total_listening_time = sum(data.values())

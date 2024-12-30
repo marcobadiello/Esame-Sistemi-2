@@ -311,7 +311,7 @@ def media_oraria_cumulata(df):
     return df
 
 
-def ascolto_generi(df,client_id=client_id,client_secret=client_secret,redirect_uri=redirect_uri):
+def ascolto_generi(df,periodo,client_id=client_id,client_secret=client_secret,redirect_uri=redirect_uri):
     startint = datetime.now()
     mappa = {}
 
@@ -321,7 +321,7 @@ def ascolto_generi(df,client_id=client_id,client_secret=client_secret,redirect_u
                                                 redirect_uri=redirect_uri,
                                                 scope="user-library-read"))
     print(df)
-    dataframe = top_n_artisti(df)
+    dataframe = top_n_artisti(df,periodo=periodo)
     # 1. Calcolare la somma totale di 's_played'
     total_played = dataframe["s_played"].sum()
 
