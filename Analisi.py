@@ -10,9 +10,12 @@ import streamlit as st
 
 import icecream as ic
 
-from credenziali import client_id
-from credenziali import client_secret
-from credenziali import redirect_uri
+from credenziali import leggi_credenziali
+cred = leggi_credenziali()
+client_id = cred[0]
+client_secret = cred[1]
+redirect_uri = cred[2]
+print(cred)
 
 '''
 In questo file vengono definite tutte le funzioni che hanno come
@@ -312,14 +315,16 @@ def media_oraria_cumulata(df):
 
 
 def ascolto_generi(df,periodo,client_id=client_id,client_secret=client_secret,redirect_uri=redirect_uri):
+    
     startint = datetime.now()
     mappa = {}
 
     # Autenticazione con Spotify usando il OAuth Flow
-    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
-                                                client_secret=client_secret,
-                                                redirect_uri=redirect_uri,
-                                                scope="user-library-read"))
+    if client_id and client_secret and redirect_uri != None:
+        sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
+                                                    client_secret=client_secret,
+                                                    redirect_uri=redirect_uri,
+                                                    scope="user-library-read"))
     print(df)
     dataframe = top_n_artisti(df,periodo=periodo)
     # 1. Calcolare la somma totale di 's_played'
@@ -343,7 +348,8 @@ def ascolto_generi(df,periodo,client_id=client_id,client_secret=client_secret,re
         print(nome)
 
     # Cerca l'artista usando il nome
-        results = sp.search(q='artist:' + nome, type='artist', limit=1)
+        if client_id and client_secret and redirect_uri != None:
+            results = sp.search(q='artist:' + nome, type='artist', limit=1)
 
     
      # Verifica se sono stati trovati risultati
@@ -364,6 +370,7 @@ def ascolto_generi(df,periodo,client_id=client_id,client_secret=client_secret,re
 
     print(mappa)
     return mappa
+# ascolto_generi(df,periodo=None)
         
 
 

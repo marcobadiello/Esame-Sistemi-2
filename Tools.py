@@ -3,14 +3,18 @@ import Analisi as anal
 import polars as pl
 import Tools
 from Estrattore import df
+import os
 import altair as alt
 import math
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
-from credenziali import client_id
-from credenziali import client_secret
-from credenziali import redirect_uri
+from credenziali import leggi_credenziali
+cred = leggi_credenziali()
+client_id = cred[0]
+client_secret = cred[1]
+redirect_uri = cred[2]
+print(cred)
 
 '''
 In qesto file mi creo delle funzioni utili per allegerire poi il codice negli altri file
@@ -110,15 +114,20 @@ def stampa_top_artisti(df, n, periodo):
             numero = numero + "🥉"
         
         # Definisci qui l'URL dell'immagine (modifica questa variabile con il tuo URL)
-        image_url = get_artist_image_url({data.row(i)[0]}, client_id=client_id, client_secret=client_secret)
+        if os.path.exists("credenziali.txt"):
+            image_url = get_artist_image_url({data.row(i)[0]}, client_id=client_id, client_secret=client_secret)
+        else:
+            errore = "Inserire credenziali per visualizzare foto"
         
         # Crea due colonne
         col1, col2 = st.columns([1, 3])  # La prima colonna è più stretta per l'immagine
         
         with col1:
             # Mostra l'immagine a sinistra
-            st.image(image_url, width=400)  # Puoi cambiare la larghezza dell'immagine se necessario
-        
+            if os.path.exists("credenziali.txt"):
+                st.image(image_url, width=400)  # Puoi cambiare la larghezza dell'immagine se necessario
+            else:
+                st.error(errore)
         with col2:
             # Mostro l'artista e le informazioni nella colonna di destra
             st.header(numero)

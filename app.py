@@ -13,6 +13,7 @@ from pagine.time_series_artisti import run_time_series_artisti
 from pagine.shuffle import run_shuffle
 from pagine.giornata import run_giornata
 from pagine.generi import run_generi
+from pagine.login import run_login
 
 
 
@@ -23,6 +24,7 @@ from pagine.generi import run_generi
 # questo è un dizionario che contiene tutte le pagine del mio progetto
 pagine = {
     "Menù": [st.Page(run_home, title="Home", icon="🏠",default=True)],
+    "\t" : [st.Page(run_login, title="Login", icon="⚙️")],
     "TOP 🎖️": [st.Page(run_top_canzoni, title="TOP Canzoni", icon="")],
     "": [st.Page(run_top_artisti, title="TOP Artisti", icon="")],
     "Analisi": [st.Page(run_time_series, title="Serie storica", icon="")],
