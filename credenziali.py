@@ -1,3 +1,3 @@
-client_id = 'db449c23473c4b389020231c35f58678'
-client_secret = '9517486ef22e4f8bb56be1f4b739a369'
+client_id = None
+client_secret = '69d5a6c6a7214d22966580d1effa3d25'
 redirect_uri = 'http://localhost:8888/callback'

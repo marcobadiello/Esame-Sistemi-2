@@ -110,14 +110,18 @@ def stampa_top_artisti(df, n, periodo):
             numero = numero + "🥉"
         
         # Definisci qui l'URL dell'immagine (modifica questa variabile con il tuo URL)
-        image_url = get_artist_image_url({data.row(i)[0]}, client_id=client_id, client_secret=client_secret)
+        if client_id and client_secret and redirect_uri != None:
+            image_url = get_artist_image_url({data.row(i)[0]}, client_id=client_id, client_secret=client_secret)
         
         # Crea due colonne
         col1, col2 = st.columns([1, 3])  # La prima colonna è più stretta per l'immagine
         
         with col1:
             # Mostra l'immagine a sinistra
-            st.image(image_url, width=400)  # Puoi cambiare la larghezza dell'immagine se necessario
+            if client_id and client_secret and redirect_uri != None:
+                st.image(image_url, width=400)  # Puoi cambiare la larghezza dell'immagine se necessario
+            else:
+                st.error("Per visualizzare la foto dell'artista inserire le credenzili nel file credenziali.py")
         
         with col2:
             # Mostro l'artista e le informazioni nella colonna di destra
