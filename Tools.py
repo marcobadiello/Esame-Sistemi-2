@@ -9,11 +9,11 @@ import math
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
-from credenziali import leggi_credenziali
-cred = leggi_credenziali()
-client_id = cred[0]
-client_secret = cred[1]
-redirect_uri = cred[2]
+from pagine.login import credentials
+client_id = credentials['id']
+client_secret = credentials['secret']
+redirect_uri = 'http://localhost:8888/callback'
+cred = (client_id,client_secret,redirect_uri)
 print(cred)
 
 '''
@@ -95,6 +95,8 @@ def stampa_top_canzoni_n(df,n,periodo):
   
 # questa funzione stampa la top 'n' degli artisti
 def stampa_top_artisti(df, n, periodo):
+    global client_id
+    global client_secret
     # Ottengo la top artisti
     numero_artisti = anal.top_n_artisti(df, n=None, periodo=periodo)['master_metadata_album_artist_name'].n_unique() 
     data = anal.top_n_artisti(df, n, periodo)

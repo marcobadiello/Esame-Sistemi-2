@@ -10,12 +10,13 @@ import streamlit as st
 
 import icecream as ic
 
-from credenziali import leggi_credenziali
-cred = leggi_credenziali()
-client_id = cred[0]
-client_secret = cred[1]
-redirect_uri = cred[2]
+from pagine.login import credentials
+client_id = credentials['id']
+client_secret = credentials['secret']
+redirect_uri = 'http://localhost:8888/callback'
+cred = (client_id,client_secret,redirect_uri)
 print(cred)
+
 
 '''
 In questo file vengono definite tutte le funzioni che hanno come

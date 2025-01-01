@@ -1,7 +1,16 @@
 import streamlit as st
 
+# Usa la cache per inizializzare le variabili globali
+@st.cache_data
+def init_credentials():
+    return {"id": None, "secret": None}
+
+# Inizializza le variabili globali con i dati della cache
+credentials = init_credentials()
 
 def run_login():
+    global credentials  # Usa le credenziali globali
+
     # Titolo e logo Spotify
     col1, col2 = st.columns([1, 3])
     with col1:
@@ -10,23 +19,27 @@ def run_login():
         st.title("Spotify Wrapped Statistico")
 
     # Input per Client ID e Client Secret
-    id = st.text_input("Client ID", placeholder="Inserisci il tuo client_id")
-    secret = st.text_input("Client Secret", type="password", placeholder="Inserisci il tuo client_secret")
+    id_input = st.text_input(
+        "Client ID",
+        value=credentials["id"] or "",
+        placeholder="Inserisci il tuo client_id"
+    )
+    secret_input = st.text_input(
+        "Client Secret",
+        type="password",
+        value=credentials["secret"] or "",
+        placeholder="Inserisci il tuo client_secret"
+    )
 
-    # Bottone per salvare le credenziali
-    if st.button("Salva Credenziali"):
-        if id and secret:
-            salva_credenziali(id, secret)
-            st.success("Credenziali salvate correttamente in credenziali.txt!")
-        else:
-            st.error("Inserisci entrambe le credenziali prima di salvare.")
+    # Aggiorna le credenziali globali
+    if id_input:
+        credentials["id"] = id_input
+    if secret_input:
+        credentials["secret"] = secret_input
 
+    # Visualizza le credenziali (solo per debug)
+    st.write(f"Client ID: {credentials['id']}")
+    st.write(f"Client Secret: {credentials['secret']}")
 
-def salva_credenziali(client_id, client_secret):
-    """
-    Salva le credenziali in un file di testo.
-    """
-    with open("credenziali.txt", "w") as file:
-        file.write(f"{client_id}\n")
-        file.write(f"{client_secret}\n")
-        file.write('http://localhost:8888/callback')
+# Esegui la funzione di login
+run_login()
