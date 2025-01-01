@@ -4,6 +4,10 @@ from datetime import datetime
 from Estrattore import df
 
 def run_top_canzoni():
+    st.set_page_config(
+    layout="wide",  
+    initial_sidebar_state="collapsed"  #"expanded" o "collapsed"
+    )
 
     oggi = datetime.now().date()
     anno_corrente = oggi.year

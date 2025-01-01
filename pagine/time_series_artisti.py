@@ -14,6 +14,10 @@ In qeusto file è scritto il codice per la pagina della time series degli artist
 # questa funzione avvia la pagina della 
 # time series degli artisti
 def run_time_series_artisti():
+    st.set_page_config(
+    layout="wide",  
+    initial_sidebar_state="collapsed"  #"expanded" o "collapsed"
+    )
 
     # stampo il titolo e il logo di spotify
     col1, col2 = st.columns([1, 3])

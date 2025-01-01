@@ -13,6 +13,10 @@ ai dati riguardo l'utilizzo della modalità di shuffle
 '''
 
 def run_shuffle():
+    st.set_page_config(
+    layout="wide",  
+    initial_sidebar_state="collapsed"  #"expanded" o "collapsed"
+    )
 
     # metto il titolo e il logo di spotify
     col1, col2 = st.columns([1, 3])

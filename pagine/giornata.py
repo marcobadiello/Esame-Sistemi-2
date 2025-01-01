@@ -12,6 +12,10 @@ In questo file c'è il codice per descrivere gli ascolti durante la gironatata
 '''
 
 def run_giornata():
+    st.set_page_config(
+    layout="wide",  
+    initial_sidebar_state="collapsed"  #"expanded" o "collapsed"
+    )
 
     # metto il titolo e il logo di spotify
     col1, col2 = st.columns([1, 3])

@@ -17,7 +17,10 @@ def run_generi():
     df = df1
     
     if client_id and client_secret and redirect_uri != None:
-        
+        st.set_page_config(
+    layout="wide",  
+    initial_sidebar_state="collapsed"  #"expanded" o "collapsed"
+    )
 
 
         oggi = datetime.now().date()
