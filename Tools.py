@@ -10,6 +10,7 @@ from vega_datasets import data
 import math
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
+from spotipy.oauth2 import SpotifyOAuth
 
 from credenziali import client_id
 from credenziali import client_secret
@@ -44,6 +45,38 @@ def banner_canzone_big(codice):
             loading="lazy">
     </iframe>
     """
+    st.markdown(oo, unsafe_allow_html=True)
+
+def banner_artista_big(codice):
+    # Crea il codice HTML per l'iframe utilizzando l'ID dell'artista
+    oo = f"""
+    <iframe style="border-radius:12px" 
+            src="https://open.spotify.com/embed/artist/{codice}?utm_source=generator" 
+            width="100%" 
+            height="352" 
+            frameBorder="0" 
+            allowfullscreen="" 
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+            loading="lazy">
+    </iframe>
+    """
+    # Mostra il banner in Streamlit
+    st.markdown(oo, unsafe_allow_html=True)
+
+def banner_artista_small(codice):
+    # Crea il codice HTML per l'iframe utilizzando l'ID dell'artista
+    oo = f"""
+    <iframe style="border-radius:12px" 
+            src="https://open.spotify.com/embed/artist/{codice}?utm_source=generator" 
+            width="100%" 
+            height="152" 
+            frameBorder="0" 
+            allowfullscreen="" 
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+            loading="lazy">
+    </iframe>
+    """
+    # Mostra il banner in Streamlit
     st.markdown(oo, unsafe_allow_html=True)
 
 def get_artist_image_url(artist_name,client_id,client_secret):
@@ -468,8 +501,12 @@ def stampa_generi(df, n, periodo):
 
 # Funzione per visualizzare le informazioni di una traccia
 def stampa_info_track(nome):
+    global client_id
+    global client_secret
+    global redirect_uri
     # Recupera le informazioni della traccia
     data = anal.get_track_info(nome)['tracks']['items'][0]
+    
     
     # Crea due colonne per visualizzare immagine album e nome traccia
     col1, col2 = st.columns([1, 3])
@@ -478,20 +515,166 @@ def stampa_info_track(nome):
         st.image(data['album']['images'][0]['url'], width=400)
 
     with col2:
-        st.title(f"{data['name']}")
-        st.title(f"Dei {data['artists'][0]['name']}")
+        st.title(f"Titolo: {data['name']}")
+        st.title(f"Artista: {data['artists'][0]['name']}")
         banner_canzone_small(data['id'])
+    # Estrai i dati necessari
     album_nome = data['album']['name']
     album_release_date = data['album']['release_date']
     track_name = data['name']
     track_number = data['track_number']
     total_tracks = data['album']['total_tracks']
-
-    # Crea il testo informativo completo e mettilo in st.subheader
-    st.subheader(f"""
-    Dall'album '{album_nome}', pubblicato il **{album_release_date}**, il brano **{track_name}** si trova al numero **{track_number}** di **{total_tracks}** tracce totali.
-    """)
-        
+    popularity = data['popularity']  # Popolarità del brano (valore da 0 a 100)
+    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
+                                                client_secret=client_secret,
+                                                redirect_uri=redirect_uri,
+                                                scope="user-library-read"))
+    results = sp.search(q='artist:' + data['artists'][0]['name'], type='artist', limit=1)
 
     
-   
+     # Verifica se sono stati trovati risultati
+    if results['artists']['items']:
+        artist = results['artists']['items'][0]
+        generi = artist['genres']
+    else:
+        print("Artista non trovato")
+    
+
+    # Verifica se è un singolo
+    is_single = total_tracks == 1
+
+    # Crea il testo informativo completo e mettilo in st.subheader
+    if is_single:
+        st.subheader(f"""
+        Questo brano **{track_name}** è un singolo, il **{album_release_date}**.
+        """)
+        st.subheader(f"**I generi musicali che caratterizzano questo brano sono:**")
+        if generi:
+            for i in generi:
+                st.subheader(f"➡️{i}")
+        else:
+            st.subheader("Nessun genere disponibile.")
+                
+                    
+    else:
+        st.subheader(f"""
+        Dall'album '{album_nome}', pubblicato il **{album_release_date}**, il brano **{track_name}** si trova al numero **{track_number}** di **{total_tracks}** tracce.
+        """)
+        st.subheader(f"**I generi musicali che caratterizzano questo brano sono:**")
+        if generi:
+            for i in generi:
+                st.subheader(f"➡️{i}")
+        else:
+            st.subheader("Nessun genere disponibile.")
+                
+
+        # Aggiungi il testo per il brano
+    st.subheader(f"🔥 La popolarità di **{track_name}** è del **{popularity}%**!")
+
+    # Codice HTML + CSS per creare la barra di progressione
+    st.markdown(f"""
+        <style>
+        .progress-bar {{
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }}
+        .progress-bar > .bar {{
+            height: 20px;
+            width: {popularity}%;
+            border-radius: 20px;
+            background-color: {'#ff4d4d' if popularity < 50 else '#4caf50'};
+            transition: width 0.5s ease;
+        }}
+        </style>
+        <div class="progress-bar">
+            <div class="bar"></div>
+        </div>
+    """, unsafe_allow_html=True)
+    if popularity >= 70:
+        st.header(f"Cosa ?!?! {popularity}% di popolarità 😱 Sembra che tu abbia trovato un capolavoro della musica! 🎉")
+        st.balloons()
+
+def stampa_info_artista(nome_artista):
+    global client_id
+    global client_secret
+    global redirect_uri
+
+    # Configura Spotipy
+    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
+        client_id=client_id,
+        client_secret=client_secret,
+        redirect_uri=redirect_uri,
+        scope="user-library-read"
+    ))
+
+    # Cerca l'artista
+    results = sp.search(q=f'artist:{nome_artista}', type='artist', limit=1)
+
+    # Verifica se sono stati trovati risultati
+    if not results['artists']['items']:
+        st.error("Artista non trovato. Riprova con un altro nome.")
+        return
+
+    # Estrai i dettagli dell'artista
+    artist = results['artists']['items'][0]
+    artist_name = artist['name']
+    artist_image = artist['images'][0]['url'] if artist['images'] else None
+    generi = artist['genres']
+    popularity = artist['popularity']  # Popolarità da 0 a 100
+    followers = artist['followers']['total']
+    artist_id = artist['id']
+
+    # Visualizza i dettagli dell'artista
+    col1, col2 = st.columns([1, 3])
+
+    with col1:
+        if artist_image:
+            st.image(artist_image, width=400)
+
+    with col2:
+        st.title(f"{artist_name}")
+        banner_artista_big(artist_id)
+    
+    len_followers = round((followers*1.6)/1000,2)
+    st.subheader(f"👥 Numero di follower: {followers} se si tenessero tutti per mano sarebbero lunghi circa {len_followers} km ovvero {round(len_followers/40076,3) } volte il giro del mondo")
+    
+    st.subheader("I generi di questo artista sono:")
+    if generi:
+        for i in generi:
+            st.subheader(f"➡️{i}")
+    else:
+        st.subheader("Nessun genere disponibile.")
+
+    # Mostra la popolarità
+    st.subheader(f"🔥 Popolarità: {popularity}%")
+
+    # Barra di popolarità
+    st.markdown(f"""
+        <style>
+        .progress-bar {{
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }}
+        .progress-bar > .bar {{
+            height: 20px;
+            width: {popularity}%;
+            border-radius: 20px;
+            background-color: {'#ff4d4d' if popularity < 50 else '#4caf50'};
+            transition: width 0.5s ease;
+        }}
+        </style>
+        <div class="progress-bar">
+            <div class="bar"></div>
+        </div>
+    """, unsafe_allow_html=True)
+
+    
+
+    # Messaggio speciale per popolarità alta
+    if popularity >= 70:
+        st.header(f"Wow! {popularity}% di popolarità 😱! Questo artista è una divinità della musica! 🎉")
+        st.balloons()
