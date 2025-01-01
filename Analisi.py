@@ -364,7 +364,20 @@ def ascolto_generi(df,periodo,client_id=client_id,client_secret=client_secret,re
 
     print(mappa)
     return mappa
-        
+
+def get_track_info(track_name):
+    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
+                                                client_secret=client_secret,
+                                                redirect_uri=redirect_uri,
+                                                scope="user-library-read"))
+    # Ricerca del brano
+    results = sp.search(q=track_name, type='track', limit=1)
+    
+
+    return results
+
+print(get_track_info('In Too Deep'))
+
 
 
     

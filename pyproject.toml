@@ -17,4 +17,6 @@ dependencies = [
     "pygame>=2.6.1",
     "matplotlib>=3.9.3",
     "spotipy>=2.24.0",
+    "vega-datasets>=0.9.0",
+    "geopandas>=1.0.1",
 ]

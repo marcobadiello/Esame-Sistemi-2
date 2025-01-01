@@ -2,8 +2,11 @@ import streamlit as st
 import Analisi as anal
 import polars as pl
 import Tools
+import geopandas as gpd
+import polars as pl
 from Estrattore import df
 import altair as alt
+from vega_datasets import data
 import math
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
@@ -461,3 +464,34 @@ def stampa_generi(df, n, periodo):
     st.title(f'Distribuzione della Percentuale di Ascolto per i Primi {n} Generi Musicali')
     st.altair_chart(chart, use_container_width=True)
 
+
+
+# Funzione per visualizzare le informazioni di una traccia
+def stampa_info_track(nome):
+    # Recupera le informazioni della traccia
+    data = anal.get_track_info(nome)['tracks']['items'][0]
+    
+    # Crea due colonne per visualizzare immagine album e nome traccia
+    col1, col2 = st.columns([1, 3])
+
+    with col1:
+        st.image(data['album']['images'][0]['url'], width=400)
+
+    with col2:
+        st.title(f"{data['name']}")
+        st.title(f"Dei {data['artists'][0]['name']}")
+        banner_canzone_small(data['id'])
+    album_nome = data['album']['name']
+    album_release_date = data['album']['release_date']
+    track_name = data['name']
+    track_number = data['track_number']
+    total_tracks = data['album']['total_tracks']
+
+    # Crea il testo informativo completo e mettilo in st.subheader
+    st.subheader(f"""
+    Dall'album '{album_nome}', pubblicato il **{album_release_date}**, il brano **{track_name}** si trova al numero **{track_number}** di **{total_tracks}** tracce totali.
+    """)
+        
+
+    
+   
