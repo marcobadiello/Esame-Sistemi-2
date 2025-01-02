@@ -2,7 +2,6 @@ import streamlit as st
 import Analisi as anal
 import polars as pl
 import Tools
-import geopandas as gpd
 import polars as pl
 from Estrattore import df
 import altair as alt
