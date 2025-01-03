@@ -12,7 +12,7 @@ principali dei dati di ascolto.
 
 ## Requisiti di sistema e dipendenze
 Il progetto è stato realizzato in [Python 3.12](https://www.python.org/downloads/release/python-3120/) e tutte
-le dipendenze sono state gestite con [uv]("https://github.com/astral-sh/uv)
+le dipendenze sono state gestite con [uv](https://github.com/astral-sh/uv)
 
 Non devi preoccuparti di nulla, un ambiente virtuale verra creato automaticamente se verranno eseguiti correttamente tutti i passaggi nel capitolo successivo.
 
@@ -32,7 +32,7 @@ Per eseguire il progetto, segui questi passi:
    cd Esame-Sistemi-2
    ```
 ### 3. Carica i dati da analizzare:
-   Estrai il contenuto della cartella che spotify ti ha fornito (sarà una sola cartella chiamiamola 'Cartella A'). Inserisci la 'Cartella A' all'inteno della cartella [Dati](#Struttura-del-Progetto). Nella cartella dati dovrà esserci SOLAMENTE la 'Cartella A' che puoi comunque rinominare a tuo piacimento. Se non sai come scaricare i tuoi dati leggi [qui](#Ottenere-i-dati-da-Spotify). Se non hai dei dati o stai aspettando che Spotify ti consegni i tuoi puoi utilizzare dei dati di esempio reperibili nella cartella [ESEMPIO DI DATI](## Struttura del Progetto ). Prendi una delle cartelle presenti e mettila nella cartella [Dati](#Struttura-del-Progetto) non preoccuparti del nome della cartella.
+   Estrai il contenuto della cartella che spotify ti ha fornito (sarà una sola cartella, chiamiamola 'Cartella A'). Inserisci la 'Cartella A' all'inteno della cartella [Dati](#Struttura-del-Progetto). Nella cartella dati dovrà esserci SOLAMENTE la 'Cartella A' che puoi comunque rinominare a tuo piacimento. Se non sai come scaricare i tuoi dati leggi [qui](#Ottenere-i-dati-da-Spotify). Se non hai dei dati o stai aspettando che Spotify ti consegni i tuoi puoi utilizzare dei dati di esempio reperibili nella cartella [ESEMPIO DI DATI](#Struttura-del-Progetto). Prendi una delle cartelle presenti e mettila nella cartella [Dati](#Struttura-del-Progetto) non preoccuparti del nome della cartella.
 
 ### 4. **Inserisci le credenziali**:  
    Inserisci il tuo **client_id** e **client secret** all'interno del file *credenziali.py* e salva le modifiche.
@@ -118,15 +118,15 @@ La comprensione degli altri file non è streattamente necessaria ai fini della c
 ---
 
 ## Librerie utilizzate
-- [Polars](https://github.com/pola-rs/polars)\n
+- [Polars](https://github.com/pola-rs/polars)  
 Per la gestione dei dataframe.
-- [Streamlit](https://github.com/streamlit/streamlit)\n
+- [Streamlit](https://github.com/streamlit/streamlit)  
 Per la creazione dell'applicazione web.
-- [Altair](https://github.com/vega/altair)\n
+- [Altair](https://github.com/vega/altair)  
 Per la realizzazione dei grafici.
-- [Wikipedia](https://github.com/goldsmith/Wikipedia)\n
+- [Wikipedia](https://github.com/goldsmith/Wikipedia)  
 Per utilizzare in modo più semplice le API di Wikipedia.
-- [Spotipy](https://github.com/spotipy-dev/spotipy)\n
+- [Spotipy](https://github.com/spotipy-dev/spotipy)  
 Per utilizzare in modo più semplice le API di Spotify.
 
 ---
