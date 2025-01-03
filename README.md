@@ -30,6 +30,10 @@ Per eseguire il progetto, segui questi passi:
    cd Esame-Sistemi-2
    ```
 
+### 4. **Inserisci le credenziali**:  
+   Inserisci il tuo **client_id** e **client secret** all'interno del file *credenziali.py* e salva le modifiche.
+   Se non sai come recuperare tali credenziali leggi QUI
+
 ### 3. **Esegui il programma**:  
    ```bash
    uv run streamlit run app.py

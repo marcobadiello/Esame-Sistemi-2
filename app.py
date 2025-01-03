@@ -16,6 +16,7 @@ from pagine.generi import run_generi
 from pagine.discover_artist import run_discover_artist
 from pagine.discover_track import run_discover_track
 from pagine.profilo import run_profilo
+from pagine.readme import run_readme
 
 
 
@@ -27,6 +28,7 @@ from pagine.profilo import run_profilo
 pagine = {
     "Menù": [st.Page(run_home, title="Home", icon="🏠",default=True)],
     "\t\t\t\t": [st.Page(run_profilo, title="Profilo", icon="🪪")],
+    "\t\t\t\t\t": [st.Page(run_readme, title="Readme", icon="")],
     "TOP 🎖️": [st.Page(run_top_canzoni, title="TOP Canzoni", icon="")],
     "": [st.Page(run_top_artisti, title="TOP Artisti", icon="")],
     "Analisi": [st.Page(run_time_series, title="Serie storica", icon="")],
