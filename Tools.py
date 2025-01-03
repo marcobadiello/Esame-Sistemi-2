@@ -7,6 +7,7 @@ import wikipedia
 from Estrattore import df
 import altair as alt
 from vega_datasets import data
+import webbrowser
 import math
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
@@ -689,3 +690,59 @@ def stampa_info_artista(nome_artista):
     if popularity >= 70:
         st.header(f"Wow! {popularity}% di popolarità 😱! Questo artista è una divinità della musica! 🎉")
         st.balloons()
+
+# periodo: str,limit: int,offset = 0
+def stampa_profilo():
+    user_data = anal.get_profilo_info()
+
+    
+    country = user_data['country']
+    display_name = user_data['display_name']
+    email = user_data['email']
+    explicit_content_filter_enabled = user_data['explicit_content']['filter_enabled']
+    explicit_content_filter_locked = user_data['explicit_content']['filter_locked']
+    spotify_url = user_data['external_urls']['spotify']
+    followers_total = user_data['followers']['total']
+    profile_href = user_data['href']
+    user_id = user_data['id']
+    images = user_data['images']  # Lista delle immagini
+    product = user_data['product']
+    user_type = user_data['type']
+    user_uri = user_data['uri']
+    image_url = images[0]['url'] 
+    
+    st.title("🎵 Profilo Spotify")
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        st.image(image_url, width=200)
+    with col2:
+        st.title(f"Ciao {display_name}")
+    
+    # Dividere in colonne
+    col1, col2 = st.columns(2)
+
+    # Colonna 1: Informazioni generali
+    with col1:
+        st.header("Informazioni generali")
+        st.write(f"**Email:** {email}")
+        st.write(f"**Paese:** {country}")
+        st.write(f"**Tipo di account:** {product.capitalize()}")
+
+    # Colonna 2: Contenuti espliciti e follower
+    with col2:
+        st.header("Dettagli aggiuntivi")
+        st.write(f"**Contenuti espliciti abilitati:** {'Sì' if explicit_content_filter_enabled else 'No'}")
+        st.write(f"**Contenuti espliciti bloccati:** {'Sì' if explicit_content_filter_locked else 'No'}")
+        st.write(f"**Numero di follower:** {followers_total}")
+    
+
+    # Link e ID
+    st.divider()
+    st.subheader("Collegamenti utili")
+    st.code(f"ID Utente: {user_id}", language="plaintext")
+    st.code(f"URI Utente: {user_uri}", language="plaintext")
+    if st.button("Apri profilo Spotify"):
+        webbrowser.open(spotify_url)
+
+
+        

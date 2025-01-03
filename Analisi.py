@@ -376,14 +376,41 @@ def get_track_info(track_name):
 
     return results
 
-print(get_track_info('In Too Deep'))
+def get_profilo_info():
+    scope = 'user-read-private user-read-email user-top-read'
+    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
+                                                client_secret=client_secret,
+                                                redirect_uri=redirect_uri,
+                                                scope=scope))
+    
 
-
+    # Ottenere informazioni sul profilo
+    user_profile = sp.current_user()
 
     
 
+    return user_profile
+def get_top_profilo(periodo: str,limit: int,offset = 0):
+    scope = 'user-read-private user-read-email user-top-read'
+    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
+                                                client_secret=client_secret,
+                                                redirect_uri=redirect_uri,
+                                                scope=scope))
+    
 
 
+    user_top_track = sp.current_user_top_tracks(time_range=periodo,limit=limit,offset=offset)
+    user_top_artist = sp.current_user_top_artists(time_range=periodo,limit=limit,offset=offset)
+    
+    risultati = {
+        'top_track':user_top_track,
+        'top_artist':user_top_artist
+    }
+    return risultati
+
+
+
+print(get_profilo_info())
 
 '''
 COSE IMPORTANTI DA SAPERE

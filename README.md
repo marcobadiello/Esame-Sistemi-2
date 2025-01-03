@@ -85,6 +85,7 @@ Questo codice è stato scritto utilizzando queste fonti:
 - https://chatgpt.com/
 - https://www.reddit.com/
 - https://github.com/
+- https://developer.spotify.com/documentation/web-api
 - Amici e Colleghi
 
 
@@ -179,6 +180,7 @@ This code was written using the following sources:
 - https://www.reddit.com/  
 - https://chatgpt.com/  
 - https://github.com/  
+- https://developer.spotify.com/documentation/web-api
 - Friends and Colleagues  
 
 ---

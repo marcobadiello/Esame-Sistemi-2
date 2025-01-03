@@ -15,6 +15,7 @@ from pagine.giornata import run_giornata
 from pagine.generi import run_generi
 from pagine.discover_artist import run_discover_artist
 from pagine.discover_track import run_discover_track
+from pagine.profilo import run_profilo
 
 
 
@@ -25,6 +26,7 @@ from pagine.discover_track import run_discover_track
 # questo è un dizionario che contiene tutte le pagine del mio progetto
 pagine = {
     "Menù": [st.Page(run_home, title="Home", icon="🏠",default=True)],
+    "\t\t\t\t": [st.Page(run_profilo, title="Profilo", icon="🪪")],
     "TOP 🎖️": [st.Page(run_top_canzoni, title="TOP Canzoni", icon="")],
     "": [st.Page(run_top_artisti, title="TOP Artisti", icon="")],
     "Analisi": [st.Page(run_time_series, title="Serie storica", icon="")],
