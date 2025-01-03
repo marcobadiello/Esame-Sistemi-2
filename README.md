@@ -2,6 +2,8 @@
 
 # Spotify wrapped Statistico
 
+---
+
 ## Introduzione  
 Questo progetto ha lo scopo di analizzare e visualizzare i dati relativi agliascolti di Spotify. Utilizza strumenti di analisi dati e visualizzazione per fornire insight sulle informazioni
 principali dei dati di ascolto.
@@ -9,8 +11,8 @@ principali dei dati di ascolto.
 ---
 
 ## Requisiti di sistema e dipendenze
-Il progetto è stato realizzato in **Python 3.12** e tutte
-le dipendenze sono state gestite con **uv** "https://github.com/astral-sh/uv"
+Il progetto è stato realizzato in [Python 3.12](https://www.python.org/downloads/release/python-3120/) e tutte
+le dipendenze sono state gestite con [uv]("https://github.com/astral-sh/uv)
 
 Non devi preoccuparti di nulla, un ambiente virtuale verra creato automaticamente se verranno eseguiti correttamente tutti i passaggi nel capitolo successivo.
 
@@ -64,11 +66,14 @@ I file di interesse del progetto sono i seguenti:
   - **time_series.py**: Codice per la pagina "Serie storica".
   - **Top_artisti.py**: Codice per la pagina "TOP Artisti".
   - **Top_canzoni.py**: Codice per la pagina "TOP Canzoni".
-- **Analisi.py** : Codice per funzioni di analisi del dataframe.
-- **app.py** : Codice principale per avviare il programma (MAIN).
-- **Estrattore.py** : Codice per estrarre i dati, ripulirli e convertirli in un dataframe.
-- **Tools.py** : Codice per funzioni utili.
-- **README.md** : Documentazione del progetto.  
+- **Analisi.py**: Codice per funzioni di analisi del dataframe.
+- **app.py**: Codice principale per avviare il programma (MAIN).
+- **Estrattore.py**: Codice per estrarre i dati, ripulirli e convertirli in un dataframe.
+- **Tools.py**: Codice per funzioni utili.
+- **credenziali.py**: File che contiene le credenzili per l'utilizzo delle API Spotify
+- **README.md**: Documentazione del progetto.  
+
+La comprensione degli altri file non è streattamente necessaria ai fini della comprensione del funzionamento del codice.
 
 ---
 
@@ -113,15 +118,15 @@ I file di interesse del progetto sono i seguenti:
 ---
 
 ## Librerie utilizzate
-- [Polars](https://github.com/pola-rs/polars)  
+- [Polars](https://github.com/pola-rs/polars)\n
 Per la gestione dei dataframe.
-- [Streamlit](https://github.com/streamlit/streamlit)  
+- [Streamlit](https://github.com/streamlit/streamlit)\n
 Per la creazione dell'applicazione web.
-- [Altair](https://github.com/vega/altair)
+- [Altair](https://github.com/vega/altair)\n
 Per la realizzazione dei grafici.
-- [Wikipedia](https://github.com/goldsmith/Wikipedia)
+- [Wikipedia](https://github.com/goldsmith/Wikipedia)\n
 Per utilizzare in modo più semplice le API di Wikipedia.
-- [Spotipy](https://github.com/spotipy-dev/spotipy)
+- [Spotipy](https://github.com/spotipy-dev/spotipy)\n
 Per utilizzare in modo più semplice le API di Spotify.
 
 ---
