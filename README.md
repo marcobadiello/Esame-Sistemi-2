@@ -34,7 +34,7 @@ Per eseguire il progetto, segui questi passi:
 
 ### 4. **Inserisci le credenziali**:  
    Inserisci il tuo **client_id** e **client secret** all'interno del file *credenziali.py* e salva le modifiche.
-   Se non sai come recuperare tali credenziali leggi [qui](#-Ottenere-le-credenziali-Spotify)
+   Se non sai come recuperare tali credenziali leggi [qui](#Ottenere-le-credenziali-Spotify)
 
 ### 5. Salva correttamente tutte le modifiche
 
