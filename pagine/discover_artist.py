@@ -12,4 +12,4 @@ def run_discover_artist():
     if titolo:
         Tools.stampa_info_artista(titolo)
     else:
-        st.warning("Inserire il nome di un brano per avviare la ricerca")
+        st.warning("Inserire il nome di un artista per avviare la ricerca")

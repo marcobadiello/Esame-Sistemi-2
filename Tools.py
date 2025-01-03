@@ -670,7 +670,7 @@ def stampa_info_artista(nome_artista):
     try:
         wikipedia.set_lang("it")
         # Ottieni il riassunto
-        summary = wikipedia.summary(f"{artist_name}", sentences=5)
+        summary = wikipedia.summary(f"{artist_name} musica", sentences=5)
         # Mostra tutto il testo come un unico subheader
         st.markdown(f"{summary.split('=')[0]}")  # Livello 1 (più grande)
     except Exception as e:
