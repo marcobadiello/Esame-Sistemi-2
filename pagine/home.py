@@ -53,42 +53,54 @@ Gli obiettivi di questo progetto sono la presentazione dei miei dati personali d
     if st.button("Mostra dataframe"):
         st.write(df)
         
-    st.subheader("Come è stato ottenuto il dataset")
-    stringhetta = '''
-    Il dataset è stato ottenuto mediante una richiesta di dawnload di tutto lo storico 
-    delle mie stream a Spotify. I file ottenuti a seguito della richiesta sono più file di tipo 
-    .json i queli sono stati letti, analizzati e 
-    trasformati in un dataset polars attraverso opportune analisi. Successivamente i dati sono
-    stati ripuliti da tutte le 
-    varibili non utili ai fini del progetto e dai dati relativi agli ascolti di podcast 
-    poichè in questo progetto si procede ad analizzare solo i dati sulla musica. 
-    '''
-    st.write(stringhetta)
+    
     
     st.markdown("---")
+    st.subheader("Per maggiori informazioni consiglio vivamente di leggere la pagina 'Readme' o visitare la [pagina GitHub del progetto](https://github.com/marcobadiello/Esame-Sistemi-2).")
+    st.markdown("---")
     st.title("📒Le pagine")
+    st.subheader("Profilo")
+    st.write('''
+In questa pagina puoi trovare una panoramica del profilo spotify associato alle API Spotify utilizzate, inoltre è possibile vedere una top canzoni e artisti molto generale.
+    ''')
+    st.subheader("Readme")
+    st.write('''
+In questa pagina è riportato il file Readme ovvero la documentazione del progetto, consiglio vivamente di leggerlo.           
+''')
     st.subheader("TOP Canzoni")
     st.write('''
-In questa pagina puoi vedere una classifica di tutte le canzoni ascoltate in un determinato periodo.
+In questa pagina puoi vedere una classifica delle canzoni molto dettaglaita. Viene offerta la possibilità di scegliere quante posizioni vedere e in quel periodo di tempo.
 ''')
     st.subheader("TOP Artisti")
     st.write('''
-In questa pagina puoi vedere una classifica di tutti gli artisti ascoltati in un determinato periodo.
+In questa pagina puoi vedere una classifica degli artisti molto dettaglaita. Viene offerta la possibilità di scegliere quante posizioni vedere e in quel periodo di tempo.
 ''')
     st.subheader("Serie storica")
     st.write('''
-In questa pagina puoi vedere la serie storica di tutti gli ascolti con periodo mensile.
+In questa pagina puoi vedere la serie storica, da quando hai creato l'account spotify a quando hai scaricato i dati, con periodicità mensile.
 ''')
     st.subheader("Serie storica artisti")
     st.write('''
-In questa pagina puoi vedere la serie storica degli ascolti con periodo mensile
-             e dividerla per artisti.
+In questa pagina puoi vedere la serie storica suddivisa per artisti, da quando hai creato l'account spotify a quando hai scaricato i dati, con periodicità mensile. Vi è anceh la possibilità di confrontare le serie storiche di diversi artisti fino ad un massimo di 10.
 ''')
     st.subheader("Shuffle?")
     st.write('''
-In queswta pagina puoi vedere un riassunto dell'utilizzo della funzione Shuffle.
+In queswta pagina puoi vedere un riassunto del tuo utilizzo della funzione shuffle.
 ''')
     st.subheader("Giornata tipo")
     st.write('''
 In questa pagina puoi vedere come gli ascolti sono distribuiti nell'arco di una giornata
 ''')
+    st.subheader("Generi musicali")
+    st.write('''
+In questa pagina puoi vedere la top 10, in percentuale, dei tuoi generi musicali più ascoltati in un periodo di tempo determinato.
+''')
+    st.subheader("Scopri artisti")
+    st.write('''
+In questa pagina puoi scoprire nuovi artisti e avere informazioni a riguardo.
+''')
+    st.subheader("Scopri brani")
+    st.write('''
+In questa pagina puoi scoprire nuovi brani e avere informazioni a riguardo.
+''')
+    

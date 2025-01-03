@@ -626,6 +626,7 @@ def stampa_info_artista(nome_artista):
     popularity = artist['popularity']  # Popolarità da 0 a 100
     followers = artist['followers']['total']
     artist_id = artist['id']
+    spotify_link = artist['external_urls']['spotify']
 
     # Visualizza i dettagli dell'artista
     col1, col2 = st.columns([1, 3])
@@ -633,6 +634,24 @@ def stampa_info_artista(nome_artista):
     with col1:
         if artist_image:
             st.image(artist_image, width=400)
+            st.markdown(
+            """
+            <style>
+            .stButton>button {
+                background-color: #1DB954; /* Colore verde Spotify */
+                color: black; /* Testo nero */
+                font-size: 20px; /* Dimensioni del testo */
+                padding: 20px 40px; /* Aumenta le dimensioni del bottone */
+                border-radius: 10px; /* Angoli arrotondati */
+                border: none;
+                width: auto;
+            }
+            </style>
+            """, unsafe_allow_html=True)
+
+        # Bottone per aprire il profilo Spotify
+        if st.button("Apri profilo Spotify"):
+            webbrowser.open(spotify_link)
 
     with col2:
         st.title(f"{artist_name}")
