@@ -29,12 +29,16 @@ Per eseguire il progetto, segui questi passi:
    ```bash
    cd Esame-Sistemi-2
    ```
+### 3. Carica nella cartella [Dati](##Struttura-del-Progetto) i dati da analizzare:
+   Estrai il contenuto della cartella che spotify ti ha fornito (sarà una sola cartella chiamiamola 'Cartella A'). Inserisci la 'Cartella A' all'inteno della cartella [Dati](##Struttura-del-Progetto). Nella cartella dati dovrà esserci SOLAMENTE la 'Cartella A' che puoi comunque rinominare a tuo piacimento. Se non sai come scaricare i tuoi dati leggi [qui](###Ottenere-i-dati-da-Spotify). Se non hai dei dati o stai aspettando che Spotify ti consegni i tuoi puoi utilizzare dei dati di esempio reperibili nella cartella [ESEMPIO DI DATI](## Struttura del Progetto ). Prendi una delle cartelle presenti e mettila nella cartella [Dati](##Struttura-del-Progetto) non preoccuparti del nome della cartella.
 
 ### 4. **Inserisci le credenziali**:  
    Inserisci il tuo **client_id** e **client secret** all'interno del file *credenziali.py* e salva le modifiche.
-   Se non sai come recuperare tali credenziali leggi QUI
+   Se non sai come recuperare tali credenziali leggi [qui](###-Ottenere-le-credenziali-Spotify)
 
-### 3. **Esegui il programma**:  
+### 5. Salva correttamente tutte le modifiche
+
+### 6. **Esegui il programma**:  
    ```bash
    uv run streamlit run app.py
    ```
@@ -45,8 +49,14 @@ Questo comando è necessario per avviare correttamente tutte le dipendenze.
 ## Struttura del Progetto  
 
 I file di interesse del progetto sono i seguenti:
-- **my_spotify_data/** : Contiene i dati del progetto.  
+- **DATI**: Cartella che deve contenere la cartella (*my_spotify_data/*) con i dati che vuoi analizzare.
+- **ESEMPIO DI DATI**: Cartella con dei dati di esempio
 - **pagine/**  
+  - **discover_artist.py**: Codice per la pagina "Scopri artisti".
+  - **discover_track.py**: Codice per la pagina "Scopri brani".
+  - **genery.py**: Codice per la pagina "Generi musicali".
+  - **profilo.py**: Codice per la pagina "Profilo".
+  - **readme.py**: Codice per la pagina "Readme".
   - **giornata.py**: Codice per la pagina "Giornata tipo".
   - **home.py**: Codice per la pagina "Home".
   - **shuffle.py**: Codice per la pagina "Shuffle?".  
@@ -62,12 +72,20 @@ I file di interesse del progetto sono i seguenti:
 
 ---
 
+## Come ottenere i dati necessari al funzionamento del progetto
+
+   ### Ottenere i dati da Spotify
+
+   ### Ottenere le credenziali Spotify
+
+---
+
 ## Possibili implementazioni furure
 
-- **Possibilità di caricare i dati direttamente dall'app**
-- **Integrazione di modelli di machine learning per un sistema di raccomandazione**
+- **Possibilità di caricare i dati direttamente dall'app** (Non prima che streamlit permetta di poter caricare direttametne una cartella invece che i file singolarmente)
+- **Integrazione di modelli di machine learning per un sistema di raccomandazione** (I sistemi di raccomandazione possibili con le API di Spotify sono diventati obsoleti e non più utilizzabili bisogna trovare un altro sistema)
 - **Possibilità di adattare il l'applicazione ai dati di Aplle Music**
-- **Possibilità di implementare l'utilizzo delle [API Spotify](https://developer.spotify.com/documentation/web-api)**
+
 
 ---
 
@@ -78,6 +96,10 @@ Per la gestione dei dataframe.
 Per la creazione dell'applicazione web.
 - [Altair](https://github.com/vega/altair)
 Per la realizzazione dei grafici.
+- [Wikipedia](https://github.com/goldsmith/Wikipedia)
+Per utilizzare in modo più semplice le API di Wikipedia
+-[Spotipy](https://github.com/spotipy-dev/spotipy)
+Per utilizzare in modo più semplice le API di Spotify
 
 ---
 
@@ -89,6 +111,7 @@ Questo codice è stato scritto utilizzando queste fonti:
 - https://chatgpt.com/
 - https://www.reddit.com/
 - https://github.com/
+- https://youtube.com/
 - https://developer.spotify.com/documentation/web-api
 - Amici e Colleghi
 
