@@ -82,7 +82,7 @@ I file di interesse del progetto sono i seguenti:
    Ti arriverà una email di conferma
    Segui le istruzioni su quella mail per confermare la richiesta
    Attendere
-   Congratulazioni hai i tuoi dati ora segui questi [passaggi](#-3.-Carica-i-dati-da-analizzare:)
+   Congratulazioni hai i tuoi dati ora segui questi [passaggi](#3-Carica-i-dati-da-analizzare)
 
    ### Ottenere le credenziali Spotify
    Seguire questo [link](https://developer.spotify.com/documentation/web-api)
@@ -99,7 +99,7 @@ I file di interesse del progetto sono i seguenti:
    Congratulazioni hai appena creato la tua applicazione
    Ora in altro a destra clicca su 'Settings'
    Ora puoi vedere il client id e se premi su 'View client secret' puoi vedere il client secre
-   Congratulazioni hai le tue credenziali ora segui questi [passaggi](#-4.-**Inserisci-le-credenziali**:)
+   Congratulazioni hai le tue credenziali ora segui questi [passaggi](#4-Inserisci-le-credenziali)
 
 ---
 
