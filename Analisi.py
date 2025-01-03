@@ -209,7 +209,7 @@ def time_series_artista_scorretta(df, artista, periodo=None):
     )
     
 
-    print(df_finale)
+
 
     return df_finale
 # questa funzine ha il compito di correggere la funzione precedente come nel caso di prima 
@@ -320,7 +320,7 @@ def ascolto_generi(df,periodo,client_id=client_id,client_secret=client_secret,re
                                                 client_secret=client_secret,
                                                 redirect_uri=redirect_uri,
                                                 scope="user-library-read"))
-    print(df)
+
     dataframe = top_n_artisti(df,periodo=periodo)
     # 1. Calcolare la somma totale di 's_played'
     total_played = dataframe["s_played"].sum()
@@ -335,12 +335,11 @@ def ascolto_generi(df,periodo,client_id=client_id,client_secret=client_secret,re
     df_filtered = dataframe.filter(pl.col("percentage_of_total") >= 1)
 
     # Visualizzare il risultato
-    print(df_filtered)
-    print("inizio a iterare")
+
     for row in df_filtered.iter_rows():
         nome = row[0]
         tempo = row[1]
-        print(nome)
+
 
     # Cerca l'artista usando il nome
         results = sp.search(q='artist:' + nome, type='artist', limit=1)
@@ -351,7 +350,7 @@ def ascolto_generi(df,periodo,client_id=client_id,client_secret=client_secret,re
             artist = results['artists']['items'][0]
             generi = artist['genres']
         else:
-            print("Artista non trovato")
+            pass
 
         for i in generi:
             if i not in mappa:
@@ -360,9 +359,7 @@ def ascolto_generi(df,periodo,client_id=client_id,client_secret=client_secret,re
                 mappa[i] += tempo
 
         
-        print(f"{nome} -> {generi}")
 
-    print(mappa)
     return mappa
 
 def get_track_info(track_name):
@@ -410,7 +407,7 @@ def get_top_profilo(periodo: str,limit: int,offset = 0):
 
 
 
-print(get_profilo_info())
+
 
 '''
 COSE IMPORTANTI DA SAPERE

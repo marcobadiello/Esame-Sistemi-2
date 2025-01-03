@@ -270,7 +270,7 @@ def stampa_time_series_artisti(df, artisti: list, periodo):
     # creo il grafico
     # non ho idea del perchè questo codice funzioni
     # NON TOCCARE NULLA
-    print(df_completo)
+
     
 
 
@@ -538,7 +538,7 @@ def stampa_info_track(nome):
         artist = results['artists']['items'][0]
         generi = artist['genres']
     else:
-        print("Artista non trovato")
+        pass
     
 
     # Verifica se è un singolo
@@ -744,5 +744,66 @@ def stampa_profilo():
     if st.button("Apri profilo Spotify"):
         webbrowser.open(spotify_url)
 
+def stampa_top_profilo(n,periodo):
+    data = anal.get_top_profilo(periodo=periodo,limit=n)
+    data_track = data['top_track']
+    data_artisti = data['top_artist']
+    risultati_track = {}
+    risultati_artisti = {}
+    posizione = 0
+    for i in data_track['items']:
+        posizione += 1
+        nome = i['name']
+        foto = i['album']['images'][0]['url']
+        x = {
+            'titolo':nome,
+            'foto':foto
+        }
+        risultati_track[posizione] = x
+        
+    posizione = 0
+    for i in data_artisti['items']:
+        posizione += 1
+        nome = i['name']
+        foto = i['images'][0]['url']
+        x = {
+            'nome':nome,
+            'foto':foto
+        }
+        risultati_artisti[posizione] = x
+    col1, col2, col3, col4 = st.columns([1, 2, 1, 2])
+    with col1 and col2:
+        st.subheader("Classsifica canzoni")
+    with col3 and col4:
+        st.subheader("Classifica artisti")
+    
+    for i in range(1,min(len(risultati_artisti),len(risultati_track))+1):
 
         
+        col1, col2, col3, col4 = st.columns([1, 2, 1, 2])
+        with col1 and col2:
+            st.divider()
+        with col3 and col4:
+            st.divider()
+        with col1:
+            st.image(f"{risultati_track[i]['foto']}", width=400)
+        with col2:
+
+            st.subheader(f"{i} - {risultati_track[i]['titolo']}")
+        with col3:
+            st.image(f"{risultati_artisti[i]['foto']}")
+        with col4:
+            st.subheader(f"{i} - {risultati_artisti[i]['nome']}")
+    if n != min(len(risultati_artisti),len(risultati_track)):
+        st.warning(f"Se non vedi esattamente {n} risultati è dovuto ad una mancanza di dati. Prova a ridurre il numero di risultati o ad aumentare la lunghezza del tuo periodo di intresse!")
+    
+    
+    
+
+
+    
+
+        
+        
+        
+# ESTRAZIONE ARTISTI
