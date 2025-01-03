@@ -29,7 +29,7 @@ Per eseguire il progetto, segui questi passi:
    ```bash
    cd Esame-Sistemi-2
    ```
-### 3. Carica nella cartella [Dati](#Struttura-del-Progetto) i dati da analizzare:
+### 3. Carica i dati da analizzare:
    Estrai il contenuto della cartella che spotify ti ha fornito (sarà una sola cartella chiamiamola 'Cartella A'). Inserisci la 'Cartella A' all'inteno della cartella [Dati](#Struttura-del-Progetto). Nella cartella dati dovrà esserci SOLAMENTE la 'Cartella A' che puoi comunque rinominare a tuo piacimento. Se non sai come scaricare i tuoi dati leggi [qui](#Ottenere-i-dati-da-Spotify). Se non hai dei dati o stai aspettando che Spotify ti consegni i tuoi puoi utilizzare dei dati di esempio reperibili nella cartella [ESEMPIO DI DATI](## Struttura del Progetto ). Prendi una delle cartelle presenti e mettila nella cartella [Dati](#Struttura-del-Progetto) non preoccuparti del nome della cartella.
 
 ### 4. **Inserisci le credenziali**:  
@@ -75,8 +75,31 @@ I file di interesse del progetto sono i seguenti:
 ## Come ottenere i dati necessari al funzionamento del progetto
 
    ### Ottenere i dati da Spotify
+   Seguire questo [link](https://www.spotify.com/it/account/privacy)
+   Scorrere in basso
+   Selezionare solo 'Cronologia di ascolto estesa'
+   Premere il bottone 'Richiedi i dati'
+   Ti arriverà una email di conferma
+   Segui le istruzioni su quella mail per confermare la richiesta
+   Attendere
+   Congratulazioni hai i tuoi dati ora segui questi [passaggi](#-3.-Carica-i-dati-da-analizzare:)
 
    ### Ottenere le credenziali Spotify
+   Seguire questo [link](https://developer.spotify.com/documentation/web-api)
+   Effettua l'accesso con le tue credenziali spotify
+   Clicca sul tuo profilo in alto a destra
+   Clicca su 'Dashboard'
+   Crea una nuova applicazione
+   Inserisci un nome a paicere
+   Inserisci una descrizione a piacere
+   Alla voce 'Redirect URIs' inserisci 'http://localhost:8888/callback'
+   Alla voce 'Which API/SDKs are you planning to use?' spunta la casella 'Web API'
+   Accetta termini e condizioni
+   Crea la applicazione
+   Congratulazioni hai appena creato la tua applicazione
+   Ora in altro a destra clicca su 'Settings'
+   Ora puoi vedere il client id e se premi su 'View client secret' puoi vedere il client secre
+   Congratulazioni hai le tue credenziali ora segui questi [passaggi](#-4.-**Inserisci-le-credenziali**:)
 
 ---
 
@@ -97,9 +120,9 @@ Per la creazione dell'applicazione web.
 - [Altair](https://github.com/vega/altair)
 Per la realizzazione dei grafici.
 - [Wikipedia](https://github.com/goldsmith/Wikipedia)
-Per utilizzare in modo più semplice le API di Wikipedia
--[Spotipy](https://github.com/spotipy-dev/spotipy)
-Per utilizzare in modo più semplice le API di Spotify
+Per utilizzare in modo più semplice le API di Wikipedia.
+- [Spotipy](https://github.com/spotipy-dev/spotipy)
+Per utilizzare in modo più semplice le API di Spotify.
 
 ---
 
