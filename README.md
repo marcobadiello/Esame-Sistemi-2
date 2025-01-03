@@ -1,4 +1,4 @@
-[Italiano](#spotify-wrapped-statistico)
+[Italiano](#spotify-wrapped-statistico)/[English](#spotify-wrapped-statistical)
 
 # Spotify wrapped Statistico
 
@@ -151,3 +151,151 @@ Questo codice è stato scritto utilizzando queste fonti:
 - Si rigrazia chiunque abbia contrinuito in qualunque modo al progetto ed eventuali pull request o segnalazioni di issues.
 - Si ringrazia il professore [Ceccarello Matteo](https://www.dei.unipd.it/~ceccarello/).
 
+---
+---
+
+# Spotify Wrapped Statistical
+
+---
+
+## Introduction  
+This project aims to analyze and visualize Spotify listening data. It uses data analysis and visualization tools to provide insights into the main aspects of listening data.  
+
+---
+
+## System Requirements and Dependencies  
+The project was built with [Python 3.12](https://www.python.org/downloads/release/python-3120/), and all dependencies are managed with [uv](https://github.com/astral-sh/uv).  
+
+You don’t need to worry about anything; a virtual environment will be created automatically if all the steps in the next chapter are followed correctly.  
+
+---
+
+## Project Startup  
+To run the project, follow these steps:  
+
+### 1. **Clone the repository**:  
+   ```bash
+   git clone https://github.com/marcobadiello/Esame-Sistemi-2.git
+   ```
+
+### 2. **Navigate to the project directory**:  
+   ```bash
+   cd Esame-Sistemi-2
+   ```
+
+### 3. Load the data to analyze:  
+   Extract the contents of the folder Spotify provided you (there will be only one folder, let’s call it 'Folder A'). Place 'Folder A' inside the [Data](#Project-Structure) folder. The Data folder must contain ONLY 'Folder A,' which you can rename if desired. If you don’t know how to download your data, read [here](#How-to-Obtain-Data-from-Spotify). If you don’t have data yet or are waiting for Spotify to provide it, you can use sample data available in the [SAMPLE DATA](#Project-Structure) folder. Take one of the folders provided and place it in the [Data](#Project-Structure) folder without worrying about its name.
+
+### 4. **Insert the credentials**:  
+   Enter your **client_id** and **client_secret** in the *credenziali.py* file and save the changes.  
+   If you don’t know how to retrieve these credentials, read [here](#How-to-Obtain-Spotify-Credentials).
+
+### 5. Save all changes correctly
+
+### 6. **Run the program**:  
+   ```bash
+   uv run streamlit run app.py
+   ```
+This command is required to properly start all dependencies.
+
+---
+
+## Project Structure  
+
+The relevant project files are as follows:  
+- **DATA**: Folder that must contain the folder (*my_spotify_data/*) with the data you want to analyze.  
+- **SAMPLE DATA**: Folder with sample data.  
+- **pages/**  
+  - **discover_artist.py**: Code for the "Scopri artisti" page.  
+  - **discover_track.py**: Code for the "Scopri brani" page.  
+  - **genery.py**: Code for the "Generi musicali" page.  
+  - **profile.py**: Code for the "Profilo" page.  
+  - **readme.py**: Code for the "Readme" page.  
+  - **day.py**: Code for the "Giornata tipo" page.  
+  - **home.py**: Code for the "Home" page.  
+  - **shuffle.py**: Code for the "Shuffle?" page.  
+  - **time_series_artists.py**: Code for the "Serie storica artisti" page.  
+  - **time_series.py**: Code for the "Serie storica" page.  
+  - **Top_artists.py**: Code for the "Top Artisti" page.  
+  - **Top_tracks.py**: Code for the "Top Canzoni" page.  
+- **Analysis.py**: Code for dataframe analysis functions.  
+- **app.py**: Main code to run the program (MAIN).  
+- **Extractor.py**: Code to extract, clean, and convert data into a dataframe.  
+- **Tools.py**: Code for utility functions.  
+- **credentials.py**: File containing Spotify API credentials.  
+- **README.md**: Project documentation.  
+
+Understanding the other files is not strictly necessary to comprehend how the code works.
+
+---
+
+## How to Obtain Data Required for the Project  
+
+### Obtain Data from Spotify  
+Follow this [link](https://www.spotify.com/it/account/privacy)  
+Scroll down  
+Select only 'Extended listening history'  
+Click the 'Request data' button  
+You will receive a confirmation email  
+Follow the instructions in that email to confirm the request  
+Wait  
+Congratulations! You have your data. Now follow these [steps](#3-Load-the-data-to-analyze).  
+
+### Obtain Spotify Credentials  
+Follow this [link](https://developer.spotify.com/documentation/web-api)  
+Log in with your Spotify credentials  
+Click on your profile in the top-right corner  
+Click 'Dashboard'  
+Create a new application  
+Enter a name of your choice  
+Enter a description of your choice  
+Under 'Redirect URIs', enter 'http://localhost:8888/callback'  
+Under 'Which API/SDKs are you planning to use?', check 'Web API'  
+Accept terms and conditions  
+Create the application  
+Congratulations! You just created your application.  
+Now, in the top-right corner, click 'Settings'.  
+You can now see the client ID, and if you click 'View client secret', you can see the client secret.  
+Congratulations! You have your credentials. Now follow these [steps](#4-Insert-the-credentials).  
+
+---
+
+## Possible Future Implementations  
+
+- **Ability to upload data directly from the app** (Not before Streamlit allows folders to be uploaded directly instead of individual files).  
+- **Integration of machine learning models for a recommendation system** (Recommendation systems using Spotify APIs have become obsolete and unusable; an alternative system must be found).  
+- **Ability to adapt the application to Apple Music data**.  
+
+---
+
+## Libraries Used  
+- [Polars](https://github.com/pola-rs/polars)  
+  For dataframe management.  
+- [Streamlit](https://github.com/streamlit/streamlit)  
+  For web application development.  
+- [Altair](https://github.com/vega/altair)  
+  For graph creation.  
+- [Wikipedia](https://github.com/goldsmith/Wikipedia)  
+  To simplify the use of Wikipedia APIs.  
+- [Spotipy](https://github.com/spotipy-dev/spotipy)  
+  To simplify the use of Spotify APIs.  
+
+---
+
+## Bibliography  
+This code was written using these sources:  
+- https://altair-viz.github.io/  
+- https://docs.streamlit.io/  
+- https://www.reddit.com/  
+- https://chatgpt.com/  
+- https://github.com/  
+- https://youtube.com/  
+- https://developer.spotify.com/documentation/web-api  
+- Friends and colleagues  
+
+---
+
+## Acknowledgments  
+- Thanks to [Spotify](https://www.spotify.com/) for allowing me to obtain the data through this [page](https://www.spotify.com/it/account/privacy).  
+- Thanks to anyone who contributed to the project, including pull requests or issue reports.  
+- Special thanks to Professor [Ceccarello Matteo](https://www.dei.unipd.it/~ceccarello/).  
