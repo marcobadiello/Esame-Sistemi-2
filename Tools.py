@@ -3,6 +3,7 @@ import Analisi as anal
 import polars as pl
 import Tools
 import polars as pl
+import wikipedia
 from Estrattore import df
 import altair as alt
 from vega_datasets import data
@@ -545,7 +546,7 @@ def stampa_info_track(nome):
     # Crea il testo informativo completo e mettilo in st.subheader
     if is_single:
         st.subheader(f"""
-        Questo brano **{track_name}** è un singolo, il **{album_release_date}**.
+        Questo brano **{track_name}** è un singolo rilasciato il **{album_release_date}**.
         """)
         st.subheader(f"**I generi musicali che caratterizzano questo brano sono:**")
         if generi:
@@ -645,6 +646,17 @@ def stampa_info_artista(nome_artista):
             st.subheader(f"➡️{i}")
     else:
         st.subheader("Nessun genere disponibile.")
+        
+    try:
+        wikipedia.set_lang("it")
+        # Ottieni il riassunto
+        summary = wikipedia.summary(f"{artist_name}", sentences=5)
+        # Mostra tutto il testo come un unico subheader
+        st.markdown(f"{summary.split('=')[0]}")  # Livello 1 (più grande)
+    except Exception as e:
+        st.error(f"Scusa ma non ho trovato nulla sulla canzone '{artist_name}'")
+    
+    st.warning(f"Queste informazione potrebbero non essere corrette o non riferirsi a '{artist_name}' per via i possibili errori di wikipedia")
 
     # Mostra la popolarità
     st.subheader(f"🔥 Popolarità: {popularity}%")
