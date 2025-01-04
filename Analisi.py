@@ -6,6 +6,7 @@ from spotipy.oauth2 import SpotifyOAuth
 from datetime import datetime
 import json
 from pytube import Search, YouTube
+from datetime import datetime, timedelta
 import os
 import streamlit as st
 
@@ -488,12 +489,79 @@ def get_playlist_tracks(playlist_id, client_id=client_id, client_secret=client_s
 
     return risultati
 
+def crea_date_complete(anno):
+    # Funzione per verificare se un anno è bisestile
+    def is_bisestile(anno):
+        return (anno % 4 == 0 and anno % 100 != 0) or (anno % 400 == 0)
+
+    # Determinare il numero di giorni nell'anno
+    giorni_nell_anno = 366 if is_bisestile(anno) else 365
+
+    # Creare l'elenco di date
+    date_list = []
+    start_date = datetime(anno, 1, 1)
+
+    for giorno in range(giorni_nell_anno):
+        date_list.append((start_date + timedelta(days=giorno)).date())
+
+    # Creare il DataFrame Polars
+    date_complete = pl.DataFrame({"giorno": date_list})
+
+    return date_complete
+
+def ascolti_giornalieri(df, anno):
+    # Selezionare le colonne necessarie
+    df_selezionato = df.select(["ts", "s_played"])
+    print(df_selezionato)
+    
+    # Convertire il timestamp in formato giorno
+    df = df.with_columns(
+        pl.col("ts").dt.strftime("%Y-%m-%d").alias("giorno")
+    )
+    
+    # Filtrare i giorni per l'anno indicato
+    df = df.filter(pl.col("giorno").str.slice(0, 4) == str(anno))
+    
+    # Raggruppamento per giorno e somma del tempo di ascolto
+    df_aggregated = df.group_by("giorno").agg(
+        totale_ascolto=pl.col("s_played").sum()
+    )
+    
+    # Creazione della lista di tutte le date dell'anno
+    date_complete = crea_date_complete(anno)  # Assicurati che questa funzione esista e restituisca una lista di stringhe
+    print(df_aggregated)
+    print(date_complete)
+    
+    date_non_complete = {}
+    for row in df_aggregated.iter_rows():
+        date_non_complete[row[0]] = row[1]
+        
+    date_complete_lista = []
+    for row in date_complete.iter_rows():
+        date_complete_lista.append(row[0].strftime("%Y-%m-%d"))
+        
+    
+    risultati = {}
+    
+    for i in date_complete_lista:
+        if i in date_non_complete:
+            risultati[i] = date_non_complete[i]
+        else:
+            risultati[i] = 0
+    
+
+   
+    dataframe_finale = pl.DataFrame(list(risultati.items()), schema=["data", "valore"])
+
+    return dataframe_finale
+    
+
+print(ascolti_giornalieri(df,2024))
+
 '''
 COSE IMPORTANTI DA SAPERE
 - Ogni periodo corrisponde ad un mese quindi ogni 12 periodi corrisponde un anno
 '''
-
-
 
 
 #########################################

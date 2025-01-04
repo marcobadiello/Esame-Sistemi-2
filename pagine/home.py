@@ -1,5 +1,6 @@
 import streamlit as st
 from Estrattore import df
+import Tools
 
 ''''
 In qeusto file è contenuto il codice per la schermata HOME del progetto
@@ -18,6 +19,8 @@ def run_home():
         st.image("spotify_logo.png", width=100)
     with col2:
         st.title("Spotify Wrapped Statistico")
+        
+    Tools.stampa_heetmap(df,2024)
     
     st.markdown("## **Descrizione del progetto**")
     st.markdown("---")

@@ -6,6 +6,7 @@ import polars as pl
 import wikipedia
 from Estrattore import df
 import os
+import pandas as pd
 import yt_dlp
 from pytube import YouTube
 import altair as alt
@@ -883,8 +884,40 @@ def stampa_dawnload_palylist():
                         download_audio_from_youtube(link)
                 st.write(f"Download terminato")
                 
-                
-        
+def stampa_heetmap(df, anno):
+    source = anal.ascolti_giornalieri(df, anno)
+
+    # Estrai il giorno e il mese dalla colonna "data"
+    source = source.with_columns([
+        pl.col("data").str.slice(8, 2).alias("day"),  # Estrai il giorno
+        pl.col("data").str.slice(5, 2).alias("month")  # Estrai il mese
+    ])
+
+    # Calcola il numero di ore di riproduzione (valore diviso per 3600)
+    source = source.with_columns([
+        (pl.col("valore") / 3600).alias("ore_riproduzione")  # Dividi per 3600 per ottenere ore
+    ])
+
+    # Crea la heatmap con Altair
+    chart = alt.Chart(source.to_pandas(), title="Heatmap Giornaliera").mark_rect().encode(
+        alt.X("day:O").title("Day").axis(labelAngle=0),
+        alt.Y("month:O").title("Month"),
+        alt.Color("ore_riproduzione:Q", scale=alt.Scale(scheme='viridis')).title("Ore di Riproduzione"),
+        tooltip=[
+            alt.Tooltip("data", title="Date"),
+            alt.Tooltip("ore_riproduzione", title="Ore di Riproduzione"),
+        ],
+    ).configure_view(
+        step=13,
+        strokeWidth=0
+    ).configure_axis(
+        domain=False
+    )
+
+    # Visualizza la heatmap in Streamlit
+    st.title('Heatmap Giornaliera')
+    st.altair_chart(chart, use_container_width=True)
+    
         
         
 # ESTRAZIONE ARTISTI
