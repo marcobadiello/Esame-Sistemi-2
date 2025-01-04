@@ -5,6 +5,8 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from datetime import datetime
 import json
+from pytube import Search, YouTube
+import os
 import streamlit as st
 
 
@@ -405,9 +407,86 @@ def get_top_profilo(periodo: str,limit: int,offset = 0):
     }
     return risultati
 
+def search_youtube_video(video_name):
+    try:
+        # Cerca il video su YouTube
+        search = Search(video_name)
+        video = search.results[0]  # Prende il primo risultato
+        return video.watch_url
+    except Exception as e:
+        return None
 
+def get_user_playlists(client_id=client_id, client_secret=client_secret, redirect_uri=redirect_uri):
+    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
+                                                   client_secret=client_secret,
+                                                   redirect_uri=redirect_uri,
+                                                   scope="playlist-read-private"))
+    
+    offset = 0  # Inizializza l'offset
+    risultati = {}
+    while True:
+        # Ottieni le playlist dell'utente con l'offset per la paginazione
+        results = sp.current_user_playlists(offset=offset)
+        playlists = results['items']
+        
+        # Aggiungi le playlist alla lista
+        for idx, playlist in enumerate(playlists):
+            name = playlist['name']
+            playlist_id = playlist['id']
+            images = playlist.get('images', [])
+            
+            # Controlla se ci sono immagini nella playlist
+            if images:
+                image_url = images[0]['url']  # Prendi la prima immagine
+            else:
+                image_url = "No image available"  # Se non ci sono immagini
+            
+            risultati[offset + idx + 1] = {
+                'nome': name,
+                'id': playlist_id,
+                'foto': image_url
+            }
+        
+        # Se il numero di playlist recuperate è inferiore a 50, significa che abbiamo raggiunto la fine
+        if len(playlists) < 50:
+            break
+        
+        # Altrimenti, incrementa l'offset di 50 per ottenere il blocco successivo
+        offset += 50
+    
+    return risultati
 
+def get_playlist_tracks(playlist_id, client_id=client_id, client_secret=client_secret, redirect_uri=redirect_uri):
+    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
+                                                   client_secret=client_secret,
+                                                   redirect_uri=redirect_uri,
+                                                   scope="playlist-read-private"))
+    offset = 0  # Inizializza l'offset
+    risultati = {}  # Dizionario per memorizzare i risultati
 
+    while True:
+        # Ottieni le tracce della playlist con l'offset per la paginazione
+        results = sp.playlist_tracks(playlist_id, offset=offset)
+        tracks = results['items']
+        
+        # Aggiungi le tracce al dizionario
+        for idx, item in enumerate(tracks):
+            track = item['track']
+            track_name = track['name']
+            artists = ', '.join(artist['name'] for artist in track['artists'])  # Unisce i nomi degli artisti
+            risultati[offset + idx + 1] = {
+                'canzone': track_name,
+                'artista': artists
+            }
+        
+        # Se il numero di tracce recuperate è inferiore a 100, significa che abbiamo raggiunto la fine
+        if len(tracks) < 100:
+            break
+        
+        # Altrimenti, incrementa l'offset di 100 per ottenere il blocco successivo
+        offset += 100
+
+    return risultati
 
 '''
 COSE IMPORTANTI DA SAPERE

@@ -17,6 +17,7 @@ from pagine.discover_artist import run_discover_artist
 from pagine.discover_track import run_discover_track
 from pagine.profilo import run_profilo
 from pagine.readme import run_readme
+from pagine.download_playlist import run_dawnload_playlist
 
 
 
@@ -37,7 +38,8 @@ pagine = {
     "\n\n\n":[st.Page(run_giornata,title="Giornata tipo")],
     "\n\n\n\n":[st.Page(run_generi,title="Generi musicali")],
     "Scopri": [st.Page(run_discover_artist, title="Scopri artisti", icon="")],
-    "\t": [st.Page(run_discover_track, title="Scopri brani", icon="")]
+    "\t": [st.Page(run_discover_track, title="Scopri brani", icon="")],
+    "\t\t\t": [st.Page(run_dawnload_playlist, title="Dawnload playlist", icon="")]
     
 }
 

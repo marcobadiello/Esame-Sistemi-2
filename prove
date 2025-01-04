@@ -1,0 +1,54 @@
+import spotipy
+from spotipy.oauth2 import SpotifyOAuth
+
+from credenziali import client_id
+from credenziali import client_secret
+from credenziali import redirect_uri
+
+# Configura le credenziali (Client ID, Client Secret, Redirect URI)
+
+
+# Funzione per ottenere le playlist dell'utente
+
+        
+
+# Chiamata della funzione per ottenere le playlist
+
+
+def get_playlist_tracks(playlist_id, client_id=client_id, client_secret=client_secret, redirect_uri=redirect_uri):
+    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
+                                                   client_secret=client_secret,
+                                                   redirect_uri=redirect_uri,
+                                                   scope="playlist-read-private"))
+    offset = 0  # Inizializza l'offset
+    risultati = {}  # Dizionario per memorizzare i risultati
+
+    while True:
+        # Ottieni le tracce della playlist con l'offset per la paginazione
+        results = sp.playlist_tracks(playlist_id, offset=offset)
+        tracks = results['items']
+        
+        # Aggiungi le tracce al dizionario
+        for idx, item in enumerate(tracks):
+            track = item['track']
+            track_name = track['name']
+            artists = ', '.join(artist['name'] for artist in track['artists'])  # Unisce i nomi degli artisti
+            risultati[offset + idx + 1] = {
+                'canzone': track_name,
+                'artista': artists
+            }
+        
+        # Se il numero di tracce recuperate è inferiore a 100, significa che abbiamo raggiunto la fine
+        if len(tracks) < 100:
+            break
+        
+        # Altrimenti, incrementa l'offset di 100 per ottenere il blocco successivo
+        offset += 100
+
+    return risultati
+
+# Chiamata della funzione per ottenere tutte le tracce di una playlist
+playlist_tracks = get_playlist_tracks('6vzZjtl5XMgH1GCMZwiWS0')
+
+# Stampa i risultati
+print(playlist_tracks)

@@ -103,4 +103,8 @@ In questa pagina puoi scoprire nuovi artisti e avere informazioni a riguardo.
     st.write('''
 In questa pagina puoi scoprire nuovi brani e avere informazioni a riguardo.
 ''')
+    st.subheader("Scarica playlist")
+    st.write('''
+In questa pagina puoi vedere tutte le playlist presenti nel tuo profilo e decidere di scaricarle. Le canzoni scaricate le puoi ritrovare nella cartella 'DOWNLOAD'.
+''')
     

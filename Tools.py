@@ -5,6 +5,9 @@ import Tools
 import polars as pl
 import wikipedia
 from Estrattore import df
+import os
+import yt_dlp
+from pytube import YouTube
 import altair as alt
 from vega_datasets import data
 import webbrowser
@@ -514,6 +517,8 @@ def stampa_info_track(nome):
 
     with col1:
         st.image(data['album']['images'][0]['url'], width=400)
+        if st.button("Scarica canzone"):
+            Tools.download_audio_from_youtube(anal.search_youtube_video(f"{data['name']}{data['artists'][0]['name']}"))
 
     with col2:
         st.title(f"Titolo: {data['name']}")
@@ -596,6 +601,8 @@ def stampa_info_track(nome):
     if popularity >= 70:
         st.header(f"Cosa ?!?! {popularity}% di popolarità 😱 Sembra che tu abbia trovato un capolavoro della musica! 🎉")
         st.balloons()
+    
+    st.video(anal.search_youtube_video(f"{data['name']}{data['artists'][0]['name']}"))
 
 def stampa_info_artista(nome_artista):
     global client_id
@@ -670,11 +677,11 @@ def stampa_info_artista(nome_artista):
     try:
         wikipedia.set_lang("it")
         # Ottieni il riassunto
-        summary = wikipedia.summary(f"{artist_name} musica", sentences=5)
+        summary = wikipedia.summary(f"{artist_name} (gruppo musicale,cantante,musica)", sentences=5)
         # Mostra tutto il testo come un unico subheader
         st.markdown(f"{summary.split('=')[0]}")  # Livello 1 (più grande)
     except Exception as e:
-        st.error(f"Scusa ma non ho trovato nulla sulla canzone '{artist_name}'")
+        st.error(f"Scusa ma non ho trovato nulla rigurdo '{artist_name}'")
     
     st.warning(f"Queste informazione potrebbero non essere corrette o non riferirsi a '{artist_name}' per via i possibili errori di wikipedia")
 
@@ -816,12 +823,67 @@ def stampa_top_profilo(n,periodo):
     if n != min(len(risultati_artisti),len(risultati_track)):
         st.warning(f"Se non vedi esattamente {n} risultati è dovuto ad una mancanza di dati. Prova a ridurre il numero di risultati o ad aumentare la lunghezza del tuo periodo di intresse!")
     
-    
-    
+def download_audio_from_youtube(url, output_path="DOWNLOAD"):
+    try:
+        # Crea la cartella di destinazione se non esiste
+        if not os.path.exists(output_path):
+            os.makedirs(output_path)
+
+        # Impostazioni per scaricare l'audio in formato MP3
+        ydl_opts = {
+            'outtmpl': os.path.join(output_path, '%(title)s.%(ext)s'),  # Cartella di salvataggio
+            'format': 'bestaudio/best',  # Seleziona il miglior audio disponibile
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',  # Usa FFmpeg per estrarre l'audio
+                'preferredcodec': 'mp3',  # Converte in formato MP3
+                'preferredquality': '192',  # Qualità dell'audio
+            }],
+            'ffmpeg_location': r'C:\path\to\ffmpeg\bin',  # Assicurati di avere ffmpeg installato e fornire il percorso
+        }
+
+        # Avvia il download
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([url])
+        print("Download completato con successo!")
+
+    except Exception as e:
+        print(f"Errore durante il download: {e}")
 
 
+def stampa_dawnload_palylist():
+    # Ottieni le playlist
+    playlist = anal.get_user_playlists()
     
-
+    # Itera su ogni playlist
+    for i in range(1, len(playlist) + 1):
+        st.divider()
+        col1, col2, col3 = st.columns([2, 2, 1])
+        
+        with col1:
+            # Mostra l'immagine della playlist con una dimensione ridotta
+            st.image(playlist[i]['foto'], width=80)  # Modifica la larghezza per una foto più piccola
+        
+        with col2:
+            # Mostra il nome della playlist in modo più grande
+            st.subheader(f"{playlist[i]['nome']}", anchor=f"playlist_{i}")  # Aggiungi un anchor per una buona visibilità
+        
+        with col3:
+            # Usa il nome della playlist come identificatore univoco per il bottone
+            if st.button(f"Scarica {playlist[i]['nome']}"):
+                st.write(f"Inizio il download...")
+                id_playlist = playlist[i]['id']
+                canzoni_nella_playlist = anal.get_playlist_tracks(id_playlist)
+                for i in range(1,len(canzoni_nella_playlist)+1):
+                    titolo = f"{canzoni_nella_playlist[i]['canzone']} {canzoni_nella_playlist[i]['artista']}"
+                    try:
+                        link = anal.search_youtube_video(titolo)
+                    except:
+                        link = None
+                    if link:
+                        download_audio_from_youtube(link)
+                st.write(f"Download terminato")
+                
+                
         
         
         

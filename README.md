@@ -53,6 +53,8 @@ Questo comando è necessario per avviare correttamente tutte le dipendenze.
 I file di interesse del progetto sono i seguenti:
 - **DATI**: Cartella che deve contenere la cartella (*my_spotify_data/*) con i dati che vuoi analizzare.
 - **ESEMPIO DI DATI**: Cartella con dei dati di esempio
+- **DOWNLOAD**: Cartella nella quale si trovano le canzoni che sono state scaricate.
+- **ESEMPIO DI DOWNLOAD**: Cartella nella quale sono presenti degli esempio di canzoni scaricate.
 - **pagine/**  
   - **discover_artist.py**: Codice per la pagina "Scopri artisti".
   - **discover_track.py**: Codice per la pagina "Scopri brani".
@@ -66,6 +68,7 @@ I file di interesse del progetto sono i seguenti:
   - **time_series.py**: Codice per la pagina "Serie storica".
   - **Top_artisti.py**: Codice per la pagina "TOP Artisti".
   - **Top_canzoni.py**: Codice per la pagina "TOP Canzoni".
+  - **download_playlist.py**: Codice per la pagina "Download playlist".
 - **Analisi.py**: Codice per funzioni di analisi del dataframe.
 - **app.py**: Codice principale per avviare il programma (MAIN).
 - **Estrattore.py**: Codice per estrarre i dati, ripulirli e convertirli in un dataframe.
@@ -128,6 +131,8 @@ Per la realizzazione dei grafici.
 Per utilizzare in modo più semplice le API di Wikipedia.
 - [Spotipy](https://github.com/spotipy-dev/spotipy)  
 Per utilizzare in modo più semplice le API di Spotify.
+- [Pytube](https://github.com/pytube/pytube)  
+Per la gestione delle richieste a youtube e il download.
 
 ---
 
@@ -203,8 +208,10 @@ This command is required to properly start all dependencies.
 ## Project Structure  
 
 The relevant project files are as follows:  
-- **DATA**: Folder that must contain the folder (*my_spotify_data/*) with the data you want to analyze.  
-- **SAMPLE DATA**: Folder with sample data.  
+- **DATI**: Folder that must contain the folder (*my_spotify_data/*) with the data you want to analyze.  
+- **ESEMPIO DATI**: Folder with sample data.  
+- **DOWNLOAD**: Folder where the songs that have been downloaded are located.
+- **ESEMPIO DI DOWNLOAD**: Folder containing examples of downloaded songs.
 - **pages/**  
   - **discover_artist.py**: Code for the "Scopri artisti" page.  
   - **discover_track.py**: Code for the "Scopri brani" page.  
@@ -218,6 +225,7 @@ The relevant project files are as follows:
   - **time_series.py**: Code for the "Serie storica" page.  
   - **Top_artists.py**: Code for the "Top Artisti" page.  
   - **Top_tracks.py**: Code for the "Top Canzoni" page.  
+  - **download_playlist.py**: Code for the "Download playlist" page.
 - **Analysis.py**: Code for dataframe analysis functions.  
 - **app.py**: Main code to run the program (MAIN).  
 - **Extractor.py**: Code to extract, clean, and convert data into a dataframe.  
@@ -279,7 +287,8 @@ Congratulations! You have your credentials. Now follow these [steps](#4-Insert-t
   To simplify the use of Wikipedia APIs.  
 - [Spotipy](https://github.com/spotipy-dev/spotipy)  
   To simplify the use of Spotify APIs.  
-
+- [Pytube](https://github.com/pytube/pytube)  
+For managing requests to YouTube and downloading.
 ---
 
 ## Bibliography  

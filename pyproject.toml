@@ -19,4 +19,8 @@ dependencies = [
     "spotipy>=2.24.0",
     "vega-datasets>=0.9.0",
     "wikipedia>=1.4.0",
+    "pytube>=15.0.0",
+    "youtube-search-python>=1.6.6",
+    "pydub>=0.25.1",
+    "yt-dlp>=2024.12.23",
 ]
