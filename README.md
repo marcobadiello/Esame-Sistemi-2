@@ -227,7 +227,7 @@ The relevant project files are as follows:
   - **Top_artists.py**: Code for the "Top Artisti" page.  
   - **Top_tracks.py**: Code for the "Top Canzoni" page.  
   - **download_playlist.py**: Code for the "Download playlist" page.
-  - ***heetmap.py**: Code for the "HeetMap" page.
+  - **heetmap.py**: Code for the "HeetMap" page.
 - **Analysis.py**: Code for dataframe analysis functions.  
 - **app.py**: Main code to run the program (MAIN).  
 - **Extractor.py**: Code to extract, clean, and convert data into a dataframe.  
