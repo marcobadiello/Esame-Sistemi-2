@@ -69,6 +69,7 @@ I file di interesse del progetto sono i seguenti:
   - **Top_artisti.py**: Codice per la pagina "TOP Artisti".
   - **Top_canzoni.py**: Codice per la pagina "TOP Canzoni".
   - **download_playlist.py**: Codice per la pagina "Download playlist".
+  - ***heetmap.py**: Codice per la pagina "HeetMap".
 - **Analisi.py**: Codice per funzioni di analisi del dataframe.
 - **app.py**: Codice principale per avviare il programma (MAIN).
 - **Estrattore.py**: Codice per estrarre i dati, ripulirli e convertirli in un dataframe.
@@ -226,6 +227,7 @@ The relevant project files are as follows:
   - **Top_artists.py**: Code for the "Top Artisti" page.  
   - **Top_tracks.py**: Code for the "Top Canzoni" page.  
   - **download_playlist.py**: Code for the "Download playlist" page.
+  - ***heetmap.py**: Code for the "HeetMap" page.
 - **Analysis.py**: Code for dataframe analysis functions.  
 - **app.py**: Main code to run the program (MAIN).  
 - **Extractor.py**: Code to extract, clean, and convert data into a dataframe.  

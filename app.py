@@ -18,6 +18,7 @@ from pagine.discover_track import run_discover_track
 from pagine.profilo import run_profilo
 from pagine.readme import run_readme
 from pagine.download_playlist import run_dawnload_playlist
+from pagine.heetmap import run_heetmap
 
 
 
@@ -36,6 +37,7 @@ pagine = {
     "\n":[st.Page(run_time_series_artisti,title="Serie storica artisti")],
     "\n\n":[st.Page(run_shuffle,title="Shuffle?")],
     "\n\n\n":[st.Page(run_giornata,title="Giornata tipo")],
+    "\n\n\n\t":[st.Page(run_heetmap,title="HeetMap")],
     "\n\n\n\n":[st.Page(run_generi,title="Generi musicali")],
     "Scopri": [st.Page(run_discover_artist, title="Scopri artisti", icon="")],
     "\t": [st.Page(run_discover_track, title="Scopri brani", icon="")],

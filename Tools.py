@@ -915,7 +915,6 @@ def stampa_heetmap(df, anno):
     )
 
     # Visualizza la heatmap in Streamlit
-    st.title('Heatmap Giornaliera')
     st.altair_chart(chart, use_container_width=True)
     
         
