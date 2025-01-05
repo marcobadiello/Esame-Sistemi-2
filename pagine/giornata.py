@@ -86,8 +86,16 @@ def run_giornata():
     unsafe_allow_html=True
     )
     # mostro il grafico circolare
+    aa = ''''
+    In questo grafico puoi avere una visione degli ascolti durante i vari momenti della giornata.
+    '''
+    st.write(aa)
     Tools.grafico_giornata(df,orario_selezionato)
     # mostro il grafico orizzonale
+    bb = '''
+    In questo grafico puoi vedere più dettagliatamente come i tuoi ascolti variano durante la giornata.
+    '''
+    st.write(bb)
     Tools.grafico_giornata_orizzontale(df,orario_selezionato)
     
 

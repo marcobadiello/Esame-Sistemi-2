@@ -40,7 +40,8 @@ def run_time_series():
     stringa = f'''
     Il seguente grafcio riporta la serie storica degli ascolti suddivisa per mesi. 
     Ogni perido corrisponde a un mese a partire da {mesi[serie["mese"][0]]} {serie["anno"][0]} fino a 
-    {mesi[serie["mese"][-1]]} {serie["anno"][-1]}
+    {mesi[serie["mese"][-1]]} {serie["anno"][-1]}. Questo grafico è utile per verificare l'andametno degli ascolti 
+    nel tempo e per vedere eventuali stagionalità
     '''
     st.write(stringa)
     # mostro a schermo la time series
@@ -48,7 +49,7 @@ def run_time_series():
 
     
     st.title("Serie storica cumulata")
-    st.write("Il seguente grafcio mostra la serie storica cumulata degli ascolti, ad ongni periodo")
+    st.write("Il seguente grafcio mostra la serie storica cumulata degli ascolti, ad ongni periodo. Questo grafico è utile per vdedere eventuali bruschi aumenti di ascolto nel tempo o periodo di bassi ascolti.")
     # stampo la serie storica cumulata
     Tools.stampa_time_series_cumulata(df)
     # stampo lo slider

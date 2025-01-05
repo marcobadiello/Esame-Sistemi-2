@@ -29,4 +29,9 @@ def run_heetmap():
     )
     
     # Richiamo della funzione per stampare la heatmap
+    xx = f'''
+    In questo grafico è riporatata la HeetMap dell'anno {anno_selezionato} utilie per vedere periodo di forte ascolto o periodi di bassi ascolti.
+    Inoltre è possibile vedere la loro distribuzione durante l'anno e l'idenificazione di eventulai picchi. 
+    '''
+    st.write(xx)
     Tools.stampa_heetmap(df, anno_selezionato)

@@ -335,7 +335,7 @@ def ascolto_generi(df,periodo,client_id=client_id,client_secret=client_secret,re
 
 
     # 3. Filtrare gli artisti con una percentuale di ascolto superiore o uguale all'1%
-    df_filtered = dataframe.filter(pl.col("percentage_of_total") >= 1)
+    df_filtered = dataframe.filter(pl.col("percentage_of_total") >= 0.1)
 
     # Visualizzare il risultato
 

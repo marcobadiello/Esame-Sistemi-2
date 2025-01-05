@@ -27,7 +27,7 @@ def run_shuffle():
     
     stringa = '''
     In questa pagina puoi vedere un grafico che mostra quanto viene utilizzato 
-    in percentuale la funzione 'Shuffle', ovvero la riproduzione casuale
+    in percentuale la funzione 'Shuffle', ovvero la riproduzione casuale.
     '''
     colori = ("#00FF00", "#FF0000")
     if st.checkbox("Sono daltonico"):

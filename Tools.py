@@ -499,7 +499,6 @@ def stampa_generi(df, n, periodo):
     )
 
     # Visualizzare il grafico con Streamlit
-    st.title(f'Distribuzione della Percentuale di Ascolto per i Primi {n} Generi Musicali')
     st.altair_chart(chart, use_container_width=True)
 
 

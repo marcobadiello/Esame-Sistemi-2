@@ -59,7 +59,14 @@ def run_generi():
                 st.error("La data di inizio non può essere successiva alla data di fine.")
                 return  # esce dalla funzione se l'intervallo non è valido
             periodo = (start_date, end_date)
-
-        Tools.stampa_generi(df,10,periodo=periodo)
+        n = st.slider("Quanti generi vuoi visualizzare?",min_value=1,max_value=50,value=10)
+        xx = '''
+        In questo grafico è possibile vedere le percentuali dei generi musicali ascoltati in un determinato periodo di tempo. 
+        Notare che i dati vengono clacolati solo in base agli artisti che hannno un ascolto complessivo superiore al 0.1% nel peridoo di tempo 
+        selezionato.
+        '''
+        st.write(xx)
+        st.warning("La generazione del grafcio potrebbe richiedere qualche secondo in più")
+        Tools.stampa_generi(df,n,periodo=periodo)
     else:
         st.warning("Attenzione per utilizzare questa pagina inserire le credenziali nel file credenziali.py")
