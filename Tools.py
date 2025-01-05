@@ -908,7 +908,7 @@ def stampa_heetmap(df, anno):
             alt.Tooltip("ore_riproduzione", title="Ore di Riproduzione"),
         ],
     ).configure_view(
-        step=13,
+        step=25,
         strokeWidth=0
     ).configure_axis(
         domain=False

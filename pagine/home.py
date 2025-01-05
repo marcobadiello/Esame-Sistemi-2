@@ -96,6 +96,10 @@ In questa pagina puoi vedere come gli ascolti sono distribuiti nell'arco di una 
     st.write('''
 In questa pagina puoi vedere la top 10, in percentuale, dei tuoi generi musicali più ascoltati in un periodo di tempo determinato.
 ''')
+    st.subheader("HeetMap")
+    st.write('''
+In questa pagina puoi vedere la Heet Map realztiva agli ascolti giornalieri relativi ad un anno specifico.
+''')
     st.subheader("Scopri artisti")
     st.write('''
 In questa pagina puoi scoprire nuovi artisti e avere informazioni a riguardo.
