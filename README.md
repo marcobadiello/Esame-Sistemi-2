@@ -69,7 +69,7 @@ I file di interesse del progetto sono i seguenti:
   - **Top_artisti.py**: Codice per la pagina "TOP Artisti".
   - **Top_canzoni.py**: Codice per la pagina "TOP Canzoni".
   - **download_playlist.py**: Codice per la pagina "Download playlist".
-  - ***heetmap.py**: Codice per la pagina "HeetMap".
+  - **heetmap.py**: Codice per la pagina "HeetMap".
 - **Analisi.py**: Codice per funzioni di analisi del dataframe.
 - **app.py**: Codice principale per avviare il programma (MAIN).
 - **Estrattore.py**: Codice per estrarre i dati, ripulirli e convertirli in un dataframe.
