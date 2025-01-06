@@ -53,7 +53,7 @@ Questo comando è necessario per avviare correttamente tutte le dipendenze.
 I file di interesse del progetto sono i seguenti:
 - **DATI**: Cartella che deve contenere la cartella (*my_spotify_data/*) con i dati che vuoi analizzare.
 - **ESEMPIO DI DATI**: Cartella con dei dati di esempio
-- **DOWNLOAD**: Cartella nella quale si trovano le canzoni che sono state scaricate.
+- **DOWNLOAD**: Cartella nella quale si trovano le canzoni che sono state scaricate (questa cartella viene creata solamente nel momento in cui almeno una canzone viene scaricata).
 - **ESEMPIO DI DOWNLOAD**: Cartella nella quale sono presenti degli esempio di canzoni scaricate.
 - **pagine/**  
   - **discover_artist.py**: Codice per la pagina "Scopri artisti".
@@ -211,7 +211,7 @@ This command is required to properly start all dependencies.
 The relevant project files are as follows:  
 - **DATI**: Folder that must contain the folder (*my_spotify_data/*) with the data you want to analyze.  
 - **ESEMPIO DATI**: Folder with sample data.  
-- **DOWNLOAD**: Folder where the songs that have been downloaded are located.
+- **DOWNLOAD**: Folder where the songs that have been downloaded are located (this folder is created only when at least one song is downloaded).
 - **ESEMPIO DI DOWNLOAD**: Folder containing examples of downloaded songs.
 - **pages/**  
   - **discover_artist.py**: Code for the "Scopri artisti" page.  
