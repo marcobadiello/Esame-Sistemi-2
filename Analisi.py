@@ -23,13 +23,14 @@ scopo un analisi dei dati pecifica e restituiscono i dati richiesti
 '''
 
 # definisco una funzione per restituire la top delle canzoni di una determianto peridoo
-def top_n_canzoni(df,n=None,periodo=None):
+def top_n_canzoni(df,n=None,periodo=None,artisti=None):
     
     # se viene definito un periodo allora filtro in base a quel periodo altrimenti considero i
     # dati di sempre
     if periodo != None:
         new_df = df.filter((pl.col("ts") >= periodo[0]) & (pl.col("ts") <=  periodo[1])) 
-        
+    if artisti != None:
+        new_df = new_df.filter(pl.col("master_metadata_album_artist_name").is_in(artisti))
     # se imposto il parametro 'n' mi viene restituita la top n canzoni
     if n != None:
         return((new_df.group_by("master_metadata_track_name")

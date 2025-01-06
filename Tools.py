@@ -101,12 +101,12 @@ def get_artist_image_url(artist_name,client_id,client_secret):
     return None  # Se l'artista non ha immagine o non è stato trovato
 
 # questa funzione stampa la top 'n' delle canzoni
-def stampa_top_canzoni_n(df,n,periodo):
+def stampa_top_canzoni_n(df,n,periodo,artisti=None):
       
       # ottengo il dataframe con la top
-        numero_canzoni = anal.top_n_canzoni(df,n=None,periodo=periodo)['master_metadata_track_name'].n_unique() 
-        data = anal.top_n_canzoni(df,n,periodo)
-        total_sum = anal.top_n_canzoni(df,n=None,periodo=periodo)["s_played"].sum()
+        numero_canzoni = anal.top_n_canzoni(df,n=None,periodo=periodo,artisti=artisti)['master_metadata_track_name'].n_unique() 
+        data = anal.top_n_canzoni(df,n,periodo=periodo,artisti=artisti)
+        total_sum = anal.top_n_canzoni(df,n=None,periodo=periodo,artisti=artisti)["s_played"].sum()
         
         # scrivo il tempo di ascolto
         st.subheader(f"Hai ascoltato {numero_canzoni} canzoni per un totale di ")
