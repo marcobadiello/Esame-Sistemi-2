@@ -52,7 +52,28 @@ def run_time_series():
     st.write("Il seguente grafcio mostra la serie storica cumulata degli ascolti, ad ongni periodo. Questo grafico è utile per vdedere eventuali bruschi aumenti di ascolto nel tempo o periodo di bassi ascolti.")
     # stampo la serie storica cumulata
     Tools.stampa_time_series_cumulata(df)
-    # stampo lo slider
+    st.markdown(
+    """
+    <style>
+    .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: #f5f5f5;
+        text-align: center;
+        padding: 10px;
+        font-size: 14px;
+        color: #333;
+        border-top: 1px solid #ddd;
+    }
+    </style>
+    <div class="footer">
+    Creato con ❤️ da <b>Marco Badiello</b>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
     
     
 '''

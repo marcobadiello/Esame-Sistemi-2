@@ -70,3 +70,24 @@ def run_generi():
         Tools.stampa_generi(df,n,periodo=periodo)
     else:
         st.warning("Attenzione per utilizzare questa pagina inserire le credenziali nel file credenziali.py")
+    st.markdown(
+    """
+    <style>
+    .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: #f5f5f5;
+        text-align: center;
+        padding: 10px;
+        font-size: 14px;
+        color: #333;
+        border-top: 1px solid #ddd;
+    }
+    </style>
+    <div class="footer">
+    Creato con ❤️ da <b>Marco Badiello</b>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
