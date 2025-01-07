@@ -86,7 +86,7 @@ def run_giornata():
     unsafe_allow_html=True
     )
     # mostro il grafico circolare
-    aa = ''''
+    aa = '''
     In questo grafico puoi avere una visione degli ascolti durante i vari momenti della giornata.
     '''
     st.write(aa)

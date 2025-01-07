@@ -564,7 +564,7 @@ def stampa_info_track(nome):
                     
     else:
         st.subheader(f"""
-        Dall'album '{album_nome}', pubblicato il **{album_release_date}**, il brano **{track_name}** si trova al numero **{track_number}** di **{total_tracks}** tracce.
+        Dall'album '{album_nome}', pubblicato il **{album_release_date}**, il brano **{track_name}** si trova alla posizione numero **{track_number}** di **{total_tracks}** tracce.
         """)
         st.subheader(f"**I generi musicali che caratterizzano questo brano sono:**")
         if generi:
