@@ -13,11 +13,23 @@ Le informzioen sulle varaibili presenti nel dataframe sono visibili sul pdf
 
 #questa funzione trasforma i file li pulisce e restituisce un dataframe
 def data():
-    percorso = 'DATI'
-    sottocartelle = [nome for nome in os.listdir(percorso) 
-                    if os.path.isdir(os.path.join(percorso, nome))]
-    percorso = 'DATI'  # Sostituisci con la tua cartella di interesse
-    directory = 'DATI/'+sottocartelle[0]+'/Spotify Extended Streaming History'
+    def trova_cartella_con_json(percorso_base):
+        for root, dirs, files in os.walk(percorso_base):
+            # Controlla se ci sono file JSON nella directory corrente
+            for file in files:
+                if file.endswith('.json'):
+                    return root  # Restituisce la directory che contiene il file JSON
+            # Se ci sono sottocartelle, esplora la successiva
+            if dirs:  # dirs contiene sottocartelle
+                sottocartella = os.path.join(root, dirs[0])
+                return trova_cartella_con_json(sottocartella)
+        return None  # Nessun file JSON trovato
+
+    # Percorso di partenza
+    percorso_base = 'DATI'
+
+    # Cerca la cartella contenente il file JSON
+    directory = trova_cartella_con_json(percorso_base)
 
     # Lista per memorizzare i DataFrame
     dfs = []
