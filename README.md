@@ -84,31 +84,31 @@ La comprensione degli altri file non è streattamente necessaria ai fini della c
 ## Come ottenere i dati necessari al funzionamento del progetto
 
    ### Ottenere i dati da Spotify
-   Seguire questo [link](https://www.spotify.com/it/account/privacy)
-   Scorrere in basso
-   Selezionare solo 'Cronologia di ascolto estesa'
-   Premere il bottone 'Richiedi i dati'
-   Ti arriverà una email di conferma
-   Segui le istruzioni su quella mail per confermare la richiesta
-   Attendere
-   Congratulazioni hai i tuoi dati ora segui questi [passaggi](#3-Carica-i-dati-da-analizzare)
+   Seguire questo [link](https://www.spotify.com/it/account/privacy)  
+   Scorrere in basso  
+   Selezionare solo 'Cronologia di ascolto estesa'  
+   Premere il bottone 'Richiedi i dati'  
+   Ti arriverà una email di conferma  
+   Segui le istruzioni su quella mail per confermare la richiesta  
+   Attendere  
+   Congratulazioni hai i tuoi dati ora segui questi [passaggi](#3-Carica-i-dati-da-analizzare)  
 
    ### Ottenere le credenziali Spotify
-   Seguire questo [link](https://developer.spotify.com/documentation/web-api)
-   Effettua l'accesso con le tue credenziali spotify
-   Clicca sul tuo profilo in alto a destra
-   Clicca su 'Dashboard'
-   Crea una nuova applicazione
-   Inserisci un nome a paicere
-   Inserisci una descrizione a piacere
-   Alla voce 'Redirect URIs' inserisci 'http://localhost:8888/callback'
-   Alla voce 'Which API/SDKs are you planning to use?' spunta la casella 'Web API'
-   Accetta termini e condizioni
-   Crea la applicazione
-   Congratulazioni hai appena creato la tua applicazione
-   Ora in altro a destra clicca su 'Settings'
-   Ora puoi vedere il client id e se premi su 'View client secret' puoi vedere il client secre
-   Congratulazioni hai le tue credenziali ora segui questi [passaggi](#4-Inserisci-le-credenziali)
+   Seguire questo [link](https://developer.spotify.com/documentation/web-api)  
+   Effettua l'accesso con le tue credenziali spotify  
+   Clicca sul tuo profilo in alto a destra  
+   Clicca su 'Dashboard'  
+   Crea una nuova applicazione  
+   Inserisci un nome a paicere  
+   Inserisci una descrizione a piacere  
+   Alla voce 'Redirect URIs' inserisci 'http://localhost:8888/callback'  
+   Alla voce 'Which API/SDKs are you planning to use?' spunta la casella 'Web API'  
+   Accetta termini e condizioni  
+   Crea la applicazione  
+   Congratulazioni hai appena creato la tua applicazione  
+   Ora in altro a destra clicca su 'Settings'  
+   Ora puoi vedere il client id e se premi su 'View client secret' puoi vedere il client secre  
+   Congratulazioni hai le tue credenziali ora segui questi [passaggi](#4-Inserisci-le-credenziali)  
 
 ---
 
