@@ -58,8 +58,7 @@ def run_top_canzoni():
                 return  # esco dalla funzione se l'intervallo non è valido
             periodo = (start_date, end_date)
             
-        # calcolo del periodo massimo
-        periodo = (df['ts'].min(), df['ts'].max())
+
             
         # ottengo gli artisti da analizzare
         artisti_da_analizzare = anal.top_n_artisti(df, periodo=periodo)["master_metadata_album_artist_name"]
