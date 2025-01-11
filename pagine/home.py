@@ -70,10 +70,7 @@ Gli obiettivi di questo progetto sono la presentazione dei miei dati personali d
         - **master_metadata_album_artist_name**: Titolo dell'artista
         - **master_metadata_album_album_name**: Titolo dell'album
         - **spotify_track_uri**: Codice identificativo del brano
-        - **reason_start**: Motivo per cui è iniziata la stream
-        - **reason_end**: Motivo per cui è terminata la stream
         - **shuffle**: Variabile dicotomica. La stram era o non era n riproduzione casuale
-        - **skipped**: Variabile dicotomica. La canzone è o non è stata skippata.
     ''')
     
     # creo un bottone per mostrare il dataframe

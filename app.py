@@ -22,29 +22,29 @@ from pagine.heetmap import run_heetmap
 
 
 
-"""
-Questo file è l'entry point dell'applicazione Streamlit. Importa vari moduli e funzioni necessari per il funzionamento dell'app,
-inclusi i dati, strumenti e analisi. Inoltre, importa le funzioni che gestiscono le diverse pagine dell'applicazione.
+# """
+# Questo file è l'entry point dell'applicazione Streamlit. Importa vari moduli e funzioni necessari per il funzionamento dell'app,
+# inclusi i dati, strumenti e analisi. Inoltre, importa le funzioni che gestiscono le diverse pagine dell'applicazione.
 
-Le pagine disponibili includono:
-- Home
-- Profilo
-- Readme
-- TOP Canzoni
-- TOP Artisti
-- Serie storica
-- Serie storica artisti
-- Shuffle
-- Giornata tipo
-- HeetMap
-- Generi musicali
-- Scopri artisti
-- Scopri brani
-- Dawnload playlist
+# Le pagine disponibili includono:
+# - Home
+# - Profilo
+# - Readme
+# - TOP Canzoni
+# - TOP Artisti
+# - Serie storica
+# - Serie storica artisti
+# - Shuffle
+# - Giornata tipo
+# - HeetMap
+# - Generi musicali
+# - Scopri artisti
+# - Scopri brani
+# - Dawnload playlist
 
-Il dizionario 'pagine' contiene tutte le pagine del progetto, ognuna con il proprio titolo e icona.
-L'applicazione avvia la navigazione tra queste pagine utilizzando Streamlit.
-"""
+# Il dizionario 'pagine' contiene tutte le pagine del progetto, ognuna con il proprio titolo e icona.
+# L'applicazione avvia la navigazione tra queste pagine utilizzando Streamlit.
+# """
 
 
 # questo è un dizionario che contiene tutte le pagine del mio progetto

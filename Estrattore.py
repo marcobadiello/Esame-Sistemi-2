@@ -57,6 +57,9 @@ def data():
                 df = df.drop('offline')
                 df = df.drop('offline_timestamp')
                 df = df.drop('incognito_mode')
+                df = df.drop('reason_start')
+                df = df.drop('reason_end')
+                df = df.drop('skipped')
 
                 #rimuovo tutte le righe che riguardano i podcast
                 df = df.filter(pl.col('episode_name').is_null())

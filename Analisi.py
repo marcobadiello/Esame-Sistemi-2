@@ -742,7 +742,7 @@ def ascolti_giornalieri(df, anno):
     """
     # Selezionare le colonne necessarie
     df_selezionato = df.select(["ts", "s_played"])
-    print(df_selezionato)
+
     
     # Convertire il timestamp in formato giorno
     df = df.with_columns(
@@ -759,8 +759,7 @@ def ascolti_giornalieri(df, anno):
     
     # Creazione della lista di tutte le date dell'anno
     date_complete = crea_date_complete(anno)  # Assicurati che questa funzione esista e restituisca una lista di stringhe
-    print(df_aggregated)
-    print(date_complete)
+
     
     date_non_complete = {}
     for row in df_aggregated.iter_rows():
