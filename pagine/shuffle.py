@@ -7,12 +7,27 @@ import Tools
 from datetime import datetime
 import Analisi as anal
 
-'''
-In questo file c'è il codicce per la pagina streamlit realativa
-ai dati riguardo l'utilizzo della modalità di shuffle
-'''
-
 def run_shuffle():
+    """
+    Configura e avvia la pagina Streamlit per visualizzare le statistiche relative alla funzione shuffle di Spotify.
+
+    La funzione imposta il layout della pagina, visualizza il logo di Spotify e il titolo, fornisce una descrizione delle statistiche sulla funzione shuffle e mostra un grafico a torta con i dati percentuali relativi all'utilizzo della funzione shuffle. Include anche un'opzione per gli utenti daltonici per modificare i colori del grafico.
+
+    La pagina include:
+    - Logo di Spotify e titolo
+    - Descrizione delle statistiche sulla funzione shuffle
+    - Checkbox per modificare i colori del grafico per utenti daltonici
+    - Grafico a torta che mostra le statistiche di utilizzo della funzione shuffle
+    - Percentuali relative all'utilizzo della funzione shuffle
+    - Footer con il nome del creatore
+
+    Nota:
+    - La funzione presuppone l'esistenza di un DataFrame `df` e dei moduli `Tools` e `anal` con i metodi `stmapa_torta_shuffle` e `shuffle_data` rispettivamente.
+
+    Ritorna:
+    - Nessun valore (None).
+    """
+
     st.set_page_config(
     layout="wide",  
     initial_sidebar_state="collapsed"  #"expanded" o "collapsed"

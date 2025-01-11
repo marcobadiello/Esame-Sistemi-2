@@ -21,13 +21,37 @@ from credenziali import client_id
 from credenziali import client_secret
 from credenziali import redirect_uri
 
-'''
-In qesto file mi creo delle funzioni utili per allegerire poi il codice negli altri file
-e renderlo più leggivile
-'''
+"""
+Questo file contiene una raccolta di funzioni utili per l'analisi e la visualizzazione dei dati musicali.
+Le funzioni sono progettate per essere utilizzate con Streamlit e includono:
+- Generazione di banner Spotify per tracce e artisti.
+- Recupero di immagini di artisti da Spotify.
+- Visualizzazione delle top canzoni e artisti per un determinato periodo.
+- Conversione di secondi in un formato leggibile (giorni, ore, minuti, secondi).
+- Creazione di grafici di serie temporali e grafici cumulativi utilizzando Altair.
+- Visualizzazione di grafici a torta per lo stato dello shuffle.
+- Creazione di grafici polari e orizzontali per l'analisi delle ore di ascolto.
+- Visualizzazione della distribuzione dei generi musicali.
+- Recupero e visualizzazione delle informazioni di tracce e artisti.
+- Visualizzazione delle informazioni del profilo utente di Spotify.
+- Download di audio da YouTube.
+- Visualizzazione delle playlist dell'utente e opzioni di download.
+- Generazione di heatmap giornaliere delle ore di riproduzione.
 
-# questa funzione cra un banner piccole della canzone su streamlit
+Queste funzioni sono progettate per migliorare la leggibilità e la modularità del codice, facilitando l'analisi e la visualizzazione dei dati musicali.
+"""
+
+
 def banner_canzone_small(codice):
+    """
+    Genera e visualizza un banner incorporato di una traccia Spotify utilizzando il codice della traccia fornito.
+
+    Args:
+        codice (str): Il codice della traccia Spotify da incorporare.
+
+    Returns:
+        None
+    """
     oo = f"""
     <iframe style="border-radius:12px" 
             src="https://open.spotify.com/embed/track/{codice}?utm_source=generator" 
@@ -38,9 +62,17 @@ def banner_canzone_small(codice):
     </iframe>
     """
     st.markdown(oo, unsafe_allow_html=True)
-    
-# questa funzione crea un banner grande di una canzone su streamlit
+
 def banner_canzone_big(codice):
+    """
+    Genera e visualizza un banner grande incorporato di una traccia Spotify utilizzando il codice della traccia fornito.
+
+    Args:
+        codice (str): Il codice della traccia Spotify da incorporare.
+
+    Returns:
+        None
+    """
     oo = f"""
     <iframe style="border-radius:12px" 
             src="https://open.spotify.com/embed/track/{codice}?utm_source=generator" 
@@ -53,7 +85,15 @@ def banner_canzone_big(codice):
     st.markdown(oo, unsafe_allow_html=True)
 
 def banner_artista_big(codice):
-    # Crea il codice HTML per l'iframe utilizzando l'ID dell'artista
+    """
+    Genera e visualizza un banner grande incorporato di un artista Spotify utilizzando il codice dell'artista fornito.
+
+    Args:
+        codice (str): Il codice dell'artista Spotify da incorporare.
+
+    Returns:
+        None
+    """
     oo = f"""
     <iframe style="border-radius:12px" 
             src="https://open.spotify.com/embed/artist/{codice}?utm_source=generator" 
@@ -69,7 +109,15 @@ def banner_artista_big(codice):
     st.markdown(oo, unsafe_allow_html=True)
 
 def banner_artista_small(codice):
-    # Crea il codice HTML per l'iframe utilizzando l'ID dell'artista
+    """
+    Genera e visualizza un banner piccolo incorporato di un artista Spotify utilizzando il codice dell'artista fornito.
+
+    Args:
+        codice (str): Il codice dell'artista Spotify da incorporare.
+
+    Returns:
+        None
+    """
     oo = f"""
     <iframe style="border-radius:12px" 
             src="https://open.spotify.com/embed/artist/{codice}?utm_source=generator" 
@@ -84,7 +132,18 @@ def banner_artista_small(codice):
     # Mostra il banner in Streamlit
     st.markdown(oo, unsafe_allow_html=True)
 
-def get_artist_image_url(artist_name,client_id,client_secret):
+def get_artist_image_url(artist_name, client_id, client_secret):
+    """
+    Recupera l'URL dell'immagine del profilo di un artista da Spotify.
+    
+    Args:
+        artist_name (str): Il nome dell'artista.
+        client_id (str): Il client ID per l'autenticazione API di Spotify.
+        client_secret (str): Il client secret per l'autenticazione API di Spotify.
+    
+    Returns:
+        str: L'URL dell'immagine del profilo dell'artista se trovato, altrimenti None.
+    """
     # Autenticazione con Spotify
 
     client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
@@ -100,38 +159,56 @@ def get_artist_image_url(artist_name,client_id,client_secret):
             return artist['images'][0]['url']
     return None  # Se l'artista non ha immagine o non è stato trovato
 
-# questa funzione stampa la top 'n' delle canzoni
-def stampa_top_canzoni_n(df,n,periodo,artisti=None):
-      
-      # ottengo il dataframe con la top
-        numero_canzoni = anal.top_n_canzoni(df,n=None,periodo=periodo,artisti=artisti)['master_metadata_track_name'].n_unique() 
-        data = anal.top_n_canzoni(df,n,periodo=periodo,artisti=artisti)
-        total_sum = anal.top_n_canzoni(df,n=None,periodo=periodo,artisti=artisti)["s_played"].sum()
+def stampa_top_canzoni_n(df, n, periodo, artisti=None):
+    """
+    Visualizza la top 'n' delle canzoni per un determinato periodo e opzionalmente per artisti specifici.
+    
+    Parametri:
+    df (DataFrame): Il dataframe contenente i dati delle canzoni.
+    n (int): Il numero di canzoni top da visualizzare.
+    periodo (str): Il periodo per cui visualizzare le canzoni top.
+    artisti (list, opzionale): Una lista di artisti specifici per filtrare le canzoni top. Default è None.
+    
+    Ritorna:
+    None
+    """
+    # ottengo il dataframe con la top
+    numero_canzoni = anal.top_n_canzoni(df,n=None,periodo=periodo,artisti=artisti)['master_metadata_track_name'].n_unique() 
+    data = anal.top_n_canzoni(df,n,periodo=periodo,artisti=artisti)
+    total_sum = anal.top_n_canzoni(df,n=None,periodo=periodo,artisti=artisti)["s_played"].sum()
         
-        # scrivo il tempo di ascolto
-        st.subheader(f"Hai ascoltato {numero_canzoni} canzoni per un totale di ")
-        st.subheader(convert_seconds(total_sum))
-      # stampo le canzoni con una faccina per il podio
-        for i in range(0,len(data)):
-                st.markdown("---")
-                numero = str(i+1)
-                if numero == '1':
-                      numero = numero + "🥇"
-                elif numero == '2':
-                      numero = numero + "🥈"
-                elif numero == '3':
-                      numero = numero + "🥉"
-                st.header(numero)
+    # scrivo il tempo di ascolto
+    st.subheader(f"Hai ascoltato {numero_canzoni} canzoni per un totale di ")
+    st.subheader(convert_seconds(total_sum))
+    # stampo le canzoni con una faccina per il podio
+    for i in range(0,len(data)):
+            st.markdown("---")
+            numero = str(i+1)
+            if numero == '1':
+                numero = numero + "🥇"
+            elif numero == '2':
+                numero = numero + "🥈"
+            elif numero == '3':
+                numero = numero + "🥉"
+            st.header(numero)
                 
-                # scrivo il tempo di ascolto pe rla signola canzone
-                st.subheader("Riprodotta per")
-                st.subheader(convert_seconds(data.row(i)[1]))
+            # scrivo il tempo di ascolto pe rla signola canzone
+            st.subheader("Riprodotta per")
+            st.subheader(convert_seconds(data.row(i)[1]))
                 
-                # stampo il banner con la canzone
-                banner_canzone_small(data.row(i)[2])
+            # stampo il banner con la canzone
+            banner_canzone_small(data.row(i)[2])
   
-# questa funzione stampa la top 'n' degli artisti
 def stampa_top_artisti(df, n, periodo):
+    """
+    Visualizza i migliori artisti ascoltati in un determinato periodo.
+    Args:
+        df (DataFrame): Il DataFrame contenente i dati degli artisti.
+        n (int): Il numero di artisti da visualizzare.
+        periodo (str): Il periodo di tempo per il quale visualizzare i dati.
+    Returns:
+        None: La funzione non restituisce nulla, ma visualizza i dati utilizzando Streamlit.
+    """
     # Ottengo la top artisti
     numero_artisti = anal.top_n_artisti(df, n=None, periodo=periodo)['master_metadata_album_artist_name'].n_unique() 
     data = anal.top_n_artisti(df, n, periodo)
@@ -175,10 +252,16 @@ def stampa_top_artisti(df, n, periodo):
         
         st.markdown("---")
 
-
-
-# questa funzione converte i secondi in giorni-ore-minuti-secondi
 def convert_seconds(seconds):
+    """
+    Converte un dato numero di secondi in giorni, ore, minuti e secondi.
+
+    Args:
+        seconds (int): Il numero totale di secondi da convertire.
+
+    Returns:
+        str: Una stringa che rappresenta il tempo equivalente in giorni, ore, minuti e secondi.
+    """
     # è un codice molto semplice non penso di doverlo spiegare
     days = seconds // 86400 
     seconds %= 86400
@@ -188,8 +271,19 @@ def convert_seconds(seconds):
     seconds %= 60  
     return f"{round(days)} giorni, {round(hours)} ore, {round(minutes)} minuti, {round(seconds)} secondi"
 
-# questa funzione stampa un grafico di una time series
 def stampa_time_series(df):
+    """
+    Genera e visualizza un grafico di serie temporali utilizzando Altair e Streamlit.
+    Parametri:
+    df (pandas.DataFrame): Il dataframe di input contenente i dati da tracciare.
+    La funzione esegue i seguenti passaggi:
+    1. Ottiene i dati della serie temporale dal dataframe di input utilizzando la funzione `anal.time_series`.
+    2. Crea un grafico a linee con punti utilizzando Altair.
+        - L'asse x rappresenta il periodo (anno-mese) con etichette verticali.
+        - L'asse y rappresenta il tempo di ascolto in ore.
+        - Personalizza il tooltip per mostrare solo l'anno, il mese e le ore riprodotte.
+    3. Visualizza il grafico utilizzando la funzione `st.altair_chart` di Streamlit con la larghezza del contenitore impostata su true.
+    """
     # ottengo la time series
     dataframe = anal.time_series(df)
 
@@ -214,14 +308,25 @@ def stampa_time_series(df):
     # stampo a schermo il grafico
     st.altair_chart(chart, use_container_width=True)
 
-# questa funzione stampa il grafico di una time series cumulata
 def stampa_time_series_cumulata(df):
+    """
+    Genera e visualizza un grafico di serie temporali cumulata utilizzando Altair e Streamlit.
+    Parametri:
+    df (pandas.DataFrame): Il DataFrame di input contenente i dati della serie temporale.
+    La funzione esegue i seguenti passaggi:
+    1. Calcola la serie temporale cumulata dal DataFrame di input.
+    2. Crea un grafico a linee con punti utilizzando Altair.
+    3. Configura l'asse x per visualizzare il periodo (anno-mese) con etichette verticali.
+    4. Configura l'asse y per visualizzare il tempo di ascolto cumulato in ore.
+    5. Personalizza il tooltip per mostrare solo l'anno, il mese e il tempo di ascolto cumulato.
+    6. Visualizza il grafico utilizzando Streamlit con la larghezza del contenitore impostata su true.
+    """
       
-      # ottengo la time series cumulata
-      dataframe = anal.time_series_cumulata(df)
+    # ottengo la time series cumulata
+    dataframe = anal.time_series_cumulata(df)
       
-      # creo il grafico
-      chart = (
+    # creo il grafico
+    chart = (
         alt.Chart(dataframe).mark_line(point=True)
         .encode(
             # sull'asse x metto il periodo ovvero ogni anno-mese
@@ -236,13 +341,29 @@ def stampa_time_series_cumulata(df):
         )
     )
       
-      # stampo il graficgrafico a schermo
-      st.altair_chart(chart, use_container_width=True)
+    # stampo il graficgrafico a schermo
+    st.altair_chart(chart, use_container_width=True)
 
-# questo grafico stampoa una time seriees dia rtisti a confronto
-# il paramettro artisti che viene passato alla funzione infatti
-# è una lista
 def stampa_time_series_artisti(df, artisti: list, periodo):
+    """
+    Genera e visualizza un grafico di serie temporali per gli artisti specificati in un determinato periodo.
+    Parametri:
+    df (DataFrame): Il dataframe di input contenente i dati.
+    artisti (list): Una lista di nomi di artisti da includere nella serie temporale.
+    periodo (str): Il periodo per il quale generare la serie temporale.
+    Ritorna:
+    DataFrame: Un dataframe contenente i dati combinati della serie temporale per tutti gli artisti specificati.
+    La funzione esegue i seguenti passaggi:
+    1. Inizializza una lista vuota per raccogliere i dataframe di ciascun artista.
+    2. Itera su ciascun artista, creando un dataframe per ognuno.
+    3. Aggiunge una colonna con il nome dell'artista a ciascun dataframe.
+    4. Concatena tutti i dataframe individuali in un unico dataframe.
+    5. Aggiunge una colonna 'data' combinando le colonne 'anno' e 'mese'.
+    6. Crea una palette di colori per un massimo di 10 artisti.
+    7. Genera un grafico a linee utilizzando Altair, con punti e tooltip.
+    8. Visualizza il grafico utilizzando Streamlit.
+    9. Restituisce il dataframe combinato.
+    """
     # inizializzo una lista per raccogliere i dataframe degli artisti
     dataframes = []
 
@@ -302,8 +423,17 @@ def stampa_time_series_artisti(df, artisti: list, periodo):
     # mi restituisce anche il dataframe
     return df_completo
 
-# questa funzione stampa un grafico per lo shuffle
 def stmapa_torta_shuffle(df,colori):
+    """
+    Genera e visualizza un grafico a torta utilizzando Altair per visualizzare lo stato dello shuffle dei dati.
+    Parametri:
+    df (pandas.DataFrame): Il DataFrame di input da analizzare.
+    colori (list): Una lista di due stringhe di colore che rappresentano i colori per le opzioni "SHUFFLE ATTIVATO" 
+    e "SHUFFLE DISATTIVATO" nel grafico a torta.
+    Ritorna:
+    None
+    """
+
     data = anal.shuffle_data(df)
     
     source = pl.DataFrame({
@@ -321,76 +451,99 @@ def stmapa_torta_shuffle(df,colori):
     
     st.altair_chart(chart, use_container_width=True)
 
-# questa funzione stampa il grafico della giornata copiata da "https://altair-viz.github.io/gallery/polar_bar_chart.html"
 def grafico_giornata(df,barra_evidenziata: int):
-      data = anal.media_oraria(df)
+    """
+    Questa funzione stampa il grafico della giornata copiata da "https://altair-viz.github.io/gallery/polar_bar_chart.html"
 
-      source = data
+    Genera un grafico a barre polaras che rappresenta i dati orari con barre evidenziate e elementi visivi aggiuntivi.
+    Parametri:
+    df (DataFrame): Il dataframe di input contenente i dati da visualizzare.
+    barra_evidenziata (int): L'ora da evidenziare nel grafico.
+    Ritorna:
+    None: La funzione visualizza il grafico utilizzando st.altair_chart di Streamlit.
+    Il grafico include:
+    - Barre polari che rappresentano il numero di osservazioni per ora.
+    - Linee circolari dell'asse per il numero di osservazioni.
+    - Linee rette dell'asse per l'ora del giorno.
+    - Una barra evidenziata per l'ora specificata.
+    - Una linea verde che indica l'ora evidenziata.
+    """
+    data = anal.media_oraria(df)
+
+    source = data
 
 
-      polar_bars = alt.Chart(source).mark_arc(stroke='white', tooltip=True).encode(
-      theta=alt.Theta("hour:O"),
-      radius=alt.Radius('observations').scale(type='linear'),
-      radius2=alt.datum(0),
-      color = alt.condition(
+    polar_bars = alt.Chart(source).mark_arc(stroke='white', tooltip=True).encode(
+    theta=alt.Theta("hour:O"),
+    radius=alt.Radius('observations').scale(type='linear'),
+    radius2=alt.datum(0),
+    color = alt.condition(
             alt.datum.hour == barra_evidenziata,
             alt.value("red"),
             alt.value("steelblue")
           )
-      )
+    )
 
-      # Create the circular axis lines for the number of observations
-      axis_rings = alt.Chart(pl.DataFrame({"ring": range(0, 11, 1)})).mark_arc(stroke='lightgrey', fill=None).encode(
-      theta=alt.value(2 * math.pi),
-      radius=alt.Radius('ring').stack(False)
-      )
-      axis_rings_labels = axis_rings.mark_text(color='grey', radiusOffset=5, align='left').encode(
-      text="ring",
-      theta=alt.value(math.pi / 4)
-      )
+    # Create the circular axis lines for the number of observations
+    axis_rings = alt.Chart(pl.DataFrame({"ring": range(0, 11, 1)})).mark_arc(stroke='lightgrey', fill=None).encode(
+    theta=alt.value(2 * math.pi),
+    radius=alt.Radius('ring').stack(False)
+    )
+    axis_rings_labels = axis_rings.mark_text(color='grey', radiusOffset=5, align='left').encode(
+    text="ring",
+    theta=alt.value(math.pi / 4)
+    )
 
-      # Create the straight axis lines for the time of the day
-      axis_lines = alt.Chart(pl.DataFrame({
-      "radius": 10,
-      "theta": math.pi / 2,
-      'hour': ['00:00', '06:00', '12:00', '18:00']
-      })).mark_arc(stroke='lightgrey', fill=None).encode(
-      theta=alt.Theta('theta').stack(True),
-      radius=alt.Radius('radius'),
-      radius2=alt.datum(1),
-      )
-      axis_lines_labels = axis_lines.mark_text(
+    # Create the straight axis lines for the time of the day
+    axis_lines = alt.Chart(pl.DataFrame({
+    "radius": 10,
+    "theta": math.pi / 2,
+    'hour': ['00:00', '06:00', '12:00', '18:00']
+    })).mark_arc(stroke='lightgrey', fill=None).encode(
+    theta=alt.Theta('theta').stack(True),
+    radius=alt.Radius('radius'),
+    radius2=alt.datum(1),
+    )
+    axis_lines_labels = axis_lines.mark_text(
             color='grey',
             radiusOffset=5,
             thetaOffset=-math.pi / 4,
             # These adjustments could be left out with a larger radius offset, but they make the label positioning a bit clearner
             align=alt.expr('datum.hour == "18:00" ? "right" : datum.hour == "06:00" ? "left" : "center"'),
             baseline=alt.expr('datum.hour == "00:00" ? "bottom" : datum.hour == "12:00" ? "top" : "middle"'),
-      ).encode(text="hour")
+    ).encode(text="hour")
       
-      lancetta = alt.Chart(pl.DataFrame({
+    lancetta = alt.Chart(pl.DataFrame({
         'theta': [barra_evidenziata * (360 / 24)],  # Calcola l'angolo in base all'ora
         'radius': [15],  # Lunghezza della lancetta
         })).mark_line(color='green', strokeWidth=7).encode(
         theta=alt.Theta("theta:Q", scale=alt.Scale(domain=[0, 360])),
         radius=alt.Radius("radius:Q", scale=alt.Scale(domain=[0, 10]))
-        )
+    )
 
-      chart = alt.layer(
+    chart = alt.layer(
       axis_rings,
       axis_rings_labels,
       axis_lines_labels,
       axis_lines,
       polar_bars,
       lancetta
-      ).properties(
+    ).properties(
     width=800,  # Aumenta larghezza
     height=800 # Aumenta altezza
       )
 
-      st.altair_chart(chart, use_container_width=True)
+    st.altair_chart(chart, use_container_width=True)
 
 def grafico_giornata_orizzontale(df, n: int):
+    """
+    Genera un grafico a barre orizzontali che rappresenta i dati orari di un determinato giorno e evidenzia un'ora specifica con una linea verticale rossa.
+    Parametri:
+    df (DataFrame): Il DataFrame di input contenente i dati.
+    n (int): L'ora specifica da evidenziare con una linea verticale rossa.
+    Ritorna:
+    None: La funzione visualizza il grafico utilizzando Streamlit.
+    """
     data = anal.media_oraria(df)  # Non modifico i dati di partenza
     
     source = data
@@ -429,6 +582,14 @@ def grafico_giornata_orizzontale(df, n: int):
     st.altair_chart(chart, use_container_width=True)
 
 def grafico_giornata_orizzontale_cumulato(df, n: int):
+    """
+    Genera e visualizza un grafico ad area orizzontale cumulato per i dati di un determinato giorno utilizzando Altair e Streamlit.
+    Parametri:
+    df (pandas.DataFrame): Il DataFrame di input contenente i dati.
+    n (int): L'ora specifica da evidenziare con una linea verticale rossa.
+    Ritorna:
+    None
+    """
     data = anal.media_oraria_cumulata(df)  # Non modifico i dati di partenza
     
     source = data
@@ -467,6 +628,15 @@ def grafico_giornata_orizzontale_cumulato(df, n: int):
     st.altair_chart(chart, use_container_width=True)
 
 def stampa_generi(df, n, periodo):
+    """
+    Visualizza un grafico a barre della distribuzione della percentuale di ascolto per i primi n generi musicali.
+    Args:
+        df (pandas.DataFrame): Il DataFrame contenente i dati di ascolto.
+        n (int): Il numero di generi musicali da visualizzare nel grafico.
+        periodo (str): Il periodo di tempo per il quale ottenere i dati di ascolto.
+    Returns:
+        None: La funzione visualizza un grafico a barre utilizzando Streamlit.
+    """
     # Ottenere i dati di ascolto (salvato nella cache)
     data = anal.ascolto_generi(df,periodo=periodo)
 
@@ -501,10 +671,27 @@ def stampa_generi(df, n, periodo):
     # Visualizzare il grafico con Streamlit
     st.altair_chart(chart, use_container_width=True)
 
-
-
-# Funzione per visualizzare le informazioni di una traccia
 def stampa_info_track(nome):
+    """
+    Recupera e visualizza le informazioni di una traccia musicale specificata.
+    Args:
+        nome (str): Il nome della traccia musicale da cercare.
+    Funzionalità:
+        - Recupera le informazioni della traccia tramite l'API di anal.
+        - Visualizza l'immagine dell'album e il nome della traccia.
+        - Permette di scaricare la canzone tramite YouTube.
+        - Mostra il titolo, l'artista e un banner della canzone.
+        - Estrae e visualizza informazioni aggiuntive come nome dell'album, data di rilascio, numero della traccia, numero totale di tracce e popolarità.
+        - Verifica se la traccia è un singolo.
+        - Mostra i generi musicali associati all'artista.
+        - Visualizza una barra di progressione della popolarità della traccia.
+        - Mostra un messaggio speciale e palloncini se la popolarità è superiore al 70%.
+        - Riproduce un video di YouTube della traccia.
+    Note:
+        - Richiede le variabili globali `client_id`, `client_secret` e `redirect_uri` per l'autenticazione con Spotify.
+        - Utilizza la libreria `spotipy` per interagire con l'API di Spotify.
+        - Utilizza la libreria `streamlit` per visualizzare le informazioni.
+    """
     global client_id
     global client_secret
     global redirect_uri
@@ -605,6 +792,24 @@ def stampa_info_track(nome):
     st.video(anal.search_youtube_video(f"{data['name']}{data['artists'][0]['name']}"))
 
 def stampa_info_artista(nome_artista):
+    """
+    Visualizza informazioni dettagliate su un artista specifico utilizzando l'API di Spotify e Wikipedia.
+    Args:
+        nome_artista (str): Il nome dell'artista da cercare.
+    Returns:
+        None
+    Funzionalità:
+        - Configura l'autenticazione con l'API di Spotify.
+        - Cerca l'artista su Spotify.
+        - Visualizza i dettagli dell'artista, inclusi nome, immagine, generi, popolarità e numero di follower.
+        - Mostra un bottone per aprire il profilo Spotify dell'artista.
+        - Mostra un riassunto dell'artista da Wikipedia.
+        - Visualizza una barra di progresso per la popolarità dell'artista.
+        - Mostra un messaggio speciale e animazioni se la popolarità è alta.
+    Note:
+        - Richiede le librerie `spotipy`, `streamlit`, `webbrowser` e `wikipedia`.
+        - Le variabili globali `client_id`, `client_secret` e `redirect_uri` devono essere definite altrove nel codice.
+    """
     global client_id
     global client_secret
     global redirect_uri
@@ -717,8 +922,29 @@ def stampa_info_artista(nome_artista):
         st.header(f"Wow! {popularity}% di popolarità 😱! Questo artista è una divinità della musica! 🎉")
         st.balloons()
 
-# periodo: str,limit: int,offset = 0
 def stampa_profilo():
+    """
+    Visualizza le informazioni del profilo utente di Spotify utilizzando Streamlit.
+    Questa funzione recupera i dati del profilo utente dal modulo `anal` e li visualizza
+    in un'app Streamlit. Le informazioni visualizzate includono il nome visualizzato dell'utente,
+    l'email, il paese, il tipo di account, le impostazioni dei contenuti espliciti, il numero di follower
+    e l'immagine del profilo. Inoltre, fornisce collegamenti utili come l'URL del profilo Spotify
+    e l'ID utente.
+    Le informazioni del profilo sono organizzate in due colonne:
+    - Informazioni Generali: Nome visualizzato, email, paese e tipo di account.
+    - Dettagli Aggiuntivi: Impostazioni dei contenuti espliciti e numero di follower.
+    È presente un pulsante per aprire il profilo Spotify dell'utente in un browser web.
+    Nota:
+        Questa funzione presume che il modulo `anal` e Streamlit (`st`) siano già
+        importati e configurati correttamente.
+    Esempio:
+        Per utilizzare questa funzione, chiamala semplicemente all'interno di un'app Streamlit:
+        ```
+        import anal  # Assicurati che questo modulo fornisca la funzione `get_profilo_info`
+        # Chiama la funzione per visualizzare il profilo
+        stampa_profilo()
+        ```
+    """
     user_data = anal.get_profilo_info()
 
     
@@ -771,6 +997,15 @@ def stampa_profilo():
         webbrowser.open(spotify_url)
 
 def stampa_top_profilo(n,periodo):
+    """
+    Visualizza le migliori tracce e artisti per un determinato periodo.
+    Parametri:
+    n (int): Il numero di tracce e artisti migliori da visualizzare.
+    periodo (str): Il periodo di tempo per il quale recuperare le tracce e gli artisti migliori.
+    Ritorna:
+    None
+    Questa funzione recupera le migliori tracce e artisti per il periodo specific
+    """
     data = anal.get_top_profilo(periodo=periodo,limit=n)
     data_track = data['top_track']
     data_artisti = data['top_artist']
@@ -824,6 +1059,16 @@ def stampa_top_profilo(n,periodo):
         st.warning(f"Se non vedi esattamente {n} risultati è dovuto ad una mancanza di dati. Prova a ridurre il numero di risultati o ad aumentare la lunghezza del tuo periodo di intresse!")
     
 def download_audio_from_youtube(url, output_path="DOWNLOAD"):
+    """
+    Scarica l'audio da un video di YouTube e lo salva come file MP3.
+    Argomenti:
+        url (str): L'URL del video di YouTube da scaricare.
+        output_path (str, opzionale): La directory in cui salvare il file audio scaricato. Predefinito è "DOWNLOAD".
+    Eccezioni:
+        Exception: Se si verifica un errore durante il processo di download.
+    Ritorna:
+        None
+    """
     try:
         # Crea la cartella di destinazione se non esiste
         if not os.path.exists(output_path):
@@ -849,8 +1094,20 @@ def download_audio_from_youtube(url, output_path="DOWNLOAD"):
     except Exception as e:
         print(f"Errore durante il download: {e}")
 
-
 def stampa_dawnload_palylist():
+    """
+    Visualizza le playlist dell'utente e fornisce un'opzione per scaricare le tracce di ciascuna playlist.
+    Questa funzione recupera le playlist dell'utente e le visualizza in un'app Streamlit.
+    Per ogni playlist, mostra l'immagine della playlist, il nome e un pulsante di download.
+    Quando il pulsante di download viene cliccato, avvia il download di tutte le tracce della playlist
+    da YouTube.
+    Nota:
+        - La funzione presume l'esistenza del modulo `anal` con i metodi `get_user_playlists()`,
+          `get_playlist_tracks(id_playlist)` e `search_youtube_video(titolo)`.
+        - La funzione presume anche l'esistenza di una funzione `download_audio_from_youtube(link)`.
+    Eccezioni:
+        Qualsiasi eccezione sollevata durante la ricerca del video su YouTube viene catturata e gestita impostando il link a None.
+    """
     # Ottieni le playlist
     playlist = anal.get_user_playlists()
     
@@ -884,6 +1141,14 @@ def stampa_dawnload_palylist():
                 st.write(f"Download terminato")
                 
 def stampa_heetmap(df, anno):
+    """
+    Genera e visualizza una heatmap giornaliera delle ore di riproduzione per un determinato anno utilizzando Streamlit e Altair.
+    Parametri:
+    df (polars.DataFrame): Il DataFrame di input contenente i dati.
+    anno (int): L'anno per il quale generare la heatmap.
+    Ritorna:
+    None
+    """
     source = anal.ascolti_giornalieri(df, anno)
 
     # Estrai il giorno e il mese dalla colonna "data"
@@ -915,7 +1180,3 @@ def stampa_heetmap(df, anno):
 
     # Visualizza la heatmap in Streamlit
     st.altair_chart(chart, use_container_width=True)
-    
-        
-        
-# ESTRAZIONE ARTISTI

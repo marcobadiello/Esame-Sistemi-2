@@ -17,14 +17,47 @@ from credenziali import client_id
 from credenziali import client_secret
 from credenziali import redirect_uri
 
-'''
-In questo file vengono definite tutte le funzioni che hanno come
-scopo un analisi dei dati pecifica e restituiscono i dati richiesti
-'''
+"""
+Questo file contiene una serie di funzioni per l'analisi dei dati di ascolto musicale.
+Le funzioni sono progettate per estrarre, filtrare e aggregare i dati in vari modi,
+fornendo informazioni utili come le canzoni e gli artisti più ascoltati, le serie temporali
+degli ascolti e altre statistiche rilevanti.
+Funzioni principali:
+- top_n_canzoni(df, n=None, periodo=None, artisti=None): Restituisce le canzoni più ascoltate
+    in un determinato periodo, eventualmente filtrate per artista.
+- top_n_artisti(df, n=None, periodo=None): Restituisce gli artisti più ascoltati in un determinato periodo.
+- time_series_scorretto(df): Genera una serie temporale degli ascolti aggregati per anno e mese.
+- dataframe_periodi(df): Crea un DataFrame con tutti i periodi (anno e mese) presenti nei dati.
+- time_series(df): Corregge la serie temporale generata da time_series_scorretto aggiungendo i periodi con 0 ascolti.
+- time_series_artista_scorretta(df, artista, periodo=None): Genera una serie temporale degli ascolti per un artista specifico.
+- time_series_artista(df, artista, periodo=None): Corregge la serie temporale degli ascolti per un artista specifico.
+- time_series_cumulata(df): Genera una serie temporale cumulata degli ascolti.
+- shuffle_data(df): Restituisce statistiche sull'utilizzo della funzione 'shuffle'.
+- media_oraria(df): Calcola la media degli ascolti per ogni ora del giorno.
+- media_oraria_cumulata(df): Calcola la media cumulata degli ascolti per ogni ora del giorno.
+- ascolto_generi(df, periodo, client_id, client_secret, redirect_uri): Restituisce una mappa dei generi musicali ascoltati in un determinato periodo.
+- get_track_info(track_name): Restituisce informazioni su un brano specifico.
+- get_profilo_info(): Restituisce informazioni sul profilo utente di Spotify.
+- get_top_profilo(periodo, limit, offset=0): Restituisce le tracce e gli artisti più ascoltati dall'utente in un determinato periodo.
+- search_youtube_video(video_name): Cerca un video su YouTube e restituisce l'URL del primo risultato.
+- get_user_playlists(client_id, client_secret, redirect_uri): Restituisce le playlist dell'utente su Spotify.
+- get_playlist_tracks(playlist_id, client_id, client_secret, redirect_uri): Restituisce le tracce di una playlist specifica su Spotify.
+- crea_date_complete(anno): Crea un DataFrame con tutte le date di un anno specifico.
+- ascolti_giornalieri(df, anno): Restituisce un DataFrame con gli ascolti giornalieri per un anno specifico.
+"""
 
-# definisco una funzione per restituire la top delle canzoni di una determianto peridoo
+
 def top_n_canzoni(df,n=None,periodo=None,artisti=None):
-    
+    """
+    Restituisce le canzoni più ascoltate in base ai parametri forniti.
+    Args:
+        df (DataFrame): Il DataFrame contenente i dati delle canzoni.
+        n (int, optional): Il numero di canzoni da restituire. Se non specificato, restituisce tutte le canzoni.
+        periodo (tuple, optional): Una tupla contenente due date (inizio, fine) per filtrare le canzoni in base al periodo.
+        artisti (list, optional): Una lista di artisti per filtrare le canzoni in base agli artisti.
+    Returns:
+        DataFrame: Un DataFrame contenente le canzoni più ascoltate, ordinate in ordine decrescente di ascolti.
+    """
     # se viene definito un periodo allora filtro in base a quel periodo altrimenti considero i
     # dati di sempre
     if periodo != None:
@@ -52,9 +85,21 @@ def top_n_canzoni(df,n=None,periodo=None,artisti=None):
             .sort("s_played",descending=True)
             .select("*")
                 ))
-        
-# definisco una funzione per restituire la top degli artisti di un determinato periodo
+
 def top_n_artisti(df,n=None,periodo=None):
+    """
+    Restituisce i migliori artisti in base al numero di riproduzioni (s_played) in un determinato periodo.
+
+    Parameters:
+    df (DataFrame): Il DataFrame contenente i dati delle riproduzioni.
+    n (int, optional): Il numero di artisti da restituire. Se non specificato, restituisce tutti gli artisti.
+    periodo (tuple, optional): Una tupla contenente due date (inizio, fine) per filtrare i dati in base al periodo. 
+                               Se non specificato, considera tutti i dati.
+
+    Returns:
+    DataFrame: Un DataFrame contenente gli artisti e il numero totale di riproduzioni, ordinato in ordine decrescente.
+               Se 'n' è specificato, restituisce solo i primi 'n' artisti.
+    """
     
     # se viene selezionato un periodo filtro i dati in base a quel periodo
     if periodo != None:
@@ -77,15 +122,19 @@ def top_n_artisti(df,n=None,periodo=None):
             .sort("s_played",descending=True)
             .select("*")
         ))
-        
-################### NON TOCCARE ASSOLUTAMETNE PER NESSUN MOTIVO QUESTE TRE FUNZIONI ##########################
 
-# questa funzione mi restiruisce una time series che però viene perfezionata da una funzine dopo
-#
-#il problema di questa funzione e che non restituisce un periodo se durante quel periodo non ci sono ascolti
-#quindi la funzione che corregge questa funzione ha il compito di aggiungere i periodo con 0 ascolti
-#
 def time_series_scorretto(df):
+    """
+    Elabora un DataFrame per estrarre anno e mese da una colonna di timestamp, 
+    raggruppa i dati per anno e mese e calcola le ore totali riprodotte 
+    per ciascun gruppo.
+    Parametri:
+    df (polars.DataFrame): Il DataFrame di input contenente una colonna 'ts' con 
+                           timestamp e una colonna 's_played' con i secondi riprodotti.
+    Restituisce:
+    polars.DataFrame: Un DataFrame raggruppato per anno e mese con le ore totali 
+                      riprodotte per ciascun gruppo.
+    """
     # estraggo anno e mese dalle colonna ts
     df_new = df.with_columns(
         pl.col("ts").dt.year().alias("year"),
@@ -102,8 +151,14 @@ def time_series_scorretto(df):
     
     return grouped
 
-# questa funzione prende tutti i mesi dei dati e ci associa un peridoo
 def dataframe_periodi(df):
+    """
+    Genera un DataFrame contenente i periodi (anno, mese) dal timestamp minimo al massimo nel DataFrame di input.
+    Parametri:
+    df (polars.DataFrame): DataFrame di input contenente una colonna 'ts' con dati di timestamp.
+    Restituisce:
+    polars.DataFrame: DataFrame con colonne 'anno' (anno), 'mese' (mese) e 'periodo' (numero sequenziale del periodo).
+    """
     
     # estraggo il minimo e il amssimo dei peridoi dei miei dati
     periodo = (df['ts'].min(), df['ts'].max())
@@ -136,9 +191,18 @@ def dataframe_periodi(df):
     
     return df_mesi
 
-# questa funzioen ha il compito di correggere la time series restituita dalla prima funzione di queste 
-# tre funzioni che NON VANNO TOCCATE 
 def time_series(df):
+    """
+    Genera un DataFrame di serie temporali con le ore totali riprodotte per ogni periodo.
+    Parametri:
+    df (DataFrame): Il DataFrame di input contenente i dati.
+    Restituisce:
+    DataFrame: Un DataFrame con le seguenti colonne:
+        - 'anno': L'anno del periodo.
+        - 'mese': Il mese del periodo.
+        - 'ore_riprodotte': Le ore totali riprodotte per il periodo corrispondente.
+        - 'data': Una stringa che combina 'anno' e 'mese' nel formato 'YYYY-MM'.
+    """
     # creo i dataframe della time series e dei periodi di ascolto
     p = dataframe_periodi(df)
     d = time_series_scorretto(df)
@@ -180,16 +244,19 @@ def time_series(df):
 
 
     return df_finale
-#################################################################################################################
 
-# questa funzione mi serve per restituirmi una time series filtrata per un artista
-# 
-# questa funzione spudoratamente copiata dalla funzione precedente ha il suo sesso problema ovvero non
-# riesce a gestire il caso in cui in periodo non viene ascoltato l'artista
-# per cu anche per questo caso è necessario che l'output di questa funzione venga corretto dalla
-# funzione successiva
-#
 def time_series_artista_scorretta(df, artista, periodo=None):
+    """
+    Genera una serie temporale delle ore totali riprodotte per un dato artista, eventualmente in un periodo specificato.
+    Parametri:
+    df (polars.DataFrame): Il DataFrame di input contenente i dati.
+    artista (str): Il nome dell'artista da filtrare.
+    periodo (tuple, opzionale): Una tupla contenente i timestamp di inizio e fine per filtrare i dati. Default è None.
+    Restituisce:
+    polars.DataFrame: Un DataFrame contenente le ore totali riprodotte per mese per l'artista specificato, 
+                      eventualmente nel periodo specificato. Il DataFrame ha colonne 'year', 'month' 
+                      e 'total_hours_played'.
+    """
     
     # se viene selezinato un periodo filtro i dati in base a quel periodo
     if periodo is not None:
@@ -216,9 +283,23 @@ def time_series_artista_scorretta(df, artista, periodo=None):
 
 
     return df_finale
-# questa funzine ha il compito di correggere la funzione precedente come nel caso di prima 
-# viene sfrittata la funzione dataframe_periodi(df) per avere un dataframe completo dei periodi
+
 def time_series_artista(df,artista,periodo=None):
+    """
+    Genera una serie temporale delle ore totali riprodotte per un dato artista nei periodi specificati.
+    Parametri:
+    df (DataFrame): Il DataFrame di input contenente i dati.
+    artista (str): Il nome dell'artista da analizzare.
+    periodo (str, opzionale): Il periodo da analizzare. Default è None.
+    Restituisce:
+    DataFrame: Un DataFrame con i periodi e le corrispondenti ore totali riprodotte per l'artista dato.
+    Note:
+    - La funzione crea due DataFrame: uno per i periodi e uno per le ore riprodotte.
+    - Genera liste di periodi e ore riprodotte.
+    - Garantisce che le ore riprodotte siano in formato floating-point.
+    - Se l'artista non è presente in un dato periodo, assegna un valore di 0.0 per quel periodo.
+    - Il DataFrame finale include una nuova colonna 'ore_riprodotte' con le ore totali riprodotte per ogni periodo.
+    """
     
     # creo i dataframe dei periodi e delle ore di ascolto
     p = dataframe_periodi(df)
@@ -247,9 +328,18 @@ def time_series_artista(df,artista,periodo=None):
 
     return df_finale
 
-# quezt funzione mi restituisce un dataframe con la time series cumulata
-# ovvero ad ogni periodo viene indicato il numero di ore riprodotto dall'inizio fino a quel periodo
 def time_series_cumulata(df):
+    """
+    Genera una serie temporale cumulata dal DataFrame fornito.
+    Questa funzione prende un DataFrame, estrae una serie temporale e aggiunge una colonna
+    con la somma cumulata della colonna "ore_riprodotte". Successivamente rimuove
+    le colonne non necessarie, lasciando solo "periodo", "ore_riprodotte_cumulate" 
+    e "anno_int".
+    Parametri:
+    df (DataFrame): Il DataFrame di input contenente i dati della serie temporale.
+    Restituisce:
+    DataFrame: Un DataFrame con la serie temporale cumulata.
+    """
     # Mi prendo la time series classica
     data = time_series(df)
     
@@ -265,10 +355,21 @@ def time_series_cumulata(df):
     
     return data_cum
 
-
-# questa funzione mi restituisce una tubla con tutte le informazioni in merito
-# all'utilizzo della funzione 'shuffle'
 def shuffle_data(df):
+    """
+    Analizza la colonna 'shuffle' di un DataFrame e restituisce statistiche.
+
+    Parametri:
+    df (pandas.DataFrame): Il DataFrame contenente una colonna 'shuffle' con valori booleani.
+
+    Restituisce:
+    tuple: Una tupla contenente le seguenti statistiche:
+        - Numero totale di voci (int)
+        - Numero di valori True (int)
+        - Numero di valori False (int)
+        - Proporzione di valori True (float)
+        - Proporzione di valori False (float)
+    """
     l = df['shuffle'].to_list()
     tot = len(l)
     skip = 0 
@@ -281,8 +382,21 @@ def shuffle_data(df):
     risultati = (tot,skip,notskip,skip/tot,notskip/tot)
     return risultati
 
-# questa funzione mi restituisci gli ascolti medi divisi per ora
 def media_oraria(df):
+    """
+    Calcola la distribuzione percentuale oraria delle osservazioni nel DataFrame fornito.
+
+    Questa funzione prende un DataFrame con colonne 'ts' (timestamp) e 's_played' (osservazioni),
+    e calcola la percentuale delle osservazioni totali per ogni ora del giorno (0-23).
+
+    Args:
+        df (pandas.DataFrame): Un DataFrame contenente le colonne 'ts' e 's_played'.
+
+    Returns:
+        polars.DataFrame: Un DataFrame con due colonne:
+            - 'hour': L'ora del giorno (0-23).
+            - 'observations': La percentuale delle osservazioni totali per ogni ora.
+    """
     diz = {hour: 0 for hour in range(24)}
     for i in range(0,len(df)):
         ora = df['ts'][i].hour
@@ -300,6 +414,15 @@ def media_oraria(df):
     return data
 
 def media_oraria_cumulata(df):
+    """
+    Calcola la media oraria cumulata delle osservazioni nel DataFrame fornito.
+    Parametri:
+    df (polars.DataFrame): Un DataFrame contenente i dati con osservazioni orarie.
+    Restituisce:
+    polars.DataFrame: Un DataFrame con due colonne:
+        - 'hour': L'ora del giorno (0 a 23).
+        - 'cum': La somma cumulata delle osservazioni fino a quell'ora.
+    """
     data = media_oraria(df)
     
     ora = range(0,24)
@@ -314,8 +437,18 @@ def media_oraria_cumulata(df):
     })
     return df
 
-
 def ascolto_generi(df,periodo,client_id=client_id,client_secret=client_secret,redirect_uri=redirect_uri):
+    """
+    Analizza i generi musicali ascoltati dagli utenti in un determinato periodo.
+    Args:
+        df (DataFrame): Il dataframe contenente i dati degli ascolti.
+        periodo (str): Il periodo di tempo per il quale analizzare gli ascolti.
+        client_id (str): L'ID del client per l'autenticazione con Spotify.
+        client_secret (str): Il segreto del client per l'autenticazione con Spotify.
+        redirect_uri (str): L'URI di reindirizzamento per l'autenticazione con Spotify.
+    Returns:
+        dict: Un dizionario dove le chiavi sono i generi musicali e i valori sono il tempo totale di ascolto per ciascun genere.
+    """
     startint = datetime.now()
     mappa = {}
 
@@ -367,6 +500,13 @@ def ascolto_generi(df,periodo,client_id=client_id,client_secret=client_secret,re
     return mappa
 
 def get_track_info(track_name):
+    """
+    Recupera informazioni su un brano da Spotify.
+    Args:
+        track_name (str): Il nome del brano da cercare.
+    Returns:
+        dict: Un dizionario contenente i risultati della ricerca per il brano.
+    """
     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
                                                 client_secret=client_secret,
                                                 redirect_uri=redirect_uri,
@@ -378,6 +518,14 @@ def get_track_info(track_name):
     return results
 
 def get_profilo_info():
+    """
+    Recupera le informazioni del profilo utente corrente da Spotify.
+    Questa funzione utilizza la libreria Spotipy per autenticarsi con Spotify
+    tramite OAuth e recupera le informazioni del profilo utente, inclusi dettagli
+    privati e email.
+    Returns:
+        dict: Un dizionario contenente le informazioni del profilo utente.
+    """
     scope = 'user-read-private user-read-email user-top-read'
     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
                                                 client_secret=client_secret,
@@ -391,7 +539,18 @@ def get_profilo_info():
     
 
     return user_profile
+
 def get_top_profilo(periodo: str,limit: int,offset = 0):
+    """
+    Recupera le tracce e gli artisti più ascoltati dall'utente in un determinato periodo.
+    Args:
+        periodo (str): L'intervallo di tempo per gli elementi principali. I valori validi sono 'short_term' (4 settimane), 
+                        'medium_term' (6 mesi) e 'long_term' (diversi anni).
+        limit (int): Il numero di elementi da restituire. Il valore massimo è 50.
+        offset (int, opzionale): L'indice del primo elemento da restituire. Il valore predefinito è 0.
+    Returns:
+        dict: Un dizionario contenente le tracce e gli artisti principali dell'utente con le chiavi 'top_track' e 'top_artist'.
+    """
     scope = 'user-read-private user-read-email user-top-read'
     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
                                                 client_secret=client_secret,
@@ -410,6 +569,18 @@ def get_top_profilo(periodo: str,limit: int,offset = 0):
     return risultati
 
 def search_youtube_video(video_name):
+    """
+    Cerca un video su YouTube per nome e restituisce l'URL del primo risultato.
+
+    Args:
+        video_name (str): Il nome del video da cercare.
+
+    Returns:
+        str: L'URL del primo risultato video di YouTube se trovato, altrimenti None.
+
+    Raises:
+        Exception: Se si verifica un errore durante il processo di ricerca.
+    """
     try:
         # Cerca il video su YouTube
         search = Search(video_name)
@@ -419,6 +590,18 @@ def search_youtube_video(video_name):
         return None
 
 def get_user_playlists(client_id=client_id, client_secret=client_secret, redirect_uri=redirect_uri):
+    """
+    Recupera le playlist dell'utente da Spotify.
+    Questa funzione utilizza la libreria Spotipy per autenticarsi con Spotify e recuperare le playlist dell'utente.
+    Gestisce la paginazione per assicurarsi che tutte le playlist vengano recuperate.
+    Args:
+        client_id (str): L'ID client per l'applicazione Spotify.
+        client_secret (str): Il client secret per l'applicazione Spotify.
+        redirect_uri (str): L'URI di reindirizzamento per l'applicazione Spotify.
+    Returns:
+        dict: Un dizionario dove le chiavi sono gli indici delle playlist (a partire da 1) e i valori sono dizionari
+              contenenti il nome della playlist, l'ID e l'URL della prima immagine (o un segnaposto se non è disponibile).
+    """
     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
                                                    client_secret=client_secret,
                                                    redirect_uri=redirect_uri,
@@ -459,6 +642,23 @@ def get_user_playlists(client_id=client_id, client_secret=client_secret, redirec
     return risultati
 
 def get_playlist_tracks(playlist_id, client_id=client_id, client_secret=client_secret, redirect_uri=redirect_uri):
+    """
+    Recupera tutte le tracce da una playlist di Spotify.
+    Args:
+        playlist_id (str): L'ID Spotify della playlist.
+        client_id (str): L'ID client per l'autenticazione API di Spotify.
+        client_secret (str): Il client secret per l'autenticazione API di Spotify.
+        redirect_uri (str): L'URI di reindirizzamento per l'autenticazione API di Spotify.
+    Returns:
+        dict: Un dizionario dove le chiavi sono gli indici delle tracce (a partire da 1) e i valori sono dizionari
+              contenenti 'canzone' (nome della traccia) e 'artista' (nomi degli artisti).
+    Example:
+        >>> tracce = get_playlist_tracks('playlist_id', 'client_id', 'client_secret', 'redirect_uri')
+        >>> print(tracce)
+        {1: {'canzone': 'Nome Traccia 1', 'artista': 'Artista 1'},
+         2: {'canzone': 'Nome Traccia 2', 'artista': 'Artista 2, Artista 3'},
+         ...}
+    """
     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
                                                    client_secret=client_secret,
                                                    redirect_uri=redirect_uri,
@@ -491,6 +691,26 @@ def get_playlist_tracks(playlist_id, client_id=client_id, client_secret=client_s
     return risultati
 
 def crea_date_complete(anno):
+    """
+    Crea un DataFrame Polars contenente tutte le date di un anno specificato.
+    Args:
+        anno (int): L'anno per il quale creare l'elenco di date.
+    Returns:
+        pl.DataFrame: Un DataFrame Polars contenente tutte le date dell'anno specificato.
+    Example:
+        >>> crea_date_complete(2023)
+        shape: (365, 1)
+        ┌────────────┐
+        │ giorno     │
+        │ ---        │
+        │ date       │
+        ├────────────┤
+        │ 2023-01-01 │
+        │ 2023-01-02 │
+        │ ...        │
+        │ 2023-12-31 │
+        └────────────┘
+    """
     # Funzione per verificare se un anno è bisestile
     def is_bisestile(anno):
         return (anno % 4 == 0 and anno % 100 != 0) or (anno % 400 == 0)
@@ -511,6 +731,15 @@ def crea_date_complete(anno):
     return date_complete
 
 def ascolti_giornalieri(df, anno):
+    """
+    Calcola il totale del tempo di ascolto giornaliero per un determinato anno.
+    Args:
+        df (pl.DataFrame): Il DataFrame contenente i dati di ascolto con colonne "ts" (timestamp) e "s_played" (tempo di ascolto).
+        anno (int): L'anno per il quale calcolare il totale del tempo di ascolto giornaliero.
+    Returns:
+        pl.DataFrame: Un DataFrame con due colonne: "data" (giorno) e "valore" (totale del tempo di ascolto per quel giorno).
+                      Se un giorno non ha dati di ascolto, il valore sarà 0.
+    """
     # Selezionare le colonne necessarie
     df_selezionato = df.select(["ts", "s_played"])
     print(df_selezionato)
@@ -555,15 +784,3 @@ def ascolti_giornalieri(df, anno):
     dataframe_finale = pl.DataFrame(list(risultati.items()), schema=["data", "valore"])
 
     return dataframe_finale
-    
-
-print(ascolti_giornalieri(df,2024))
-
-'''
-COSE IMPORTANTI DA SAPERE
-- Ogni periodo corrisponde ad un mese quindi ogni 12 periodi corrisponde un anno
-'''
-
-
-#########################################
-

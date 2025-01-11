@@ -4,6 +4,19 @@ from datetime import datetime
 from Estrattore import df
 
 def run_top_artisti():
+    """
+    Configura ed esegue la pagina Streamlit per visualizzare i migliori artisti di Spotify.
+    Questa funzione imposta il layout della pagina, consente all'utente di selezionare il numero di artisti da visualizzare
+    e scegliere il periodo di tempo per i dati. Successivamente, visualizza i migliori artisti in base ai criteri selezionati
+    e mostra il periodo selezionato.
+    L'utente può scegliere tra tre opzioni di periodo di tempo:
+    - "Dati di sempre": Utilizza l'intero intervallo del dataframe.
+    - "Anno specifico": Consente all'utente di selezionare un anno specifico.
+    - "Periodo personalizzato": Consente all'utente di selezionare un intervallo di date personalizzato.
+    La funzione include anche un footer con il nome del creatore.
+    Ritorna:
+        Nessuno
+    """
     st.set_page_config(
     layout="wide",  
     initial_sidebar_state="collapsed"  #"expanded" o "collapsed"

@@ -2,12 +2,38 @@ import streamlit as st
 from Estrattore import df
 import Tools
 
-''''
-In qeusto file è contenuto il codice per la schermata HOME del progetto
-'''
-
-# creo una funzione che avvia la schermata
 def run_home():
+    """
+    Configura e visualizza la home page del progetto Spotify Wrapped Statistico utilizzando Streamlit.
+
+    La home page include:
+    - Configurazione della pagina con layout ampio e barra laterale ridotta.
+    - Logo di Spotify e titolo.
+    - Descrizione del progetto e degli obiettivi.
+    - Descrizione del dataset con spiegazioni dettagliate dei campi.
+    - Bottone per visualizzare il dataframe.
+    - Link alla pagina README e alla pagina del progetto su GitHub.
+    - Descrizione delle varie pagine disponibili nel progetto, tra cui:
+        - Profilo
+        - Readme
+        - TOP Canzoni
+        - TOP Artisti
+        - Serie storica
+        - Serie storica artisti
+        - Shuffle?
+        - Giornata tipo
+        - Generi musicali
+        - HeetMap
+        - Scopri artisti
+        - Scopri brani
+        - Scarica playlist
+    - Footer con il nome del creatore.
+
+    Nota:
+    - La funzione presuppone che la libreria Streamlit sia importata come `st`.
+    - Il dataframe `df` dovrebbe essere definito altrove nel codice.
+    """
+
     st.set_page_config(
     layout="wide",  
     initial_sidebar_state="collapsed"  #"expanded" o "collapsed"

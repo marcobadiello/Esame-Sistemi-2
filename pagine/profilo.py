@@ -1,6 +1,25 @@
 import streamlit as st 
 import Tools
+
 def run_profilo():
+    """
+    Configura e avvia la pagina del profilo Streamlit per Spotify Wrapped Statistico.
+
+    La funzione esegue le seguenti operazioni:
+    1. Configura la pagina con un layout ampio e una barra laterale ridotta.
+    2. Visualizza il logo di Spotify e il titolo della pagina.
+    3. Chiama `Tools.stampa_profilo()` per visualizzare le informazioni del profilo dell'utente.
+    4. Aggiunge un divisore e un titolo per la sezione delle preferenze musicali.
+    5. Mostra una breve descrizione della sezione.
+    6. Fornisce uno slider per consentire all'utente di selezionare il numero di canzoni e artisti da visualizzare.
+    7. Fornisce un pulsante radio per permettere all'utente di selezionare il periodo di interesse.
+    8. Chiama `Tools.stampa_top_profilo(n, periodo)` per visualizzare le canzoni e gli artisti principali in base al periodo selezionato.
+    9. Aggiunge un footer con il nome del creatore.
+
+    Nota:
+    - Si presuppone che i moduli `st` e `Tools` siano già importati e disponibili nel contesto.
+    """
+
     st.set_page_config(
     layout="wide",  
     initial_sidebar_state="collapsed"  #"expanded" o "collapsed"

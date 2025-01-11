@@ -7,13 +7,32 @@ import Tools
 from datetime import datetime
 import Analisi as anal
 
-'''
-In qeusto file è scritto il codice per la pagina della time series degli artisti
-'''
-
-# questa funzione avvia la pagina della 
-# time series degli artisti
 def run_time_series_artisti():
+    """
+    Questa funzione configura e avvia una pagina dell'app Streamlit per visualizzare i dati delle serie temporali della cronologia di ascolto degli artisti su Spotify.
+
+    La funzione esegue le seguenti operazioni:
+    1. Configura il layout della pagina Streamlit e lo stato della barra laterale.
+    2. Visualizza il logo di Spotify e il titolo "Spotify Wrapped Statistico".
+    3. Genera un'analisi delle serie temporali basata sul DataFrame fornito.
+    4. Mostra un titolo e una descrizione per il confronto delle serie storiche suddivise per artisti.
+    5. Fornisce opzioni per selezionare il numero di artisti da visualizzare e il periodo di analisi dei dati.
+    6. Permette agli utenti di scegliere tra:
+    - Visualizzare sempre i primi N artisti.
+    - Selezionare manualmente fino a 10 artisti per il confronto.
+    7. Visualizza i dati delle serie temporali per gli artisti e il periodo selezionati.
+    8. Aggiunge un footer con il nome del creatore.
+
+    La funzione include due sotto-funzioni principali:
+    - `not_ceck()`: Gestisce il caso in cui l'utente non seleziona manualmente gli artisti.
+    - `ceck()`: Gestisce il caso in cui l'utente seleziona manualmente gli artisti.
+
+    Nota: La funzione si basa su moduli e funzioni esterne, come `anal.time_series`, `anal.top_n_artisti` e `Tools.stampa_time_series_artisti`.
+
+    Ritorna:
+    - Nessun valore (None).
+    """
+
     st.set_page_config(
     layout="wide",  
     initial_sidebar_state="collapsed"  #"expanded" o "collapsed"

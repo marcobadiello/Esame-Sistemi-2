@@ -7,8 +7,30 @@ import Tools
 from datetime import datetime
 import Analisi as anal
 
-
 def run_time_series():
+    """
+    Configura e visualizza una pagina Streamlit con l'analisi delle serie temporali dei dati di ascolto su Spotify.
+
+    La funzione esegue i seguenti compiti:
+    1. Configura la pagina con un layout ampio e una barra laterale ridotta.
+    2. Visualizza il logo di Spotify e il titolo "Spotify Wrapped Statistico".
+    3. Genera e mostra un grafico a serie temporali dei dati di ascolto su Spotify.
+    4. Fornisce una descrizione del grafico a serie temporali, compreso l'intervallo temporale e la sua utilità.
+    5. Mostra un grafico cumulativo delle serie temporali dei dati di ascolto su Spotify.
+    6. Fornisce una descrizione del grafico cumulativo e della sua utilità.
+    7. Aggiunge un footer con il nome del creatore.
+
+    La funzione utilizza le seguenti funzioni e variabili esterne:
+    - `anal.time_series(df)`: Genera i dati delle serie temporali.
+    - `Tools.stampa_time_series(df)`: Mostra il grafico delle serie temporali.
+    - `Tools.stampa_time_series_cumulata(df)`: Mostra il grafico cumulativo delle serie temporali.
+
+    Nota:
+    - La funzione presume che il DataFrame `df` sia già definito e contenga i dati necessari.
+    - Si presume che il modulo `st` (Streamlit) sia già importato.
+    - Si presume che i moduli `anal` e `Tools` siano già importati.
+    """
+
     st.set_page_config(
     layout="wide",  
     initial_sidebar_state="collapsed"  #"expanded" o "collapsed"

@@ -7,11 +7,31 @@ import Tools
 from datetime import datetime
 import Analisi as anal
 
-'''
-In questo file c'è il codice per descrivere gli ascolti durante la gironatata
-'''
-
 def run_giornata():
+    """
+    Configura e avvia la pagina Streamlit per visualizzare le statistiche di ascolto su Spotify durante il giorno.
+
+    La pagina include:
+    - Un titolo e il logo di Spotify.
+    - Un'introduzione che spiega lo scopo della pagina.
+    - Uno slider per selezionare una specifica ora del giorno.
+    - Visualizzazione dell'ora selezionata e della percentuale di ascolto corrispondente.
+    - Un grafico circolare che mostra la distribuzione dell'ascolto durante la giornata.
+    - Un grafico orizzontale per la variazione dettagliata dell'ascolto.
+    - Un grafico cumulativo della percentuale per l'intera giornata.
+    - Un footer con il nome del creatore.
+
+    Utilizza le seguenti funzioni esterne:
+    - `anal.media_oraria(df)`: Calcola la percentuale media di ascolto per ogni ora.
+    - `Tools.grafico_giornata(df, orario_selezionato)`: Genera un grafico circolare per l'ora selezionata.
+    - `Tools.grafico_giornata_orizzontale(df, orario_selezionato)`: Genera un grafico orizzontale per l'ora selezionata.
+    - `Tools.grafico_giornata_orizzontale_cumulato(df, orario_selezionato)`: Genera un grafico orizzontale cumulativo per l'intera giornata.
+
+    Nota:
+    - La funzione presuppone l'esistenza di un DataFrame `df` contenente i dati necessari.
+    - La funzione utilizza Streamlit per l'interfaccia web.
+    """
+
     st.set_page_config(
     layout="wide",  
     initial_sidebar_state="collapsed"  #"expanded" o "collapsed"

@@ -2,13 +2,23 @@ import streamlit as st
 import Tools
 
 def run_discover_track():
+    """
+    Configura e avvia la pagina di scoperta brani in un'applicazione Streamlit.
+
+    Questa funzione configura la pagina con un layout ampio e una barra laterale ridotta.
+    Fornisce un input di testo per consentire all'utente di inserire il titolo di un brano. 
+    Se viene inserito un titolo, chiama il metodo `stampa_info_track` dal modulo `Tools` per visualizzare 
+    le informazioni relative al brano. Se non viene inserito un titolo, viene mostrato un messaggio di avviso 
+    che invita l'utente a inserire il nome di un brano. Inoltre, aggiunge un footer alla pagina con il nome del creatore.
+
+    Ritorna:
+        Nessun valore (None).
+    """
     st.set_page_config(
     layout="wide",  
     initial_sidebar_state="collapsed"  #"expanded" o "collapsed"
     )
-    
     titolo = st.text_input("Inserisci titolo del brano")
-    
     if titolo:
         Tools.stampa_info_track(titolo)
     else:

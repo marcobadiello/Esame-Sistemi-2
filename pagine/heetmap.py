@@ -4,6 +4,25 @@ import Tools
 from Estrattore import df
 
 def run_heetmap():
+    """
+    Visualizza una heatmap di Spotify Wrapped per un anno selezionato.
+
+    Questa funzione crea un layout Streamlit con due colonne: una per il logo di Spotify e l'altra per il titolo "Spotify Wrapped Statistico". Successivamente, visualizza un selectbox per permettere all'utente di scegliere un anno degli ultimi 10 anni. In base all'anno selezionato, genera e mostra una heatmap che evidenzia i periodi di alta e bassa attività di ascolto, oltre a eventuali picchi nel corso dell'anno.
+
+    La funzione include anche un footer con il nome del creatore.
+
+    Nota:
+    - La funzione presuppone che la data e l'ora correnti siano disponibili.
+    - La funzione utilizza il metodo `Tools.stampa_heetmap` per generare la heatmap.
+    - La funzione richiede i moduli `st` (Streamlit) e `datetime`.
+
+    Args:
+        Nessun argomento.
+
+    Returns:
+        Nessun valore (None).
+    """
+
     # Layout della pagina con colonne
     col1, col2 = st.columns([1, 3])
     with col1:

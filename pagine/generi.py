@@ -13,16 +13,42 @@ from credenziali import redirect_uri
 
 df1 = df
 def run_generi():
+    """
+    Esegue la logica principale per la pagina Spotify Wrapped Statistico.
+
+    Questa funzione configura la pagina Streamlit, gestisce l'input dell'utente per la selezione 
+    di un periodo di tempo e visualizza un grafico dei generi musicali ascoltati nel periodo selezionato.
+
+    Variabili Globali:
+    -----------------
+    df1 : pandas.DataFrame
+        Un dataframe globale contenente i dati da analizzare.
+
+    Parametri:
+    -----------
+    Nessun parametro.
+
+    Ritorna:
+    --------
+    Nessun valore (None).
+
+    Note:
+    ------
+    - La funzione verifica che `client_id`, `client_secret` e `redirect_uri` non siano None prima di procedere.
+    - Gli utenti possono selezionare un periodo di tempo da tre opzioni: "Dati di sempre", "Anno specifico" e "Periodo personalizzato".
+    - La funzione convalida l'intervallo di date selezionato e mostra un messaggio di errore se la data di inizio è successiva alla data di fine.
+    - Gli utenti possono scegliere il numero di generi da visualizzare utilizzando uno slider.
+    - Viene mostrato un messaggio di avviso per informare gli utenti che la generazione del grafico potrebbe richiedere alcuni secondi.
+    - Se le credenziali richieste non sono fornite, viene visualizzato un messaggio di avviso.
+    - Un footer viene aggiunto alla pagina con il nome del creatore.
+    """
     global df1
     df = df1
-    
     if client_id and client_secret and redirect_uri != None:
         st.set_page_config(
     layout="wide",  
     initial_sidebar_state="collapsed"  #"expanded" o "collapsed"
     )
-
-
         oggi = datetime.now().date()
         anno_corrente = oggi.year
         col1, col2 = st.columns([1, 3])
@@ -36,12 +62,10 @@ def run_generi():
             "Seleziona il periodo:",
             ["Dati di sempre", "Anno specifico", "Periodo personalizzato"]
         )
-
         # gestisco il periodo in base alla selezione
         if opzione_periodo == "Dati di sempre":
             # utilizza l'intero range del dataframe
             periodo = (df['ts'].min(), df['ts'].max())
-
         elif opzione_periodo == "Anno specifico":
             # permetto di scegliere un anno
             anno_selezionato = st.selectbox(
@@ -50,7 +74,6 @@ def run_generi():
                 index=0
             )
             periodo = (datetime(anno_selezionato, 1, 1), datetime(anno_selezionato, 12, 31))
-
         elif opzione_periodo == "Periodo personalizzato":
             # permetto di scegliere un intervallo di date
             start_date = st.date_input("Seleziona la data di inizio", value=datetime(anno_corrente, 1, 1).date())

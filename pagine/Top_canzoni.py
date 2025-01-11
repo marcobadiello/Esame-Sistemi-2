@@ -5,6 +5,28 @@ from Estrattore import df
 import Analisi as anal
 
 def run_top_canzoni():
+    """
+    Configura e avvia l'app Streamlit per visualizzare le canzoni più ascoltate su Spotify.
+
+    La funzione include le seguenti funzionalità:
+    - Configurazione della pagina con layout ampio e barra laterale ridotta.
+    - Visualizzazione del logo di Spotify e del titolo dell'app.
+    - Slider per scegliere il numero di canzoni da mostrare.
+    - Checkbox per filtrare le canzoni per artista.
+    - Pulsanti radio per selezionare il periodo di analisi (tutti i dati, anno specifico o periodo personalizzato).
+    - Input per le date per selezionare un intervallo personalizzato.
+    - Multiselezione per scegliere fino a 10 artisti da confrontare.
+    - Visualizzazione delle canzoni principali basata sui filtri e sul periodo selezionato.
+    - Footer con informazioni sul creatore dell'app.
+
+    Nota:
+    - La funzione presuppone la presenza di un DataFrame `df` contenente i dati di Spotify, con una colonna 'ts' che rappresenta i timestamp.
+    - Utilizza funzioni esterne come `anal.top_n_artisti` e `Tools.stampa_top_canzoni_n` per l'elaborazione e la visualizzazione dei dati.
+
+    Ritorna:
+    - Nessun valore (None).
+    """
+
     st.set_page_config(
     layout="wide",  
     initial_sidebar_state="collapsed"  #"expanded" o "collapsed"

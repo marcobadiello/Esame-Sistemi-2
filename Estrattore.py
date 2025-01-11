@@ -3,16 +3,21 @@ import polars as pl
 import os
 from datetime import datetime
 import os
-'''
-In questo file viene gestita tutta la creazioen del datafarame dei dati.
-I dati forniti da Spotify sono in formato Json e poichè sono tanto grandi
-sono più file.
-Le informzioen sulle varaibili presenti nel dataframe sono visibili sul pdf
-"ReadMeFirst_ExtendedStreamingHistory.pdf"
-'''
+"""
+Questo script gestisce la creazione e la trasformazione di un DataFrame a partire dai dati forniti da Spotify in formato JSON.
+I dati sono distribuiti su più file a causa delle loro dimensioni. Lo script cerca automaticamente i file JSON in una directory di base,
+li legge, pulisce e concatena in un unico DataFrame. Le informazioni sulle variabili presenti nel DataFrame sono disponibili nel documento
+"ReadMeFirst_ExtendedStreamingHistory.pdf".
+"""
 
-#questa funzione trasforma i file li pulisce e restituisce un dataframe
 def data():
+    """
+    Cerca una cartella contenente file JSON a partire da una directory base, legge i file JSON trovati,
+    li converte in DataFrame, rimuove colonne e righe non necessarie, concatena i DataFrame risultanti,
+    e applica alcune trasformazioni sui dati.
+    Returns:
+        pl.DataFrame: Un DataFrame contenente i dati trasformati dai file JSON trovati.
+    """
     def trova_cartella_con_json(percorso_base):
         for root, dirs, files in os.walk(percorso_base):
             # Controlla se ci sono file JSON nella directory corrente
@@ -89,17 +94,5 @@ def data():
 
     return df
 
-
-
 # creo il dataframe
 df = data()
-# print(df['spotify_track_uri'])
-
-''''
-COSE IMPORTANTI DA SAPERE
-
-- SI lo so per leggere i file si poteva fare un ciclo for ma non mi funzionava proprio bene quindi
-ho deciso di fare così
-- La variabile "df" che viene crate è una varibile globale che poi viene 
-importare in praticamente tutti gli altri file
-'''
