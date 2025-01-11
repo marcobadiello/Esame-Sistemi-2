@@ -95,10 +95,3 @@ def run_time_series():
     """,
     unsafe_allow_html=True
 )
-
-    
-    
-'''
-COSE DA SAPERE
-- Le key degli slideer sono tutte diverse perchè sennò mi creava problemi ma gli slider sono identici
-'''

@@ -14,15 +14,24 @@ def run_discover_track():
     Ritorna:
         Nessun valore (None).
     """
+    # impostazioni della pagina
     st.set_page_config(
     layout="wide",  
     initial_sidebar_state="collapsed"  #"expanded" o "collapsed"
     )
+    # scrivo il titolo
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        st.image("spotify_logo.png", width=100)
+    with col2:
+        st.title("Spotify Wrapped Statistico")
+    # strumento per selezionare brano
     titolo = st.text_input("Inserisci titolo del brano")
     if titolo:
         Tools.stampa_info_track(titolo)
     else:
         st.warning("Inserire il nome di un brano per avviare la ricerca")
+    # footer
     st.markdown(
     """
     <style>

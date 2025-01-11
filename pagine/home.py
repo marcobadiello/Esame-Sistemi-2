@@ -33,7 +33,7 @@ def run_home():
     - La funzione presuppone che la libreria Streamlit sia importata come `st`.
     - Il dataframe `df` dovrebbe essere definito altrove nel codice.
     """
-
+    # impostazioni della pagina
     st.set_page_config(
     layout="wide",  
     initial_sidebar_state="collapsed"  #"expanded" o "collapsed"
@@ -77,7 +77,7 @@ Gli obiettivi di questo progetto sono la presentazione dei miei dati personali d
     if st.button("Mostra dataframe"):
         st.write(df)
         
-    
+    # scrivo le inforrmazioni sulle pagine
     
     st.markdown("---")
     st.subheader("Per maggiori informazioni consiglio vivamente di leggere la pagina 'Readme' o visitare la [pagina GitHub del progetto](https://github.com/marcobadiello/Esame-Sistemi-2).")

@@ -22,7 +22,11 @@ def run_heetmap():
     Returns:
         Nessun valore (None).
     """
-
+    # impostazioni della pagina
+    st.set_page_config(
+    layout="wide",  
+    initial_sidebar_state="collapsed"  #"expanded" o "collapsed"
+    )
     # Layout della pagina con colonne
     col1, col2 = st.columns([1, 3])
     with col1:
@@ -54,6 +58,7 @@ def run_heetmap():
     '''
     st.write(xx)
     Tools.stampa_heetmap(df, anno_selezionato)
+    # Footer
     st.markdown(
     """
     <style>

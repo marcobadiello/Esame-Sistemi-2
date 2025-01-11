@@ -44,11 +44,14 @@ def run_generi():
     """
     global df1
     df = df1
+    # la pagina si avvia solo se ci sono le credenziali
     if client_id and client_secret and redirect_uri != None:
+        # impostazioni della pagina
         st.set_page_config(
     layout="wide",  
     initial_sidebar_state="collapsed"  #"expanded" o "collapsed"
     )
+        # scrivo il titolo e prendo l'anno corrente
         oggi = datetime.now().date()
         anno_corrente = oggi.year
         col1, col2 = st.columns([1, 3])
@@ -82,6 +85,7 @@ def run_generi():
                 st.error("La data di inizio non può essere successiva alla data di fine.")
                 return  # esce dalla funzione se l'intervallo non è valido
             periodo = (start_date, end_date)
+        # slider per il numero di generi
         n = st.slider("Quanti generi vuoi visualizzare?",min_value=1,max_value=50,value=10)
         xx = '''
         In questo grafico è possibile vedere le percentuali dei generi musicali ascoltati in un determinato periodo di tempo. 
@@ -89,10 +93,12 @@ def run_generi():
         selezionato.
         '''
         st.write(xx)
+        # mostro il grafico
         st.warning("La generazione del grafcio potrebbe richiedere qualche secondo in più")
         Tools.stampa_generi(df,n,periodo=periodo)
     else:
         st.warning("Attenzione per utilizzare questa pagina inserire le credenziali nel file credenziali.py")
+    # footer
     st.markdown(
     """
     <style>

@@ -13,16 +13,20 @@ def run_dawnload_playlist():
     Nota:
     - La funzione presuppone che i moduli `st` (Streamlit) e `Tools` siano già importati.
     """
+    # impostazioni della pagina
     st.set_page_config(
     layout="wide",  
     initial_sidebar_state="collapsed"  #"expanded" o "collapsed"
     )
+    # scrivo il titolo
     col1, col2 = st.columns([1, 3])
     with col1:
         st.image("spotify_logo.png", width=100)
     with col2:
         st.title("Spotify Wrapped Statistico")
+    # mostra la lista delle playlist
     Tools.stampa_dawnload_palylist()
+    # footer
     st.markdown(
     """
     <style>

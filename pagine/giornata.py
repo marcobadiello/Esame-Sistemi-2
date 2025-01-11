@@ -32,6 +32,7 @@ def run_giornata():
     - La funzione utilizza Streamlit per l'interfaccia web.
     """
 
+    # impostazioni della pagina
     st.set_page_config(
     layout="wide",  
     initial_sidebar_state="collapsed"  #"expanded" o "collapsed"
@@ -117,8 +118,8 @@ def run_giornata():
     '''
     st.write(bb)
     Tools.grafico_giornata_orizzontale(df,orario_selezionato)
-    
 
+    # mostro il grafico cumulato
     st.title("Percentuale di ascolto cumulata durante la giornata")
     stringhetta = '''
     In qeusto grafico puoi vedere la percentuale cumualta dell'ascolto di musica
@@ -127,6 +128,7 @@ def run_giornata():
     '''
     st.write(stringhetta)
     Tools.grafico_giornata_orizzontale_cumulato(df,orario_selezionato)  
+    # footer
     st.markdown(
     """
     <style>
