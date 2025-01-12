@@ -61,6 +61,7 @@ def data():
                 df = df.drop('reason_end')
                 df = df.drop('skipped')
 
+
                 #rimuovo tutte le righe che riguardano i podcast
                 df = df.filter(pl.col('episode_name').is_null())
 
