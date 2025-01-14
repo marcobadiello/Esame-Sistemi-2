@@ -142,7 +142,6 @@ Questo codice è stato scritto utilizzando queste fonti:
 - https://altair-viz.github.io/
 - https://docs.streamlit.io/
 - https://www.reddit.com/
-- https://chatgpt.com/
 - https://www.reddit.com/
 - https://github.com/
 - https://youtube.com/
@@ -298,7 +297,6 @@ This code was written using these sources:
 - https://altair-viz.github.io/  
 - https://docs.streamlit.io/  
 - https://www.reddit.com/  
-- https://chatgpt.com/  
 - https://github.com/  
 - https://youtube.com/  
 - https://developer.spotify.com/documentation/web-api  
