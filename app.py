@@ -19,6 +19,7 @@ from pagine.profilo import run_profilo
 from pagine.readme import run_readme
 from pagine.download_playlist import run_dawnload_playlist
 from pagine.heetmap import run_heetmap
+from pagine.scarica_copertine import run_dawnload_coperine
 
 
 
@@ -62,7 +63,8 @@ pagine = {
     "\n\n\n\n":[st.Page(run_generi,title="Generi musicali")],
     "Scopri": [st.Page(run_discover_artist, title="Scopri artisti", icon="")],
     "\t": [st.Page(run_discover_track, title="Scopri brani", icon="")],
-    "\t\t\t": [st.Page(run_dawnload_playlist, title="Dawnload playlist", icon="")]
+    "\t\t\t": [st.Page(run_dawnload_playlist, title="Dawnload playlist", icon="")],
+    "\t\t\t\t\t": [st.Page(run_dawnload_coperine, title="Dawnload coperine", icon="")]
     
 }
 

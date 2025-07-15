@@ -6,6 +6,10 @@ import polars as pl
 import wikipedia
 from Estrattore import df
 import os
+import requests
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
+import os
 import pandas as pd
 import yt_dlp
 from pytube import YouTube
@@ -1180,3 +1184,42 @@ def stampa_heetmap(df, anno):
 
     # Visualizza la heatmap in Streamlit
     st.altair_chart(chart, use_container_width=True)
+
+
+def scarica_copertine_da_uri_list(uri_list, client_id, client_secret):
+    """
+    Scarica le immagini di copertina da una lista di URI Spotify di tracce.
+
+    Args:
+        uri_list (list): Lista di URI 'spotify:track:...'.
+        client_id (str): Client ID Spotify.
+        client_secret (str): Client Secret Spotify.
+    """
+    # Autenticazione Spotipy
+    credentials = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
+    sp = spotipy.Spotify(client_credentials_manager=credentials)
+
+    # Crea cartella se non esiste
+    os.makedirs("COPERTINE", exist_ok=True)
+
+    for i, uri in enumerate(uri_list):
+        try:
+            # Recupera info sulla traccia
+            track_info = sp.track(uri)
+            immagini = track_info['album']['images']
+            nome_canzone = track_info['name'].replace('/', '_')  # Evita nomi file problematici
+
+            if immagini:
+                url = immagini[0]['url']
+                response = requests.get(url)
+
+                if response.status_code == 200:
+                    path = os.path.join("COPERTINE", f"{i}_{nome_canzone}.jpg")
+                    with open(path, "wb") as f:
+                        f.write(response.content)
+                else:
+                    print(f"Errore nel download immagine per {uri}")
+        except Exception as e:
+            print(f"Errore per URI {uri}: {e}")
+
+

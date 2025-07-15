@@ -673,6 +673,7 @@ def get_playlist_tracks(playlist_id, client_id=client_id, client_secret=client_s
         
         # Aggiungi le tracce al dizionario
         for idx, item in enumerate(tracks):
+            print(item)
             track = item['track']
             track_name = track['name']
             artists = ', '.join(artist['name'] for artist in track['artists'])  # Unisce i nomi degli artisti
@@ -783,3 +784,41 @@ def ascolti_giornalieri(df, anno):
     dataframe_finale = pl.DataFrame(list(risultati.items()), schema=["data", "valore"])
 
     return dataframe_finale
+
+def get_codici(df):
+    """
+    Restituisce un set di codici 'spotify_track_uri' delle tracce che
+    insieme coprono il 95% del tempo totale di ascolto.
+    Funziona con DataFrame Polars.
+    """
+    # Raggruppa per URI e somma s_played
+    ascolti_per_uri = df.group_by('spotify_track_uri').agg(
+        pl.col('s_played').sum().alias('tot_played')
+    )
+    
+    # Ordina per tot_played decrescente
+    ascolti_per_uri = ascolti_per_uri.sort('tot_played', descending=True)
+    
+    # Calcola la somma totale del tempo di ascolto
+    totale = ascolti_per_uri['tot_played'].sum()
+    
+    # Calcola la somma cumulativa
+    ascolti_per_uri = ascolti_per_uri.with_columns(
+        pl.col('tot_played').cum_sum().alias('cum_sum')
+    )
+    
+    # Calcola la percentuale cumulativa
+    ascolti_per_uri = ascolti_per_uri.with_columns(
+        (pl.col('cum_sum') / totale).alias('cum_perc')
+    )
+    
+    # Filtra per la soglia del 95%
+    top_95 = ascolti_per_uri.filter(pl.col('cum_perc') <= 0.975)
+    
+    # Restituisci il set dei codici
+    return set(top_95['spotify_track_uri'].to_list())
+
+
+
+
+print(df)
